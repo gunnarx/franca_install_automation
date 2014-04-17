@@ -1,9 +1,19 @@
 #!/bin/sh
+# (C) Gunnar Andersson
+# License: CC0 for now. 
+# (Might convert final version to CC-BY or similar)
 
-DEBUG=false
+
+DEBUG=true
 
 MYDIR=$(dirname "$0")
 pushd "$MYDIR" >/dev/null
+
+debug() {
+   if [ $DEBUG ] ; then
+      1>&2 echo $@ | sed 's/^/*DEBUG*: /'
+   fi
+}
 
 die() {
    echo "Something went wrong.  Message: "
@@ -36,14 +46,14 @@ deref() {
    # A kind of weird hack, but it evaluates the variable 
    # whose name is defined by the input variable.
    # e.g. x=foo ; deref x returns the value of $foo!
-   $DEBUG && echo dereffing $1 1>&2
+   debug "dereffing $1"
    eval echo \$$1
 }
 
 download() {
    outfile=$(basename "$1")
    sanity_check_filename "$outfile"
-   wget "$1" -O "$outfile" -c || die "wget failed.  Is wget installed?"
+   wget "$1" -O "$outfile" -c --no-check-certificate || die "wget failed.  Is wget installed?"
 #   curl -C - -O "$1" -O "$outfile" || die "curl failed.  Is curl installed?"
    downloaded_file=$outfile
 }
@@ -61,7 +71,7 @@ md5_check() {
    file=$2
 
    wanted_md5=$(deref ${item}_MD5)
-   $DEBUG && echo "Checking MD5 $wanted_md5 for $item"
+   debug "Checking MD5 $wanted_md5 for $item"
 
    # As long as <item>_MD5 is a non-empty string, perform the check
    if [ -n "$wanted_md5" ] ; then
@@ -77,21 +87,21 @@ md5_check() {
 # Check hash on update site such that an update is noticed
 # (warning only)
 check_site_hash() {
-   url=$(deref ${1}_UPDATE_SITE)
+   url=$(deref ${1}_UPDATE_SERVER)
    hash=$(deref ${1}_UPDATE_SITE_HASH)
-   $DEBUG && echo "checking update site hash: $hash"
+   debug "checking update site hash: $hash"
    curl -s "$url/" | grep -q "$hash" || warn "Site hash ($hash) not found on update site.  Probably it has been updated."
 }
 
-check_latest_version() {
-   url=$(deref ${1}_UPDATE_SITE)
+check_site_latest_version() {
+   url=$(deref ${1}_UPDATE_SERVER)
    version=$(deref ${1}_VERSION)
    $DEBUG && {
-      echo Versions:
-      curl -s "$url/" | egrep '[0-9]\.[0-9]\.[0-9]'
+      echo DEBUG: All versions:
+      curl -s "$url/" | egrep '[0-9]\.[0-9]\.[0-9]' | sed 's/^/DEBUG: /'
    }
    latest=$(curl -s "$url/" | egrep '[0-9]\.[0-9]\.[0-9]' | sed 's/.*\([0-9]\.[0-9]\.[0-9]\).*/\1/' | sort -n | tail -1)
-   $DEBUG && echo "latest: $latest"
+   debug "latest: $latest"
    if [ "$latest" != "$version" ] ; then
       warn "There appears to be a later version than $version for $1"
    fi
@@ -101,22 +111,25 @@ install_update_site() {
    # http://stackoverflow.com/questions/7163970/how-do-you-automate-the-installation-of-eclipse-plugins-with-command-line
    # http://help.eclipse.org/indigo/index.jsp?topic=%2Forg.eclipse.platform.doc.user%2Ftasks%2Frunning_eclipse.htm
    # http://help.eclipse.org/helios/index.jsp?topic=/org.eclipse.platform.doc.isv/guide/p2_director.html 
-   site="$1"
-   component="$2"
-   site=$(deref ${1}_UPDATE_DIR)
-   component=$(deref ${1}_FEATURE)
+   site=$(deref ${1}_UPDATE_SITE_URL)
+   features=$(deref ${1}_FEATURES)
 
+   debug "Installing from update site $1"
+
+   $DEBUG && set -x
    $TARGET_DIR/eclipse/eclipse -nosplash \
       -application org.eclipse.equinox.p2.director \
       -repository "$site" \
       -destination $TARGET_DIR/eclipse \
-      -installIU "$component"
+      -installIU "$features"
+   set +x
 }
 
 source ./CONFIG
 
 # Check config contents...
 defined ECLIPSE_INSTALLER TARGET_DIR DOWNLOAD_DIR
+
 
 mkdir -p "$TARGET_DIR" || die "Can't create target dir ($TARGET_DIR)"
 
@@ -131,12 +144,17 @@ download "$url"  # This sets a variable named $downloaded_file
 md5_check ECLIPSE "$downloaded_file"
 untar "$downloaded_file" "$TARGET_DIR"
 
-check_site_hash      DBUS_EMF 
-check_latest_version DBUS_EMF
-install_update_site  DBUS_EMF
+check_site_hash           DBUS_EMF 
+check_site_latest_version DBUS_EMF
+install_update_site       DBUS_EMF
 
-#check_site_hash      FRANCA
-#check_latest_version FRANCA
-#install_update_site  FRANCA
+install_update_site       GEF4
+
+url=$FRANCA_ARCHIVE_URL
+file=$FRANCA_ARCHIVE
+download "$url" "$file"
+md5_check FRANCA_ARCHIVE "$downloaded_file"
+install_update_site  FRANCA
 
 popd >/dev/null
+
