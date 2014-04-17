@@ -17,14 +17,19 @@ ECLIPSE_INSTALLER="http://ftp.fau.de/eclipse/technology/epp/downloads/release/ke
 # (just remove the assignment altogether)
 ECLIPSE_MD5=cd6d141af286ea06988b3710f6b9c19c
 
-DBUS_EMF_VERSION=0.7.7
+DBUS_EMF_VERSION=0.7.6
 DBUS_EMF_UPDATE_SITE_HASH=832ff9cb55ce
 DBUS_EMF_UPDATE_SERVER="http://dbus-emf-model.eclipselabs.org.codespot.com/git/update_site/releases"
 DBUS_EMF_UPDATE_SITE_URL="$DBUS_EMF_UPDATE_SERVER/$DBUS_EMF_VERSION"
-DBUS_EMF_FEATURES=model.emf.dbusxml.feature.feature.group,model.emf.dbusxml
+DBUS_EMF_FEATURES=model.emf.dbusxml.feature.feature.group
 
 GEF4_UPDATE_SITE_URL="http://download.eclipse.org/tools/gef/gef4/updates/integration"
-GEF4_FEATURES=org.eclipse.gef4.zest.layouts,org.eclipse.gef4.zest.core
+GEF4_VERSION=0.1.0.201311151505
+GEF4_FEATURES=\
+org.eclipse.gef4.zest.layouts,\
+org.eclipse.gef4.zest.core/$GEF4_VERSION
+
+# If _VERSION is not set, no particular version will be requested (-->Eclipse will install the latest, probably) 
 
 FRANCA_ARCHIVE="site_franca_0.8.11.201401091023.zip"
 FRANCA_ARCHIVE_MD5=a223eb7a9b1cafd0c71e78a92def9f51
