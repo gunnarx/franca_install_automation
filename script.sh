@@ -6,9 +6,6 @@
 # Set to "false" or "true" for debug printouts
 DEBUG=false
 
-MYDIR=$(dirname "$0")
-pushd "$MYDIR" >/dev/null
-
 debug() {
    $DEBUG && {
       1>&2 echo $@ | sed 's/^/*DEBUG*: /'
@@ -19,6 +16,22 @@ die() {
    echo "Something went wrong.  Message: "
    echo "$1"
    exit 1
+}
+
+# Set $VAGRANT non-empty if we are running under vagrant provisioning
+test_vagrant() {
+   VAGRANT=""
+   echo "$0" | fgrep -q "vagrant-shell" && VAGRANT="yes"
+}
+
+# Run command only if Vagrant environment
+if_vagrant() {
+   [ -n "$VAGRANT" ] && eval $@
+}
+
+# Run command only if NOT Vagrant environment
+unless_vagrant() {
+   [ -z "$VAGRANT" ] && $@
 }
 
 step() {
@@ -39,7 +52,7 @@ defined() {
 warn() {
    echo "WARNING: $1"
    echo Hit return to continue
-   read
+   unless_vagrant read
 }
 
 sanity_check_filename() {
@@ -129,9 +142,22 @@ install_update_site() {
    set +x
 }
 
+MYDIR=$(dirname "$0")
+ORIGDIR="$PWD"
+
+# Special case for vagrant. We know script is in /vagrant, and $0 is also the name of the shell instead of the script
+test_vagrant
+if_vagrant echo Using vagrant : $0
+if_vagrant MYDIR=/vagrant
+
+cd "$MYDIR"
+
 # Check config contents...
-source ./CONFIG
+. ./CONFIG
 defined ECLIPSE_INSTALLER INSTALL_DIR DOWNLOAD_DIR DBUS_EMF_UPDATE_SITE_URL GEF4_UPDATE_SITE_URL FRANCA_ARCHIVE_URL
+
+# Special case for vagrant
+if_vagrant DOWNLOAD_DIR=/vagrant
 
 mkdir -p "$INSTALL_DIR" || die "Can't create target dir ($INSTALL_DIR)"
 if [ -d "$WORKSPACE_DIR" ] ; then
@@ -208,5 +234,3 @@ MSG
 
 echo
 echo You may now start eclipse by running: $INSTALL_DIR/eclipse/eclipse
-
-popd >/dev/null
