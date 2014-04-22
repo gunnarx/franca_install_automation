@@ -121,21 +121,27 @@ install_update_site() {
    debug "Installing from update site $1"
 
    $DEBUG && set -x
-   $TARGET_DIR/eclipse/eclipse -nosplash \
+   $INSTALL_DIR/eclipse/eclipse -nosplash \
       -application org.eclipse.equinox.p2.director \
       -repository "$site" \
-      -destination $TARGET_DIR/eclipse \
+      -destination $INSTALL_DIR/eclipse \
       -installIU "$features"
    set +x
 }
 
-source ./CONFIG
-
 # Check config contents...
-defined ECLIPSE_INSTALLER TARGET_DIR DOWNLOAD_DIR
+source ./CONFIG
+defined ECLIPSE_INSTALLER INSTALL_DIR DOWNLOAD_DIR DBUS_EMF_UPDATE_SITE_URL GEF4_UPDATE_SITE_URL FRANCA_ARCHIVE_URL
 
-
-mkdir -p "$TARGET_DIR" || die "Can't create target dir ($TARGET_DIR)"
+mkdir -p "$INSTALL_DIR" || die "Can't create target dir ($INSTALL_DIR)"
+if [ -d "$WORKSPACE_DIR" ] ; then
+   echo
+   echo "NOTE the workspace dir in CONFIG exists ($WORKSPACE_DIR)!"
+   echo "I will unpack files into $WORKSPACE_DIR !"
+   warn "Remove it to make a clean installation or back up your files!"
+else
+   mkdir -p "WORKSPACE_DIR"
+fi
 
 # Get Eclipse archive
 url=$ECLIPSE_INSTALLER
@@ -146,7 +152,7 @@ download "$url"  # This sets a variable named $downloaded_file
 # File exists?, correct MD5?, and then unpack
 [ -f "$downloaded_file" ] || die "ECLIPSE not found (not downloaded)."
 md5_check ECLIPSE "$downloaded_file"
-untar "$downloaded_file" "$TARGET_DIR"
+untar "$downloaded_file" "$INSTALL_DIR"
 
 check_site_hash           DBUS_EMF 
 check_site_latest_version DBUS_EMF
