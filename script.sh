@@ -1,6 +1,6 @@
 #!/bin/sh
 # (C) Gunnar Andersson
-# License: CC0 for now. 
+# License: CC0 for now.
 # (Might convert final version to CC-BY or similar)
 
 # Set to "false" or "true" for debug printouts
@@ -47,7 +47,7 @@ sanity_check_filename() {
 }
 
 deref() {
-   # A kind of weird hack, but it evaluates the variable 
+   # A kind of weird hack, but it evaluates the variable
    # whose name is defined by the input variable.
    # e.g. x=foo ; deref x returns the value of $foo!
    debug "dereffing $1"
@@ -114,7 +114,7 @@ check_site_latest_version() {
 install_update_site() {
    # http://stackoverflow.com/questions/7163970/how-do-you-automate-the-installation-of-eclipse-plugins-with-command-line
    # http://help.eclipse.org/indigo/index.jsp?topic=%2Forg.eclipse.platform.doc.user%2Ftasks%2Frunning_eclipse.htm
-   # http://help.eclipse.org/helios/index.jsp?topic=/org.eclipse.platform.doc.isv/guide/p2_director.html 
+   # http://help.eclipse.org/helios/index.jsp?topic=/org.eclipse.platform.doc.isv/guide/p2_director.html
    site=$(deref ${1}_UPDATE_SITE_URL)
    features=$(deref ${1}_FEATURES)
 
@@ -155,7 +155,7 @@ md5_check ECLIPSE "$downloaded_file"
 untar "$downloaded_file" "$INSTALL_DIR"
 
 step "Installing DBus EMF model from update site"
-check_site_hash           DBUS_EMF 
+check_site_hash           DBUS_EMF
 check_site_latest_version DBUS_EMF
 install_update_site       DBUS_EMF
 
@@ -166,7 +166,7 @@ step "Downloading Franca update site archive (.zip)"
 download "$FRANCA_ARCHIVE_URL" "$FRANCA_ARCHIVE"
 md5_check FRANCA_ARCHIVE "$downloaded_file"
 
-# I can't get install directly from zip file to work 
+# I can't get install directly from zip file to work
 # (using command line invocation --installIU) -- is it supposed to?
 #
 # For now unpacking contents first instead, because it works...
@@ -182,28 +182,31 @@ FRANCA_UPDATE_SITE_URL="file://$UNPACKDIR"
 step Installing Franca
 install_update_site FRANCA
 
-step Downloading Franca examples and unpacking into workspace
-download "$EXAMPLES"
+step Downloading Franca examples
 cd "$WORKSPACE_DIR"                    || die "cd to WORKSPACE_DIR ($WORKSPACE_DIR) failed"
-unzip -q -o "$DOWNLOAD_DIR/$downloaded_file" || die "unzip of examples ($DOWNLOAD_DIR/$downloaded_file) failed!"
+download "$EXAMPLES_URL"
+EXAMPLES_FILE="$downloaded_file"
 
 cat <<MSG
 
-Instructions: 
+Instructions:
 -------------
 The examples are now in your workspace _directory_ but not yet known to your
-project browser.  When you have started eclipse, go to Workspace, then select 
+project browser.  When you have started eclipse, go to Workspace, then select
    File -> Import.
-   Select the "General" category (folder) 
+   Select the "General" category (folder)
       and then "Import existing project"
-   Then select the examples.basic (for example) and import into project.  
-      
-You should NOT select "COPY into project" since the files are already in the
-workspace directory.
+   Then select option Archive
+   and select the zip file containing $EXAMPLES_FILE
+   Hit OK to import/copy into workspace
+
+   Finally you may run the tests by going into "tests"/"src", right click
+   and select Run As "JUnit Test".
+
+   But from now on you should read the Franca documentation for more instructions
 MSG
 
 echo
 echo You may now start eclipse by running: $INSTALL_DIR/eclipse/eclipse
 
 popd >/dev/null
-

@@ -31,7 +31,7 @@ DBUS_EMF_FEATURES=model.emf.dbusxml.feature.feature.group
 
 # GEF 4 -------------------------------------------------------------
 
-# Note: If _VERSION is not set, no particular version will be requested (-->Eclipse will install the latest, probably) 
+# Note: If _VERSION is not set, no particular version will be requested (-->Eclipse will install the latest, probably)
 GEF4_UPDATE_SITE_URL="http://download.eclipse.org/tools/gef/gef4/updates/integration"
 GEF4_VERSION=0.1.0.201311151505
 GEF4_FEATURES=\
@@ -71,8 +71,8 @@ org.franca.deploymodel.dsl.tests.base.source,\
 org.franca.deploymodel.dsl.ui,\
 org.franca.deploymodel.dsl.ui.source,\
 org.franca.generators,\
-org.franca.generators.source                
+org.franca.generators.source
 
 # FRANCA EXAMPLES ----------------------------------------------------
 
-EXAMPLES=https://franca.eclipselabs.org.codespot.com/files/org_franca_examples_src_2013-09-26.zip
+EXAMPLES_URL=https://franca.eclipselabs.org.codespot.com/files/org_franca_examples_src_2013-09-26.zip
