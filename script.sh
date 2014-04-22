@@ -166,7 +166,7 @@ if [ -d "$WORKSPACE_DIR" ] ; then
    echo "I will unpack files into $WORKSPACE_DIR !"
    warn "Remove it to make a clean installation or back up your files!"
 else
-   mkdir -p "WORKSPACE_DIR"
+   mkdir -p "$WORKSPACE_DIR"
 fi
 
 # Get Eclipse archive
