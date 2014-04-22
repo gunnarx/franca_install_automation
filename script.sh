@@ -3,16 +3,16 @@
 # License: CC0 for now. 
 # (Might convert final version to CC-BY or similar)
 
-
-DEBUG=true
+# Set to "false" or "true" for debug printouts
+DEBUG=false
 
 MYDIR=$(dirname "$0")
 pushd "$MYDIR" >/dev/null
 
 debug() {
-   if [ $DEBUG ] ; then
+   $DEBUG && {
       1>&2 echo $@ | sed 's/^/*DEBUG*: /'
-   fi
+   }
 }
 
 die() {
@@ -21,12 +21,16 @@ die() {
    exit 1
 }
 
+step() {
+      echo $@ | sed 's/^/ *** /'
+}
+
 ensure() {
    $* || die "Condition not met: $*"
 }
 
 defined() {
-   echo Checking: $@
+   debug "Checking: $@"
    for f in $@ ; do
       [ -n "$f" ] || "Variable $f not defined in CONFIG?"
    done
@@ -79,7 +83,7 @@ md5_check() {
       if [ "$md5" != "$wanted_md5" ]  ; then
          die "MD5 checksum ($md5) did not match predefined md5 ($wanted_md5) for item $item.  Check CONFIG file."
       else
-         echo "MD5 ok ($item)"
+         debug "MD5 ok ($item)"
       fi
    fi
 }
