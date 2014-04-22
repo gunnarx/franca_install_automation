@@ -45,8 +45,8 @@ org.eclipse.gef4.zest.core/$GEF4_VERSION
 FRANCA_ARCHIVE="site_franca_0.8.11.201401091023.zip"
 FRANCA_ARCHIVE_MD5=a223eb7a9b1cafd0c71e78a92def9f51
 FRANCA_ARCHIVE_URL="https://franca.eclipselabs.org.codespot.com/files/$FRANCA_ARCHIVE"
-FRANCA_UPDATE_SITE_URL="$DOWNLOAD_DIR/$FRANCA_ARCHIVE"
-FRANCA_UPDATE_SITE_URL="file:///tmp/x"
+#FRANCA_UPDATE_SITE_URL="file://$DOWNLOAD_DIR/$FRANCA_ARCHIVE"
+#FRANCA_UPDATE_SITE_URL="file:///tmp/x"
 FRANCA_FEATURES=\
 org.franca.connectors.dbus,\
 org.franca.connectors.dbus.source,\

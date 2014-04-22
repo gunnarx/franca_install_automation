@@ -144,27 +144,66 @@ else
 fi
 
 # Get Eclipse archive
-url=$ECLIPSE_INSTALLER
-archive="$(basename $url)"
 cd "$DOWNLOAD_DIR"
-download "$url"  # This sets a variable named $downloaded_file
+step "Downloading Eclipse installer"
+download "$ECLIPSE_INSTALLER"  # This sets a variable named $downloaded_file
 
 # File exists?, correct MD5?, and then unpack
 [ -f "$downloaded_file" ] || die "ECLIPSE not found (not downloaded)."
+step Checking MD5 sum for Eclipse
 md5_check ECLIPSE "$downloaded_file"
 untar "$downloaded_file" "$INSTALL_DIR"
 
+step "Installing DBus EMF model from update site"
 check_site_hash           DBUS_EMF 
 check_site_latest_version DBUS_EMF
 install_update_site       DBUS_EMF
 
+step "Installing GEF4 from update site"
 install_update_site       GEF4
 
-url=$FRANCA_ARCHIVE_URL
-file=$FRANCA_ARCHIVE
-download "$url" "$file"
+step "Downloading Franca update site archive (.zip)"
+download "$FRANCA_ARCHIVE_URL" "$FRANCA_ARCHIVE"
 md5_check FRANCA_ARCHIVE "$downloaded_file"
-install_update_site  FRANCA
+
+# I can't get install directly from zip file to work 
+# (using command line invocation --installIU) -- is it supposed to?
+#
+# For now unpacking contents first instead, because it works...
+
+step Unpacking Franca update site archive
+UNPACKDIR=$DOWNLOAD_DIR/tmp.$$
+mkdir -p "$UNPACKDIR"            || die "mkdir UNPACKDIR ($UNPACKDIR) failed"
+cd "$UNPACKDIR"                  || die "cd to UNPACKDIR ($UNPACKDIR) failed"
+unzip -q "$DOWNLOAD_DIR/$downloaded_file" || die "unzip $DOWNLOAD_DIR/$downloaded_file failed"
+cd -
+
+FRANCA_UPDATE_SITE_URL="file://$UNPACKDIR"
+step Installing Franca
+install_update_site FRANCA
+
+step Downloading Franca examples and unpacking into workspace
+download "$EXAMPLES"
+cd "$WORKSPACE_DIR"                    || die "cd to WORKSPACE_DIR ($WORKSPACE_DIR) failed"
+unzip -q -o "$DOWNLOAD_DIR/$downloaded_file" || die "unzip of examples ($DOWNLOAD_DIR/$downloaded_file) failed!"
+
+cat <<MSG
+
+Instructions: 
+-------------
+The examples are now in your workspace _directory_ but not yet known to your
+project browser.  When you have started eclipse, go to Workspace, then select 
+   File -> Import.
+   Select the "General" category (folder) 
+      and then "Import existing project"
+   Then select the examples.basic (for example) and import into project.  
+      
+You should NOT select "COPY into project" since the files are already in the
+workspace directory.
+MSG
+
+echo
+echo You may now start eclipse by running: $INSTALL_DIR/eclipse/eclipse
 
 popd >/dev/null
 
