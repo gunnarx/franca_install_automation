@@ -6,6 +6,7 @@
 # Set to "false" or "true" for debug printouts
 DEBUG=false
 
+
 debug() {
    $DEBUG && {
       1>&2 echo $@ | sed 's/^/*DEBUG*: /'
@@ -234,3 +235,6 @@ MSG
 
 echo
 echo You may now start eclipse by running: $INSTALL_DIR/eclipse/eclipse
+
+if_vagrant chown -R vagrant:users "$INSTALL_DIR"
+if_vagrant echo "fixed-chmod" > "$INSTALL_DIR/fixed-chmod"
