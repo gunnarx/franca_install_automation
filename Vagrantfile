@@ -10,30 +10,50 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	config.vm.hostname = "francalab-precise64"
 
 	# If above box does not exist locally, fetch it here:
-	config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/precise/current/precise-server-cloudimg-amd64-vagrant-disk1.box" 
+	config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/precise/current/precise-server-cloudimg-amd64-vagrant-disk1.box"
 
-   # Install prerequisites
-	config.vm.provision :shell, inline: 
-      'sudo apt-get update; sudo apt-get install -y wget unzip openjdk-6-jre'
-
-	# Tell Vagrant to run this script inside the VM
-	config.vm.provision :shell, :path => "script.sh"
-
-   # Graphical environment
+   # Warning to user
 	config.vm.provision :shell, inline:
 		'echo "***************************************************************"
-       echo "Unfortunately the graphical environment install needs to be manual:" 
-       echo "run \"vagrant ssh\"" 
-       echo "then inside VM :"
-       echo "$ sudo apt-get install lxde"
-       echo ""
-       echo "Then halt the VM \"sudo halt\""
-       echo "or exit VM"
-       echo "and run \"vagrant halt\"
-       echo ""
-       echo "Then start the VM normally using VirtualBox (not headless)"
-       echo "And run eclipse (probably at: ~vagrant/tools/autoeclipse/eclipse)"
+       echo "Starting provisioning. "
+       echo
+       echo "!!!!!!!!!!!!"
+       echo "!!!      !!! You may see errors in dpkg-preconfigure."
+       echo "!!! NOTE !!! It will look like a significant error in the final step"
+       echo "!!!      !!! (cannot reopen stdin, etc). This can be ignored."
+       echo "!!!!!!!!!!!!"
+       echo
+       echo "When provisioning is done, halt the VM, then boot normally "
+       echo "with a GUI inside Virtualbox, i.e. not using vagrant..."
+       echo
+       echo "Then run eclipse, probably at: ~vagrant/tools/autoeclipse/eclipse"
        echo "***************************************************************"'
+
+   # Install prerequisites
+	config.vm.provision :shell, inline:
+      'sudo apt-get update; sudo apt-get install -y wget unzip openjdk-6-jre'
+
+	# Run the eclipse + franca installer script
+	config.vm.provision :shell, :path => "script.sh"
+
+   # Warning, again
+	config.vm.provision :shell, inline:
+		'echo "***************************************************************"
+       echo "Executing final step: install LXDE graphical environment"
+       echo
+       echo "!!!!!!!!!!!! Reminder:"
+       echo "!!! NOTE !!! Installing LXDE fails in dpkg-preconfigure."
+       echo "!!!!!!!!!!!! This can be ignored, it seems OK anyway - try it."
+       echo
+       echo "When provisioning is done, halt the VM, then boot normally "
+       echo "with a GUI inside Virtualbox, i.e. not using vagrant..."
+       echo ""
+       echo "Then run eclipse, probably at: ~vagrant/tools/autoeclipse/eclipse"
+       echo "***************************************************************"'
+
+   # Install graphical environment
+	config.vm.provision :shell, inline:
+      'sudo apt-get install -y lxde'
 
 # ----------------------------------------------
 # If VM will run some network services e.g. web browser
