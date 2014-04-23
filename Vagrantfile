@@ -36,6 +36,24 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	# Run the eclipse + franca installer script
 	config.vm.provision :shell, :path => "script.sh"
 
+   # Create desktop icon
+	config.vm.provision :shell, inline:
+   'desktopdir=/home/vagrant/Desktop
+   sudo mkdir -p $desktopdir
+   sudo chown vagrant:vagrant $desktopdir
+   shortcut=/home/vagrant/Desktop/Eclipse
+   cat <<EOT >$shortcut
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Name=Eclipse with Franca
+Name[en_US]=Eclipse with Franca
+Icon=/home/vagrant/tools/autoeclipse/eclipse/icon.xpm
+Exec=/home/vagrant/tools/autoeclipse/eclipse/eclipse
+EOT
+sudo chown -R vagrant:vagrant $desktopdir
+'
+
    # Warning, again
 	config.vm.provision :shell, inline:
 		'echo "***************************************************************"
