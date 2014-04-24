@@ -27,16 +27,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 		'echo "***************************************************************"
        echo "Starting provisioning. "
        echo
-       echo "!!!!!!!!!!!!"
-       echo "!!!      !!! You may see errors in dpkg-preconfigure."
-       echo "!!! NOTE !!! It will look like a significant error in the final step"
-       echo "!!!      !!! (cannot reopen stdin, etc). This can be ignored."
-       echo "!!!!!!!!!!!!"
-       echo
        echo "When provisioning is done, halt the VM, then boot normally "
        echo "with a GUI inside Virtualbox, i.e. not using vagrant..."
        echo
        echo "Then run eclipse, probably at: ~vagrant/tools/autoeclipse/eclipse"
+       echo "See README for more details"
        echo "***************************************************************"'
 
    # Install prerequisites
@@ -76,14 +71,11 @@ sudo deluser ubuntu
 		'echo "***************************************************************"
        echo "Executing final step: install LXDE graphical environment"
        echo
-       echo "!!!!!!!!!!!! Reminder:"
-       echo "!!! NOTE !!! Installing LXDE fails in dpkg-preconfigure."
-       echo "!!!!!!!!!!!! This can be ignored, it seems OK anyway - try it."
-       echo
        echo "When provisioning is done, halt the VM, then boot normally "
        echo "with a GUI inside Virtualbox, i.e. not using vagrant..."
        echo ""
        echo "Then run eclipse, probably at: ~vagrant/tools/autoeclipse/eclipse"
+       echo "See README for more details"
        echo "***************************************************************"'
 
    # Install graphical environment
