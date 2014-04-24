@@ -43,21 +43,25 @@ Instructions for Virtual Machine creation
 
    Login as vagrant, password vagrant
 
-6. Enjoy testing Franca environment.  
+6. Enjoy testing Franca environment!
 
-   Note: The workspace is prepared at ~vagrant/francaworkspace,
-   make sure to tell eclipse that.
+   Note: The workspace is prepared at /home/vagrant/workspace,
+   but this is also eclipse default, so just hit OK
 
-   NOTE! To run Franca examples you must manually import them into the
-   workspace.  The instructions can be found towards the end of script.sh
+7. To run Franca examples you must manually import them into the
+   workspace. The instructions can be found towards the end of script.sh
 
 
-Tips
-----
-   The VM is configured with 1.5 GB RAM.  You may want to modify the 
-   Vagrantfile or simply your resulting VM if you are doing large builds.
-   I am not sure what is required except that 512MB was not enough and
-   this seems to work to run Franca tests at least.
+Tweaking settings
+------------------
+
+   The VM is configured with 1.5 GB RAM.  You may want to modify that setting
+   in Vagrantfile or change the VM settings manually in VirtualBox if you are
+   doing large builds.  I am not sure what is required except that 512MB was
+   not enough, and 1.5G worked fine for running Franca tests.
+
+Sharing files
+-------------
 
    Note, in a Vagrant box you can share files through the /vagrant directory:
    On host: it's THIS directory, where you have Vagrantfile and this README
@@ -74,13 +78,14 @@ Installation on bare metal
 --------------------------
 
 Finally you may use ./script.sh (and CONFIG) directly on any machine (VM or
-bare metal) without using Vagrant, to automate Franca install.  Make sure
-to tweak install location and workspace name in CONFIG to your liking.
-
-This is assuming you don't have Eclipse already, etc.  Otherwise
-you probably need to follow a manual procedure using Franca documentation
-to get Franca into your "standard" Eclipse.
+bare metal) without using Vagrant to simply automate Franca install.
+Make sure to modify the install location and workspace name in CONFIG to your
+liking.
 
 script.sh does not use any package manager so it should run on several
-distros. It is developed on Fedora but tested on Ubuntu using the
-Vagrant approach
+distros. It is developed on Fedora but tested also on Ubuntu (using the 
+Vagrant wrapper)
+
+The script downloads and installs eclipse.  If you have an Eclipse environment
+already you probably need to follow a manual procedure using Franca
+documentation to get Franca into your "standard" Eclipse.
