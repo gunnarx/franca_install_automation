@@ -54,14 +54,17 @@ Instructions for Virtual Machine creation
 
 Tips
 ----
+   The VM is configured with 1.5 GB RAM.  You may want to modify the 
+   Vagrantfile or simply your resulting VM if you are doing large builds.
+   I am not sure what is required except that 512MB was not enough and
+   this seems to work to run Franca tests at least.
 
    Note, in a Vagrant box you can share files through the /vagrant directory:
-
    On host: it's THIS directory, where you have Vagrantfile and this README
    On Virtual Machine:   Mounted at /vagrant
 
-   You can also get a command line on the VM using vagrant ssh, but
-   that's not too useful for eclipse:
+   You can also get a direct command line on the VM using vagrant ssh, but
+   that's not too useful for running eclipse:
 
    $ vagrant ssh
 
