@@ -1,11 +1,11 @@
 #!/bin/sh
 # (C) Gunnar Andersson
-# License: CC0 for now.
-# (Might convert final version to CC-BY or similar)
+# License: CC-BY 4.0 International
+# (http://creativecommons.org/licenses/by/4.0/)
+# pull requests welcome
 
 # Set to "false" or "true" for debug printouts
 DEBUG=false
-
 
 debug() {
    $DEBUG && {
