@@ -22,16 +22,17 @@ Instructions for Virtual Machine creation
    The first time it will download the base VM "box" which
    is currently an Ubuntu system.
 
-   Feel free to replace it with another "box" of another 
-   distro, but the provisioning using apt-get may need changes then.
+   Feel free to replace it with another box of another distro, but the
+   provisioning using apt-get may need changes then.  Pull requests
+   welcome.
 
-   NOTE: There will be some errors towards the end of the provisioning
-   which seems to be due to vagrant provisioning not running in a normal
-   interactive shell.
+   NOTE: There will be some errors towards the end of the provisioning which
+   seems to be due to vagrant provisioning not running in a normal interactive
+   shell?
 
-   You can ignore them.  Of course you may have some other error that
-   I have not seen yet, but using vagrant and a known base box this
-   should be quite foolproof.
+   You can ignore those errors.  Of course you may have some other error that I
+   have not seen yet, but using vagrant and a known base box this should be
+   quite foolproof.
 
 4. Stop the VM which is now running headless:
 
