@@ -12,16 +12,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	# If above box does not exist locally, fetch it here:
 	config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/precise/current/precise-server-cloudimg-amd64-vagrant-disk1.box"
 
-   # To run eclipse we need more than default RAM 512MB
-   # And we might as well set a useful name also, which I
-   # prefer to have equal to the hostname defined above.
-   #
-   # If memory is not enough you can modify it here.
-   config.vm.customize [
-      "modifyvm", :id,
-      "--name", "#{config.vm.hostname}",
-      "--memory", "1536"
-   ]
+   # To run eclipse we need more than default RAM 512MB And we might as well
+   # set a useful name also, which I prefer to have equal to the hostname that
+   # was defined above.
+   config.vm.provider :virtualbox do |vb|
+        vb.customize ["modifyvm", :id, "--name", "#{config.vm.hostname}"]
+        vb.customize ["modifyvm", :id, "--memory", "1536"]
+   end
 
    # Warning to user
 	config.vm.provision :shell, inline:
