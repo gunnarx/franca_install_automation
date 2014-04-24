@@ -48,8 +48,8 @@ Instructions for Virtual Machine creation
    Note: The workspace is prepared at ~vagrant/francaworkspace,
    make sure to tell eclipse that.
 
-   To run Franca examples you must manually import them into the workspace.
-   The instructions can be found towards the end of script.sh
+   NOTE! To run Franca examples you must manually import them into the
+   workspace.  The instructions can be found towards the end of script.sh
 
 
 Tips

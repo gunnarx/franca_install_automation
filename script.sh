@@ -220,17 +220,22 @@ Instructions:
 -------------
 The examples are now in your workspace _directory_ but not yet known to your
 project browser.  When you have started eclipse, go to Workspace, then select
-   File -> Import.
-   Select the "General" category (folder)
-      and then "Import existing project"
-   Then select option Archive
-   and select the zip file containing $EXAMPLES_FILE
-   Hit OK to import/copy into workspace
+   File -> Import...
+   Expand the "General" category (folder)
+      and then "Existing Projects into Workspace".  Press Next.
+   Select option "Select Archive File" and press "Browse..."
+   Select the .zip file containing $EXAMPLES_FILE and hit OK.
+   Hit Finish to import/copy into workspace.
 
-   Finally you may run the tests by going into "tests"/"src", right click
+   Finally you may now run tests by going into 
+   "org.franca.examples.basic" package
+   under /src, open "org.franca.examples.basic.tests"
+
+   Right click on for example AllTests.java
    and select Run As "JUnit Test".
 
-   But from now on you should read the Franca documentation for more instructions
+   But from now on you should instead read the Franca documentation for up to
+   date instructions on this stuff.
 MSG
 
 echo
