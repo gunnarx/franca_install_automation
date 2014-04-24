@@ -14,15 +14,12 @@ if_vagrant HOME=/home/vagrant
 # Where to install eclipse?
 # INSTALL_DIR=/usr/local   # requires root...
 INSTALL_DIR=$HOME/tools/autoeclipse
-WORKSPACE_DIR=$HOME/francaworkspace
-
+WORKSPACE_DIR=$HOME/workspace
 
 # Set Download dir
 # NOTE: If script is used to provision a vagrant box, this will always
 # be reset to /vagrant instead
 DOWNLOAD_DIR=/tmp
-
-
 
 ECLIPSE_INSTALLER="http://ftp.fau.de/eclipse/technology/epp/downloads/release/kepler/R/eclipse-dsl-kepler-R-linux-gtk-x86_64.tar.gz"
 
