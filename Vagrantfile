@@ -40,7 +40,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	config.vm.provision :shell, inline:
    'desktopdir=/home/vagrant/Desktop
    sudo mkdir -p $desktopdir
-   sudo chown vagrant:vagrant $desktopdir
    shortcut=/home/vagrant/Desktop/Eclipse
    cat <<EOT >$shortcut
 [Desktop Entry]
@@ -51,7 +50,10 @@ Name[en_US]=Eclipse with Franca
 Icon=/home/vagrant/tools/autoeclipse/eclipse/icon.xpm
 Exec=/home/vagrant/tools/autoeclipse/eclipse/eclipse
 EOT
-sudo chown -R vagrant:vagrant $desktopdir
+
+# The above created files, and others are owned by root after provisioning 
+# Fix that:
+sudo chown -R vagrant:vagrant /home/vagrant
 '
 
    # Warning, again
