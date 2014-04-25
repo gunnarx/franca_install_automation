@@ -74,10 +74,10 @@ sudo deluser ubuntu
    # Warning, again
 	config.vm.provision :shell, inline:
 		'echo "***************************************************************"
-       echo "Executing final step: install LXDE graphical environment"
+       echo "Executing final step: install graphical environment"
        echo
        echo "!!!!!!!!!!!! Reminder:"
-       echo "!!! NOTE !!! Installing LXDE fails in dpkg-preconfigure."
+       echo "!!! NOTE !!! Installing desktop fails in dpkg-preconfigure."
        echo "!!!!!!!!!!!! This can be ignored, it seems OK anyway - try it."
        echo
        echo "When provisioning is done, halt the VM, then boot normally "
@@ -88,7 +88,7 @@ sudo deluser ubuntu
 
    # Install graphical environment
 	config.vm.provision :shell, inline:
-      'sudo apt-get install -y lxde'
+      'sudo apt-get install -y ubuntu-desktop'
 
 # ----------------------------------------------
 # If VM will run some network services e.g. web browser
