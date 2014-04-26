@@ -66,6 +66,9 @@ chmod 755 $shortcut
 # The above created files, and others are owned by root after provisioning 
 # Fix that:
 sudo chown -R vagrant:vagrant /home/vagrant
+
+# Remove other users than vagrant -- makes things less confusing
+sudo deluser ubuntu
 '
 
    # Warning, again
