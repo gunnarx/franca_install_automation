@@ -19,7 +19,7 @@ die() {
    exit 1
 }
 
-# Set $VAGRANT non-empty if we are running under vagrant provisioning
+# This function sets variable $VAGRANT if we are running under vagrant provisioning
 test_vagrant() {
    VAGRANT=""
    echo "$0" | fgrep -q "vagrant-shell" && VAGRANT="yes"
@@ -35,35 +35,42 @@ unless_vagrant() {
    [ -z "$VAGRANT" ] && $@
 }
 
+# Print an operation with *** in front of it
 step() {
       echo $@ | sed 's/^/ *** /'
 }
 
+# Check condition is met or die
 ensure() {
    $* || die "Condition not met: $*"
 }
 
+# Check that variable(s) have been defined
 defined() {
-   debug "Checking: $@"
-   for f in $@ ; do
-      [ -n "$f" ] || "Variable $f not defined in CONFIG?"
+   for v in $* ; do
+      [ -n "$v" ] || "Variable $v not defined in CONFIG?"
    done
 }
 
+# Print a warning and pause 
+# (it will not pause in Vagrant provisioning because there is no terminal)
 warn() {
    echo "WARNING: $1"
    echo Hit return to continue
    unless_vagrant read
 }
 
+# This is kind of useless...
 sanity_check_filename() {
    [ -z "$1" ] && die "Filename empty."
 }
 
+# dereference variable
+
+# This is a kind of weird hack, but it evaluates the variable whose name is
+# defined by the input variable.  
+# example:   x=foo ; deref x, returns the value of $foo!
 deref() {
-   # A kind of weird hack, but it evaluates the variable
-   # whose name is defined by the input variable.
-   # e.g. x=foo ; deref x returns the value of $foo!
    debug "dereffing $1"
    eval echo \$$1
 }
@@ -118,6 +125,7 @@ check_site_latest_version() {
       echo DEBUG: All versions:
       curl -s "$url/" | egrep '[0-9]\.[0-9]\.[0-9]' | sed 's/^/DEBUG: /'
    }
+
    latest=$(curl -s "$url/" | egrep '[0-9]\.[0-9]\.[0-9]' | sed 's/.*\([0-9]\.[0-9]\.[0-9]\).*/\1/' | sort -n | tail -1)
    debug "latest: $latest"
    if [ "$latest" != "$version" ] ; then
@@ -129,6 +137,7 @@ install_update_site() {
    # http://stackoverflow.com/questions/7163970/how-do-you-automate-the-installation-of-eclipse-plugins-with-command-line
    # http://help.eclipse.org/indigo/index.jsp?topic=%2Forg.eclipse.platform.doc.user%2Ftasks%2Frunning_eclipse.htm
    # http://help.eclipse.org/helios/index.jsp?topic=/org.eclipse.platform.doc.isv/guide/p2_director.html
+
    site=$(deref ${1}_UPDATE_SITE_URL)
    features=$(deref ${1}_FEATURES)
 
@@ -146,20 +155,24 @@ install_update_site() {
 MYDIR=$(dirname "$0")
 ORIGDIR="$PWD"
 
-# Special case for vagrant. We know script is in /vagrant, and $0 is also the name of the shell instead of the script
+# Special case for vagrant: We know the script is in /vagrant
+# $0 is in this case the name of the shell instead of the name of the script
 test_vagrant
 if_vagrant echo Using vagrant : $0
 if_vagrant MYDIR=/vagrant
 
 cd "$MYDIR"
 
-# Check config contents...
+# Include config
 . ./CONFIG
+
+# Check that a few necessary variables are defined
 defined ECLIPSE_INSTALLER INSTALL_DIR DOWNLOAD_DIR DBUS_EMF_UPDATE_SITE_URL GEF4_UPDATE_SITE_URL FRANCA_ARCHIVE_URL
 
-# Special case for vagrant
+# Override CONFIG for the download dir if running in Vagrant
 if_vagrant DOWNLOAD_DIR=/vagrant
 
+# Create install and workspace dirs
 mkdir -p "$INSTALL_DIR" || die "Can't create target dir ($INSTALL_DIR)"
 if [ -d "$WORKSPACE_DIR" ] ; then
    echo
@@ -175,8 +188,8 @@ cd "$DOWNLOAD_DIR"
 step "Downloading Eclipse installer"
 download "$ECLIPSE_INSTALLER"  # This sets a variable named $downloaded_file
 
-# File exists?, correct MD5?, and then unpack
-[ -f "$downloaded_file" ] || die "ECLIPSE not found (not downloaded)."
+# File exists?, correct MD5?, then unpack
+[ -f "$downloaded_file" ] || die "ECLIPSE not found (not downloaded?)."
 step Checking MD5 sum for Eclipse
 md5_check ECLIPSE "$downloaded_file"
 untar "$downloaded_file" "$INSTALL_DIR"
@@ -193,21 +206,21 @@ step "Downloading Franca update site archive (.zip)"
 download "$FRANCA_ARCHIVE_URL" "$FRANCA_ARCHIVE"
 md5_check FRANCA_ARCHIVE "$downloaded_file"
 
-# I can't get install directly from zip file to work
-# (using command line invocation --installIU) -- is it supposed to?
-#
-# For now unpacking contents first instead, because it works...
+# I can't get install directly from zip file to work using command line
+# invocation --installIU).  Is it supposed to work?)
+# Anyhow for now unpack zip manually, then install. That works. 
 
 step Unpacking Franca update site archive
-UNPACKDIR=$DOWNLOAD_DIR/tmp.$$
-mkdir -p "$UNPACKDIR"            || die "mkdir UNPACKDIR ($UNPACKDIR) failed"
-cd "$UNPACKDIR"                  || die "cd to UNPACKDIR ($UNPACKDIR) failed"
+UNPACK_DIR=$DOWNLOAD_DIR/tmp.$$
+mkdir -p "$UNPACK_DIR"            || die "mkdir UNPACK_DIR ($UNPACK_DIR) failed"
+cd "$UNPACK_DIR"                  || die "cd to UNPACK_DIR ($UNPACK_DIR) failed"
 unzip -q "$DOWNLOAD_DIR/$downloaded_file" || die "unzip $DOWNLOAD_DIR/$downloaded_file failed"
 cd -
 
-FRANCA_UPDATE_SITE_URL="file://$UNPACKDIR"
+FRANCA_UPDATE_SITE_URL="file://$UNPACK_DIR"
 step Installing Franca
 install_update_site FRANCA
+rm -rf "$UNPACK_DIR"
 
 step Downloading Franca examples
 cd "$WORKSPACE_DIR"                    || die "cd to WORKSPACE_DIR ($WORKSPACE_DIR) failed"
@@ -239,7 +252,5 @@ project browser.  When you have started eclipse, go to Workspace, then select
 MSG
 
 echo
-echo You may now start eclipse by running: $INSTALL_DIR/eclipse/eclipse
+echo "All Done. You may now start eclipse by running: $INSTALL_DIR/eclipse/eclipse"
 
-if_vagrant chown -R vagrant:users "$INSTALL_DIR"
-if_vagrant echo "fixed-chmod" > "$INSTALL_DIR/fixed-chmod"
