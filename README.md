@@ -28,6 +28,7 @@ differences in the code but leading to quite big differences in the VM
    trusty64-lxde   -- Ubuntu Trusty Tahr 14.04 LTS, with LXDE desktop
    debian_7.3-lxde -- Debian 7.3, with LXDE desktop
    trusty64-unity  -- Ubuntu Trusty Tahr 14.04 LTS, with standard Ubuntu (Unity) desktop
+                      (read KNOWN BUGS)
 
    All images are 64 bit versions.
 
@@ -133,8 +134,6 @@ Installation on bare metal
 
 You may use ./script.sh (and CONFIG) directly on any machine (VM or
 bare metal) without using Vagrant, to simply automate the Franca installation.
-Make sure to modify the install location and workspace name in CONFIG to your
-liking.
 
 Edit CONFIG if needed.
 and run:
@@ -144,13 +143,27 @@ script.sh does not use any package manager so it should run on most distros. It
 is developed on Fedora 20 but tested also on Ubuntu and Debian (using the
 Vagrant method)
 
+Prerequisites
+-------------
+
 script.sh does not install any packages except for Eclipse + libraries so you
-need to manually ensure the needed prerequisites.  Mostly this means JDK 6
-however.  Install for example java-1.6.0-openjdk on fedora or openjdk-6-jre on
-Ubuntu or Debian.  Note that JDK 6, not 7 (or 8) was up until recently required
-(but refer to official Franca documentation for up to date information).
+need to manually ensure the needed prerequisites on your machine
+(not for Vagrant/VM build)
+
+This is primarily JDK 6.  Install package java-1.6.0-openjdk on fedora or
+openjdk-6-jre on Ubuntu or Debian.  Note that JDK 6, NOT 7 (or 8) was up until
+recently required but refer to official Franca documentation for up to date
+information.
 
 The script downloads and installs Eclipse.  If you have an Eclipse environment
 already, you probably need to instead follow a manual procedure using Franca
 documentation to get Franca into your "standard" Eclipse.
+
+Known bugs
+----------
+There is an odd bug for Unity/Ubuntu Desktop only that causes the Eclipse menus to
+not display at all. It seems to happen on the first boot after installation
+(and never again!) It affects also the HUD.  Simply closing and restarting
+Eclipse seems to solve the problem.  If you find any additional information,
+please feed it back.
 
