@@ -15,11 +15,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    # To run eclipse we need more than default RAM 512MB And we might as well
    # set a useful name also, which I prefer to have equal to the hostname that
    # was defined above, but to make it unique a timestamp is added also.
+   # Increase video RAM as well, it doesn't cost much and we will run
+   # graphical desktops after all.
    vmname = config.vm.hostname + "-" + `date +%Y%m%d%H%M`.to_s
    vmname.chomp!
    config.vm.provider :virtualbox do |vb|
         vb.customize [ "modifyvm", :id, "--name", vmname ]
         vb.customize [ "modifyvm", :id, "--memory", "1536" ]
+        vb.customize [ "modifyvm", :id, "--vram", "128" ]
    end
 
    # Warning to user
