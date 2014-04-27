@@ -76,10 +76,14 @@ or
 
 2. Install the latest VirtualBox
 
-3. Run Vagrant up:
+3. Run Vagrant up: 
+
+NOTE: I ran into a new bug where a new machine claims to be provisioned already
+(it can't be...) but for that reason we give the explicit --provision flag.  It
+works.
 
 ```bash
-    $ vagrant up
+    $ vagrant up --provision
 ```
 
    The first time it will download the base VM "box" which
