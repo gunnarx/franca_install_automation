@@ -1,5 +1,5 @@
 # -*- mode: ruby -*-
-# vi: set ft=ruby :
+# vim: set ft=ruby sw=3 ts=3 et:
 
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
@@ -18,16 +18,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    # Increase video RAM as well, it doesn't cost much and we will run
    # graphical desktops after all.
    vmname = config.vm.hostname + "-" + `date +%Y%m%d%H%M`.to_s
-   vmname.chomp!
+   vmname.chomp!      # Without this there is a newline character in the name :-o
    config.vm.provider :virtualbox do |vb|
-        vb.customize [ "modifyvm", :id, "--name", vmname ]
-        vb.customize [ "modifyvm", :id, "--memory", "1536" ]
-        vb.customize [ "modifyvm", :id, "--vram", "128" ]
+      vb.customize [ "modifyvm", :id, "--name", vmname ]
+      vb.customize [ "modifyvm", :id, "--memory", "1536" ]
+      vb.customize [ "modifyvm", :id, "--vram", "128" ]
    end
 
    # Warning to user
-	config.vm.provision :shell, inline:
-		'echo "***************************************************************"
+   config.vm.provision :shell, inline:
+      'echo "***************************************************************"
        echo "Starting provisioning. "
        echo
        echo "When provisioning is done, halt the VM, then boot normally "
@@ -38,15 +38,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
        echo "***************************************************************"'
 
    # Install prerequisites
-	config.vm.provision :shell, inline:
+   config.vm.provision :shell, inline:
       'sudo apt-get update; sudo apt-get install -y wget unzip openjdk-6-jre'
 
-	# Run the eclipse + franca installer script
-	config.vm.provision :shell, :path => "script.sh"
+   # Run the eclipse + franca installer script
+   config.vm.provision :shell, :path => "script.sh"
 
    # Create desktop icon
-	config.vm.provision :shell, inline:
-   'desktopdir=/home/vagrant/Desktop
+   config.vm.provision :shell, inline:
+      'desktopdir=/home/vagrant/Desktop
    sudo mkdir -p $desktopdir
    shortcut=/home/vagrant/Desktop/Eclipse.desktop
    cat <<EOT >$shortcut
@@ -59,35 +59,39 @@ Icon=/home/vagrant/tools/autoeclipse/eclipse/icon.xpm
 Exec=/home/vagrant/tools/autoeclipse/eclipse/eclipse
 EOT
 
-chmod 755 $shortcut
+   chmod 755 $shortcut
 
-# The above created files, and others are owned by root after provisioning 
-# Fix that:
-sudo chown -R vagrant:vagrant /home/vagrant
-'
+   # The above created files, and others are owned by root after provisioning 
+   # Fix that:
+   sudo chown -R vagrant:vagrant /home/vagrant
+   '
 
    # Warning, again
-	config.vm.provision :shell, inline:
-		'echo "***************************************************************"
-       echo "Executing final step: install LXDE graphical environment"
-       echo
-       echo "When provisioning is done, halt the VM, then boot normally "
-       echo "with a GUI inside Virtualbox, i.e. not using vagrant..."
-       echo ""
-       echo "Then run eclipse, probably at: ~vagrant/tools/autoeclipse/eclipse"
-       echo "See README for more details"
-       echo "***************************************************************"'
+   config.vm.provision :shell, inline:
+   'echo "***************************************************************"
+    echo "Executing final step: install LXDE graphical environment"
+    echo
+    echo "!!!!!!!!!!!! Reminder:"
+    echo "!!! NOTE !!! Installing LXDE fails in dpkg-preconfigure."
+    echo "!!!!!!!!!!!! This can be ignored, it seems OK anyway - try it."
+    echo
+    echo "When provisioning is done, halt the VM, then boot normally "
+    echo "with a GUI inside Virtualbox, i.e. not using vagrant..."
+    echo ""
+    echo "Then run eclipse, probably at: ~vagrant/tools/autoeclipse/eclipse"
+    echo "Read the project README!"
+    echo "***************************************************************"'
 
    # Install graphical environment
-	config.vm.provision :shell, inline:
-      'sudo apt-get install -y lxde'
+   config.vm.provision :shell, inline:
+   'sudo apt-get install -y lxde'
 
-# ----------------------------------------------
-# If VM will run some network services e.g. web browser
-# make a port forward so we can test them from the host:
-# host:4567 -->  Virtual Machine port 80
-# ----------------------------------------------
+   # ----------------------------------------------
+   # If VM will run some network services e.g. web browser
+   # make a port forward so we can test them from the host:
+   # host:4567 -->  Virtual Machine port 80
+   # ----------------------------------------------
 
-#	   config.vm.network :forwarded_port, host: 4567, guest: 80
+   # config.vm.network :forwarded_port, host: 4567, guest: 80
 
 end
