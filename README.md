@@ -29,11 +29,11 @@ If you just want to go ahead and do a quick test, choose precise64-lxde
 * trusty64-unity  -- Ubuntu Trusty Tahr 14.04 LTS, with standard Ubuntu (Unity) desktop
                      (read KNOWN BUGS)
 
-All images are 64 bit versions.
+All images are x86 64-bit versions.
 
 LXDE desktops are lightweight.  Debian build is very quick booting and
 lightweight but lacks the nicer Virtualbox integration.  Ubuntu with LXDE
-is almost as good.
+is almost as fast and with full integration.
 
 If you prefer, a full Ubuntu desktop is available but 14.04 with Unity is
 heavier on resources.  The memory for this VM is set to 2.5G as opposed to
@@ -64,20 +64,23 @@ apparently works, it needs to work for Vagrant).
 Instructions for Virtual Machine creation
 -----------------------------------------
 
-1. Get Vagrant
-   for example:
+1. Get Vagrant, for example:
 
+```bash
     $ sudo apt-get install vagrant
-
-    or
-
+```
+or
+```bash
     $ sudo yum install vagrant
+```
 
 2. Install the latest VirtualBox
 
 3. Run Vagrant up:
 
+```bash
     $ vagrant up
+```
 
    The first time it will download the base VM "box" which
    is currently an Ubuntu system.
@@ -96,7 +99,9 @@ Instructions for Virtual Machine creation
 
 4. Stop the VM which is now running headless:
 
+```bash
     $ vagrant halt
+```
 
 5. Locate your VM in VirtualBox GUI and boot it normally (i.e. not headless)
 
@@ -130,7 +135,9 @@ On Virtual Machine:   Mounted at /vagrant
 You can also get a direct command line on the VM using vagrant ssh, but
 that's not too useful for running Eclipse:
 
+```bash
     $ vagrant ssh
+```
 
 Read Vagrant documentation to learn more: http://www.vagrantup.com/
 
@@ -143,7 +150,9 @@ bare metal) without using Vagrant, to simply automate the Franca installation.
 1. Edit CONFIG if needed.
 2. Run script:
 
+```bash
     $ ./script.sh
+```
 
 script.sh does not use any package manager so it should run on most distros. It
 is developed on Fedora 20 but tested also on Ubuntu and Debian (using the
@@ -152,18 +161,18 @@ Vagrant method)
 Prerequisites
 -------------
 
-script.sh does not install any packages except for Eclipse + libraries so you
-need to manually ensure the needed prerequisites on your machine
-(not for Vagrant/VM build)
+script.sh does not install any packages except for Eclipse + Java packages so
+for the non-Vagrant installation you need to manually install the needed
+prerequisites on your machine.
 
-This is primarily JDK 6.  Install package java-1.6.0-openjdk on fedora or
-openjdk-6-jre on Ubuntu or Debian.  Note that JDK 6, NOT 7 (or 8) was up until
-recently required but refer to official Franca documentation for up to date
+This means primarily JDK 6.  Install package java-1.6.0-openjdk on fedora or
+openjdk-6-jre on Ubuntu or Debian.  Note that JDK 6, not 7 (or 8) was up until
+recently required, but refer to official Franca documentation for up to date
 information.
 
 The script downloads and installs Eclipse.  If you have an Eclipse environment
-already, you probably need to instead follow a manual procedure using Franca
-documentation to get Franca into your "standard" Eclipse.
+already that you want to use, you probably need to instead follow a manual
+procedure using Franca documentation to get Franca into your environment.
 
 Known bugs
 ----------
