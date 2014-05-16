@@ -1,14 +1,14 @@
 Automated Eclipse/Franca environment installation
 =================================================
 
-Scripts related to Franca IDL installation
+Scripts related to [Franca IDL](https://code.google.com/a/eclipselabs.org/p/franca/) installation.
 
 VM or bare metal?
 -----------------
 
 If you are installing on your machine directly, skip to the end!
 
-If you want to create a Virtual Machine read on:
+If you want to create a Virtual Machine read on.
 
 A note on branches (for VM)
 ---------------------------
@@ -36,7 +36,7 @@ lightweight but lacks the nicer Virtualbox integration.  Ubuntu with LXDE
 is almost as fast and with full integration.
 
 If you prefer, a full Ubuntu desktop is available but 14.04 with Unity is
-heavier on resources.  The memory for this VM is set to 2.5G as opposed to
+heavier on resources.  The memory for this VM is set to 2.5GB as opposed to
 1.5 on the others.  With that setting it runs alright.  Installation is
 waaaay slower though.  There is a humongous amount of packages being
 installed as part of ubuntu-desktop.
@@ -64,27 +64,30 @@ apparently works, it needs to work for Vagrant).
 Instructions for Virtual Machine creation
 -----------------------------------------
 
-1. Get Vagrant, for example:
+1. Install Vagrant. For example (for Debian or Ubuntu): 
+   ```bash
+   $ sudo apt-get install vagrant
+   ```
+   or (for Fedora):
+   ```bash
+   $ sudo yum install vagrant
+   ```
+   Alternatively, download and install files from http://www.vagrantup.com/
 
-```bash
-    $ sudo apt-get install vagrant
-```
-or
-```bash
-    $ sudo yum install vagrant
-```
+2. Install VirtualBox. For example (for Debian or Ubuntu): 
+   ```bash
+   $ sudo apt-get install virtualbox
+   ```
+   Alternatively, download and install files from http://www.virtualbox.org/
 
-2. Install the latest VirtualBox
+3. Run `vagrant up`: 
 
-3. Run Vagrant up: 
-
-NOTE: I ran into a new bug where a new machine claims to be provisioned already
-(it can't be...) but for that reason we give the explicit --provision flag.  It
-works.
-
-```bash
-    $ vagrant up --provision
-```
+   NOTE: I ran into a new bug where a new machine claims to be provisioned already
+   (it can't be...) but for that reason we give the explicit `--provision` flag.
+   It works.
+   ```bash
+   $ vagrant up --provision
+   ```
 
    The first time it will download the base VM "box" which
    is currently an Ubuntu system.
@@ -103,40 +106,43 @@ works.
 
 4. Stop the VM which is now running headless:
 
-```bash
+   ```bash
     $ vagrant halt
-```
+   ```
 
 5. Locate your VM in VirtualBox GUI and boot it normally (i.e. not headless)
 
    You should soon see an LXDE graphical shell asking you to select user.
 
-   Login as vagrant, password vagrant
+   Login as `vagrant`, password `vagrant`
 
 6. Enjoy testing Franca environment!
 
-   Use the default workspace dir at /home/vagrant/workspace.  Just hit OK.
+   Use the default workspace directory at `/home/vagrant/workspace`.
+   Just hit OK.
 
-7. To run Franca examples you must manually import them into the
-   workspace. The instructions can be found towards the end of script.sh
+7. To run Franca examples you must manually import them into the workspace.
+
+   The instructions can be found towards the end of `script.sh`.
 
 
 Tweaking settings
 ------------------
 
-   The VM is configured with 1.5 GB RAM (2.5 for Unity).  You may want to
+   The VM is configured with 1.5 GB RAM (2.5 GB for Unity).  You may want to
    modify that setting in Vagrantfile or change the VM settings manually in
    VirtualBox if you are doing large builds.  I am not sure what is required
-   except that 512MB was not enough, and 1.5G worked for running Franca tests.
+   except that 512MB was not enough, and 1.5GB worked for running Franca tests.
 
 Sharing files
 -------------
 
-Note, in a Vagrant box you can share files through the /vagrant directory:
-On host: it's this directory, where you have Vagrantfile and this README.
-On Virtual Machine:   Mounted at /vagrant
+NOTE: In a Vagrant box you can share files through the /vagrant directory:
 
-You can also get a direct command line on the VM using vagrant ssh, but
+* On host: It is this directory, where you have Vagrantfile and this README.
+* On Virtual Machine: Mounted at /vagrant
+
+You can also get a direct command line on the VM using `vagrant ssh`, but
 that's not too useful for running Eclipse:
 
 ```bash
