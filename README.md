@@ -31,15 +31,30 @@ If you just want to go ahead and do a quick test, choose precise64-lxde
 
 All images are x86 64-bit versions.
 
-LXDE desktops are lightweight.  Debian build is very quick booting and
-lightweight but lacks the nicer Virtualbox integration.  Ubuntu with LXDE
-is almost as fast and with full integration.
+LXDE desktops are lightweight.  Debian build is quick booting and lightweight
+but lacks the nicer Virtualbox integration.  Ubuntu with LXDE is also
+good and with full integration.
 
 If you prefer, a full Ubuntu desktop is available but 14.04 with Unity is
-heavier on resources.  The memory for this VM is set to 2.5GB as opposed to
-1.5 on the others.  With that setting it runs alright.  Installation is
-waaaay slower though.  There is a humongous amount of packages being
-installed as part of ubuntu-desktop.
+heavier on resources.  The memory for this VM is set to 2.5GB as opposed to 1.5
+on the others.  With that setting it runs alright.  Installation is _much_
+slower though.  There is a huge amount of packages being installed as part of
+ubuntu-desktop, including things like LibreOffice...
+
+Better measurements would be nice but here follows the approximate _compressed_
+sizes I could measure.  I did not at this time check the actual install size,
+just a quick check of a gzipped version of the hdd image.
+
+Note that this depends not only on the distro but more on how the provided
+"base box" has been installed.  The base boxes can surely be optimized if
+desired.
+
+Gzipped hard disk image size:
+
+* 1.3G  debian_7.3-lxde
+* 886M  precise64-lxde
+* 853M  trusty64-lxde
+* 1.9G  trusty64-unity
 
 ### Sources:
 
