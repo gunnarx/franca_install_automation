@@ -198,6 +198,7 @@ elif [ "$OSTYPE" = "???" -a "$MACHINE" = "???" ]; then
     # TODO: Handle case (MacOSX, etc.)
     #ECLIPSE_INSTALLER=???
     #ECLIPSE_MD5=???
+    :
 else
     echo "ERROR: Unknown (OSTYPE=$OSTYPE, MACHINE=$MACHINE)" >/dev/stderr
     exit 1
