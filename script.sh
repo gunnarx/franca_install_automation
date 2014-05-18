@@ -166,8 +166,11 @@ cd "$MYDIR"
 # Include config
 . ./CONFIG
 
+OSTYPE=$(uname -o)
+MACHINE=$(uname -m)
+
 # Check that a few necessary variables are defined
-defined ECLIPSE_INSTALLER INSTALL_DIR DOWNLOAD_DIR DBUS_EMF_UPDATE_SITE_URL GEF4_UPDATE_SITE_URL FRANCA_ARCHIVE_URL
+defined ECLIPSE_INSTALLER_$MACHINE INSTALL_DIR DOWNLOAD_DIR DBUS_EMF_UPDATE_SITE_URL GEF4_UPDATE_SITE_URL FRANCA_ARCHIVE_URL
 
 # Override CONFIG for the download dir if running in Vagrant
 if_vagrant DOWNLOAD_DIR=/vagrant
@@ -181,6 +184,24 @@ if [ -d "$WORKSPACE_DIR" ] ; then
    warn "Remove it to make a clean installation or back up your files!"
 else
    mkdir -p "$WORKSPACE_DIR"
+fi
+
+# Support 32 or 64 bit choice automatically
+OSTYPE=$(uname -o)
+MACHINE=$(uname -m)
+
+if [ "$OSTYPE" = "GNU/Linux" -a "$MACHINE" = "i686" ]; then
+    ECLIPSE_INSTALLER=$ECLIPSE_INSTALLER_i686
+elif [ "$OSTYPE" = "GNU/Linux" -a "$MACHINE" = "x86_64" ]; then
+    ECLIPSE_INSTALLER=$ECLIPSE_INSTALLER_x86_64
+elif [ "$OSTYPE" = "???" -a "$MACHINE" = "???" ]; then
+    # TODO: Handle case (MacOSX, etc.)
+    #ECLIPSE_INSTALLER=???
+    #ECLIPSE_MD5=???
+    :
+else
+    echo "ERROR: Unknown (OSTYPE=$OSTYPE, MACHINE=$MACHINE)" >/dev/stderr
+    exit 1
 fi
 
 # Get Eclipse archive
