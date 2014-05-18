@@ -78,21 +78,30 @@ sudo deluser ubuntu
    config.vm.provision :shell, inline:
    'echo "***************************************************************"
     echo "Executing final step: install LXDE graphical environment"
-    echo
-    echo "!!!!!!!!!!!! Reminder:"
-    echo "!!! NOTE !!! Installing LXDE fails in dpkg-preconfigure."
-    echo "!!!!!!!!!!!! This can be ignored, it seems OK anyway - try it."
+    echo "***************************************************************"
+   '
+
+
+   # Install graphical environment
+   config.vm.provision :shell, inline:
+   'sudo apt-get install -y lxde'
+
+   config.vm.provision :shell, inline:
+   '
+    echo "***************************************************************"
+    echo "Reminder:"
+    echo "You will see errors in dpkg-preconfigure and similar ones."
+    echo "They seem to be because Vagrant is not running in an interactive"
+    echo "terminal.  So you can ignore them and try the VM."
+    echo "***************************************************************"
     echo
     echo "When provisioning is done, halt the VM, then boot normally "
     echo "with a GUI inside Virtualbox, i.e. not using vagrant..."
     echo ""
     echo "Then run eclipse, probably at: ~vagrant/tools/autoeclipse/eclipse"
     echo "Read the project README!"
-    echo "***************************************************************"'
-
-   # Install graphical environment
-   config.vm.provision :shell, inline:
-   'sudo apt-get install -y lxde'
+    echo "***************************************************************"
+   '
 
    # ----------------------------------------------
    # If VM will run some network services e.g. web browser
