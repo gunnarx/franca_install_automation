@@ -71,10 +71,10 @@ chmod 755 $shortcut
 sudo chown -R vagrant:vagrant /home/vagrant
 
 # Remove other users than vagrant -- makes things less confusing
-sudo deluser ubuntu
-      '
+sudo deluser ubuntu   # Might fail but that is ok
+true                  # Make sure Vagrant does not stop on error
+'
 
-   # Warning, again
    config.vm.provision :shell, inline:
    'echo "***************************************************************"
     echo "Executing final step: install LXDE graphical environment"
@@ -83,10 +83,8 @@ sudo deluser ubuntu
 
    # Install graphical environment
    config.vm.provision :shell, inline:
-   'sudo apt-get install -y lxde'
+   'sudo apt-get install -y lxde
 
-   config.vm.provision :shell, inline:
-   '
     echo "***************************************************************"
     echo "Reminder:"
     echo "You will see errors in dpkg-preconfigure and similar ones."
