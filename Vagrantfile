@@ -77,13 +77,13 @@ true                  # Make sure Vagrant does not stop on error
 
    config.vm.provision :shell, inline:
    'echo "***************************************************************"
-    echo "Executing final step: install LXDE graphical environment"
+    echo "Executing final step: install graphical environment"
     echo "***************************************************************"
    '
 
    # Install graphical environment
    config.vm.provision :shell, inline:
-   'sudo apt-get install -y lxde
+   'sudo apt-get install -y ubuntu-desktop
 
     echo "***************************************************************"
     echo "Reminder:"
