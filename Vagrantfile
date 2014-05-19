@@ -32,14 +32,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
        echo
        echo "!!!!!!!!!!!!"
        echo "!!!      !!! You may see errors in dpkg-preconfigure."
-       echo "!!! NOTE !!! It will look like a significant error in the final step"
-       echo "!!!      !!! (cannot reopen stdin, etc). This can be ignored."
+       echo "!!! NOTE !!! Please let everything run to the end. "
+       echo "!!!      !!! "
        echo "!!!!!!!!!!!!"
        echo
-       echo "When provisioning is done, halt the VM, then boot normally "
-       echo "with a GUI inside Virtualbox, i.e. not using vagrant..."
-       echo
-       echo "Then run eclipse, probably at: ~vagrant/tools/autoeclipse/eclipse"
        echo "***************************************************************"'
 
    # Install prerequisites
@@ -77,7 +73,7 @@ true                  # Make sure Vagrant does not stop on error
 
    config.vm.provision :shell, inline:
    'echo "***************************************************************"
-    echo "Executing final step: install LXDE graphical environment"
+    echo "Executing final step: install graphical environment"
     echo "***************************************************************"
    '
 
