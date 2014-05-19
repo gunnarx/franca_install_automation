@@ -64,22 +64,22 @@ EOT
    # The above created files, and others are owned by root after provisioning 
    # Fix that:
    sudo chown -R vagrant:vagrant /home/vagrant
-   '
 
-   # Warning, again
+# Remove other users than vagrant -- makes things less confusing
+sudo deluser ubuntu   # Might fail but that is ok
+true                  # Make sure Vagrant does not stop on error
+'
+
    config.vm.provision :shell, inline:
    'echo "***************************************************************"
     echo "Executing final step: install LXDE graphical environment"
     echo "***************************************************************"
    '
 
-
    # Install graphical environment
    config.vm.provision :shell, inline:
-   'sudo apt-get install -y lxde'
+   'sudo apt-get install -y lxde
 
-   config.vm.provision :shell, inline:
-   '
     echo "***************************************************************"
     echo "Reminder:"
     echo "You will see errors in dpkg-preconfigure and similar ones."
