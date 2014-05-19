@@ -21,7 +21,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    vmname.chomp!      # Without this there is a newline character in the name :-o
    config.vm.provider :virtualbox do |vb|
       vb.customize [ "modifyvm", :id, "--name", vmname ]
-      vb.customize [ "modifyvm", :id, "--memory", "1536" ]
+      vb.customize [ "modifyvm", :id, "--memory", "2048" ]
       vb.customize [ "modifyvm", :id, "--vram", "128" ]
    end
 
@@ -32,14 +32,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
        echo
        echo "!!!!!!!!!!!!"
        echo "!!!      !!! You may see errors in dpkg-preconfigure."
-       echo "!!! NOTE !!! It will look like a significant error in the final step"
-       echo "!!!      !!! (cannot reopen stdin, etc). This can be ignored."
+       echo "!!! NOTE !!! Please let everything run to the end. "
+       echo "!!!      !!! "
        echo "!!!!!!!!!!!!"
        echo
-       echo "When provisioning is done, halt the VM, then boot normally "
-       echo "with a GUI inside Virtualbox, i.e. not using vagrant..."
-       echo
-       echo "Then run eclipse, probably at: ~vagrant/tools/autoeclipse/eclipse"
        echo "***************************************************************"'
 
    # Install prerequisites
