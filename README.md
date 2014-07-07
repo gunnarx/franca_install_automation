@@ -104,15 +104,15 @@ Instructions for Virtual Machine creation
    $ vagrant up --provision
    ```
 
-   The first time it will download the base VM "box" which
-   is currently an Ubuntu system.
+   The first time it will download the VM "base box" (depending on
+   which distro branch you have chosen).
 
    Feel free to replace it with another box of another distro, but the
    provisioning using apt-get may need changes then.  Pull requests
    welcome.
 
    NOTE: There will be some errors towards the end of the provisioning which
-   seems to be due to vagrant provisioning not running in a normal interactive
+   seem to be due to vagrant provisioning not running in a normal interactive
    shell?
 
    You can ignore those errors.  Of course you may have some other error that I
