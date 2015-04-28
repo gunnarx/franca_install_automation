@@ -1,0 +1,12 @@
+Uncompressed sizes
+2.8G  francalab-debian73-201404280026 (LXDE, 64-bit, Kepler-R)
+2.1G  francalab-precise64-201404280258 (LXDE, 64-bit, Kepler-R)
+2.1G  francalab-trusty64-201404281252 (LXDE, 64-bit, Kepler-R)
+5.3G  francalab-trusty64-201404280033 (Unity, 64-bit, Kepler-R)
+
+Gzip compressed sizes:
+1.3G  /tmp/francalab-debian73-201404280026.tar.gz (LXDE, 64-bit, Kepler-R)
+886M  /tmp/francalab-precise64-201404280258.tar.gz (LXDE, 64-bit, Kepler-R)
+853M  /tmp/francalab-trusty64-201404281252.tar.gz (LXDE, 64-bit, Kepler-R)
+1.9G  /tmp/francalab-trusty64-201404280033.tar.gz (Unity, 64-bit, Kepler-R)
+
