@@ -30,11 +30,11 @@ DOWNLOAD_DIR=/tmp
 # assignment altogether).
 
 # ! Please consider setting the URL to a mirror near you instead !
-ECLIPSE_INSTALLER_i686="http://ftp.fau.de/eclipse/technology/epp/downloads/release/kepler/R/eclipse-dsl-kepler-R-linux-gtk.tar.gz"
-ECLIPSE_MD5_x686=881466e4f7ee0b83e9406e6516d57b95
+ECLIPSE_INSTALLER_i686="http://ftp.fau.de/eclipse/technology/epp/downloads/release/kepler/SR2/eclipse-dsl-kepler-SR2-linux-gtk.tar.gz"
+ECLIPSE_MD5_x686=f89c52ca5d160867970425c663db1dd1
 
 ECLIPSE_INSTALLER_x86_64="http://ftp.fau.de/eclipse/technology/epp/downloads/release/kepler/SR2/eclipse-dsl-kepler-SR2-linux-gtk-x86_64.tar.gz"
-ECLIPSE_MD5_x86_64=cd6d141af286ea06988b3710f6b9c19c
+ECLIPSE_MD5_x86_64=fdad0bfd67b21b6b662a11274c79d1f2
 
 # D-Bus EMF model ---------------------------------------------------
 
