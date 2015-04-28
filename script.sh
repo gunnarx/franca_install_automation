@@ -94,8 +94,14 @@ untar() {
 md5_check() {
    item=$1
    file=$2
+   arch=$3
 
-   wanted_md5=$(deref ${item}_MD5)
+   if [ -n "$arch" ] ; then
+      wanted_md5=$(deref ${item}_MD5_${arch})
+   else
+      wanted_md5=$(deref ${item}_MD5)
+   fi
+
    debug "Checking MD5 $wanted_md5 for $item"
 
    # As long as <item>_MD5 is a non-empty string, perform the check
@@ -212,7 +218,7 @@ download "$ECLIPSE_INSTALLER"  # This sets a variable named $downloaded_file
 # File exists?, correct MD5?, then unpack
 [ -f "$downloaded_file" ] || die "ECLIPSE not found (not downloaded?)."
 step Checking MD5 sum for Eclipse
-md5_check ECLIPSE "$downloaded_file"
+md5_check ECLIPSE "$downloaded_file" $MACHINE
 untar "$downloaded_file" "$INSTALL_DIR"
 
 step "Installing DBus EMF model from update site"
