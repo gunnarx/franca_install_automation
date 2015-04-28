@@ -24,7 +24,7 @@ DOWNLOAD_DIR=/tmp
 
 # It is recommended to look up and specify your closest mirror URL
 # Choose appropriate mirror using:
-# http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/kepler/R/eclipse-dsl-kepler-R-linux-gtk-x86_64.tar.gz
+# http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/kepler/SR2/eclipse-dsl-kepler-SR2-linux-gtk-x86_64.tar.gz
 
 # NOTE: You can set _MD5 variables to empty to skip MD5 check (just remove the
 # assignment altogether).
@@ -33,7 +33,7 @@ DOWNLOAD_DIR=/tmp
 ECLIPSE_INSTALLER_i686="http://ftp.fau.de/eclipse/technology/epp/downloads/release/kepler/R/eclipse-dsl-kepler-R-linux-gtk.tar.gz"
 ECLIPSE_MD5_x686=881466e4f7ee0b83e9406e6516d57b95
 
-ECLIPSE_INSTALLER_x86_64="http://ftp.fau.de/eclipse/technology/epp/downloads/release/kepler/R/eclipse-dsl-kepler-R-linux-gtk-x86_64.tar.gz"
+ECLIPSE_INSTALLER_x86_64="http://ftp.fau.de/eclipse/technology/epp/downloads/release/kepler/SR2/eclipse-dsl-kepler-SR2-linux-gtk-x86_64.tar.gz"
 ECLIPSE_MD5_x86_64=cd6d141af286ea06988b3710f6b9c19c
 
 # D-Bus EMF model ---------------------------------------------------
