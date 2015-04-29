@@ -88,7 +88,7 @@ true                  # Make sure Vagrant does not stop on error
     echo "terminal.  So you can ignore them and try the VM."
     echo "***************************************************************"
     echo
-    echo "When provisioning is done, halt the VM by typing:
+    echo "When provisioning is done, halt the VM by typing:"
     echo
     echo "$ vagrant halt"
     echo
