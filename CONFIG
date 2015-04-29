@@ -61,8 +61,8 @@ org.eclipse.gef4.zest.core
 
 # FRANCA ------------------------------------------------------------
 
-FRANCA_ARCHIVE="site_franca_0.9.0.201405120913.zip"
-FRANCA_ARCHIVE_MD5=bd7748660ba35a5b6fc84ee044393623
+FRANCA_ARCHIVE="site_franca_0.9.1.201412191134.zip"
+FRANCA_ARCHIVE_MD5=0957918d4f3002083d1ec48c2f5905e8
 FRANCA_ARCHIVE_URL="https://googledrive.com/host/0B7JseVbR6jvhazEtRDVsSk9mX1k/Releases/0.9/$FRANCA_ARCHIVE"
 FRANCA_FEATURES=\
 org.franca.connectors.dbus,\
