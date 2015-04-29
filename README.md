@@ -27,9 +27,16 @@ If you just want to go ahead and do a quick test, choose precise64-lxde
 * trusty64-lxde   -- Ubuntu Trusty Tahr 14.04 LTS, with LXDE desktop
 * debian_7.3-lxde -- Debian 7.3, with LXDE desktop
 * trusty64-unity  -- Ubuntu Trusty Tahr 14.04 LTS, with standard Ubuntu (Unity) desktop
-                     (read KNOWN BUGS)
+                     (This is huge. Also read KNOWN BUGS)
 
 All images are x86 64-bit versions.
+
+There are tags describing franca-version, eclipse-version, and operating
+system, as well as *-stable tags
+
+The stable tags are an easy way to get the latest stable, but generally
+branches should be kept in working state, and the more specific tags are
+also there only if that combination has been tested at least once.
 
 LXDE desktops are lightweight.  Debian build is quick booting and lightweight
 but lacks the nicer Virtualbox integration.  Ubuntu with LXDE is also
@@ -38,8 +45,12 @@ good and with full integration.
 If you prefer, a full Ubuntu desktop is available but 14.04 with Unity is
 heavier on resources.  The memory for this VM is set to 2.5GB as opposed to 1.5
 on the others.  With that setting it runs alright.  Installation is _much_
-slower though.  There is a huge amount of packages being installed as part of
-ubuntu-desktop, including things like LibreOffice...
+slower though.
+
+WARNING: There is a huge amount of packages being installed as part of
+ubuntu-desktop, including things like LibreOffice... This flavor takes
+a lot of time and bandwidth to initialize and is only recommended if you
+really need it.
 
 Better measurements would be nice but here follows the approximate _compressed_
 sizes I could measure.  I did not at this time check the actual install size,
