@@ -91,10 +91,15 @@ true                  # Make sure Vagrant does not stop on error
     echo "terminal.  So you can ignore them and try the VM."
     echo "***************************************************************"
     echo
-    echo "When provisioning is done, halt the VM, then boot normally "
-    echo "with a GUI inside Virtualbox, i.e. not using vagrant..."
-    echo ""
-    echo "Then run eclipse, probably at: ~vagrant/tools/autoeclipse/eclipse"
+    echo "When provisioning is done, halt the VM by typing:
+    echo
+    echo "$ vagrant halt"
+    echo
+    echo "Then reboot with a GUI from Virtualbox, i.e. not using vagrant..."
+    echo "Login as vagrant, password: vagrant"
+    echo "Eclipse is in ~vagrant/tools/autoeclipse/eclipse and should be "
+    echo "available as an icon on the desktop also."
+    echo
     echo "Read the project README!"
     echo "***************************************************************"
    '
