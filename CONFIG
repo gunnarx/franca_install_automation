@@ -24,24 +24,24 @@ DOWNLOAD_DIR=/tmp
 
 # It is recommended to look up and specify your closest mirror URL
 # Choose appropriate mirror using:
-# http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/kepler/SR2/eclipse-dsl-kepler-SR2-linux-gtk-x86_64.tar.gz
+# http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/luna/SR2/eclipse-dsl-luna-SR2-linux-gtk-x86_64.tar.gz
 
 # NOTE: You can set _MD5 variables to empty to skip MD5 check (just remove the
 # assignment altogether).
 
 # ! Please consider setting the URL to a mirror near you instead !
-ECLIPSE_INSTALLER_i686="http://ftp.fau.de/eclipse/technology/epp/downloads/release/kepler/SR2/eclipse-dsl-kepler-SR2-linux-gtk.tar.gz"
-ECLIPSE_MD5_x686=f89c52ca5d160867970425c663db1dd1
+ECLIPSE_INSTALLER_i686="http://ftp.fau.de/eclipse/technology/epp/downloads/release/luna/SR2/eclipse-dsl-luna-SR2-linux-gtk.tar.gz"
+ECLIPSE_MD5_x686=
 
-ECLIPSE_INSTALLER_x86_64="http://ftp.fau.de/eclipse/technology/epp/downloads/release/kepler/SR2/eclipse-dsl-kepler-SR2-linux-gtk-x86_64.tar.gz"
-ECLIPSE_MD5_x86_64=fdad0bfd67b21b6b662a11274c79d1f2
+ECLIPSE_INSTALLER_x86_64="http://ftp.fau.de/eclipse/technology/epp/downloads/release/luna/SR2/eclipse-dsl-luna-SR2-linux-gtk-x86_64.tar.gz"
+ECLIPSE_MD5_x86_64=98eeaea78478ac384667e3f05142effc
 
 # D-Bus EMF model ---------------------------------------------------
 
 # Note: Here _VERSION is necessary I think, because of the way
 # we do this download...
-DBUS_EMF_VERSION=0.7.7
-DBUS_EMF_UPDATE_SITE_HASH=832ff9cb55ce  # This is something that exists on the web page - I figured why not check it.
+DBUS_EMF_VERSION=0.7.8
+DBUS_EMF_UPDATE_SITE_HASH=f9db6c26f742   # This is something that exists on the web page - I figured why not check it.
 DBUS_EMF_UPDATE_SERVER="http://dbus-emf-model.eclipselabs.org.codespot.com/git/update_site/releases"
 DBUS_EMF_UPDATE_SITE_URL="$DBUS_EMF_UPDATE_SERVER/$DBUS_EMF_VERSION"
 DBUS_EMF_FEATURES=model.emf.dbusxml.feature.feature.group
