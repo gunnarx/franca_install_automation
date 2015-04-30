@@ -1,6 +1,6 @@
 #!/bin/sh
 branch=$(git status -b -s | grep '##' | cut -c 4-)
-ver=kepler-SR2
+ver=luna-SR2
 arch=x86_64
 variant=linux-gtk
 francaver=0.9.1
