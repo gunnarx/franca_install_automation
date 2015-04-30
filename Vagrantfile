@@ -20,6 +20,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    vmname = config.vm.hostname + "-" + `date +%Y%m%d%H%M`.to_s
    vmname.chomp!      # Without this there is a newline character in the name :-o
    config.vm.provider :virtualbox do |vb|
+      # Don't boot with headless mode
+      vb.gui = true
+
       vb.customize [ "modifyvm", :id, "--name", vmname ]
       vb.customize [ "modifyvm", :id, "--memory", "2048" ]
       vb.customize [ "modifyvm", :id, "--vram", "128" ]
@@ -88,7 +91,7 @@ true                  # Make sure Vagrant does not stop on error
     echo "terminal.  So you can ignore them and try the VM."
     echo "***************************************************************"
     echo
-    echo "When provisioning is done, halt the VM by typing:
+    echo "When provisioning is done, halt the VM by typing:"
     echo
     echo "$ vagrant halt"
     echo
