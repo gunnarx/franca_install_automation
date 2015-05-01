@@ -115,8 +115,9 @@ Instructions for Virtual Machine creation
    $ vagrant up --provision
    ```
 
-   The first time it will download the VM "base box" (depending on
-   which distro branch you have chosen).
+   The first time it will download the VM "base box" system from the URL.
+   The base box is cached in your vagrant environment. (~/.vagrant
+   currently)
 
    Feel free to replace it with another box of another distro, but the
    provisioning using apt-get may need changes then.  Pull requests
