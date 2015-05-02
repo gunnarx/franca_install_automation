@@ -272,10 +272,10 @@ project browser.  When you have started eclipse, go to Workspace, then select
    under /src, open "org.franca.examples.basic.tests"
 
    Right click on for example AllTests.java
-   and select Run As "JUnit Test".
+   and select Run As "JUnit Test".  You should get a green bar result.
 
-   But from now on you should instead read the Franca documentation for up to
-   date instructions on this stuff.
+   But from now on you should instead read the Franca documentation for up
+   to date instructions on this stuff.
 MSG
 
 echo
