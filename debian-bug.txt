@@ -1,0 +1,49 @@
+vagrant@francalab-debian73:~$ tools/autoeclipse/eclipse/eclipse 
+
+(java:3209): GLib-GObject-WARNING **: cannot register existing type `GdkDisplayManager'
+
+(java:3209): GLib-CRITICAL **: g_once_init_leave: assertion `result != 0' failed
+
+(java:3209): GLib-GObject-CRITICAL **: g_object_new: assertion `G_TYPE_IS_OBJECT (object_type)' failed
+
+(java:3209): GLib-GObject-WARNING **: invalid (NULL) pointer instance
+
+(java:3209): GLib-GObject-CRITICAL **: g_signal_connect_data: assertion `G_TYPE_CHECK_INSTANCE (instance)' failed
+
+(java:3209): GLib-GObject-WARNING **: invalid (NULL) pointer instance
+
+(java:3209): GLib-GObject-CRITICAL **: g_signal_connect_data: assertion `G_TYPE_CHECK_INSTANCE (instance)' failed
+
+(java:3209): GLib-GObject-WARNING **: cannot register existing type `GdkDisplay'
+
+(java:3209): GLib-CRITICAL **: g_once_init_leave: assertion `result != 0' failed
+
+(java:3209): GLib-GObject-CRITICAL **: g_type_register_static: assertion `parent_type > 0' failed
+
+(java:3209): GLib-CRITICAL **: g_once_init_leave: assertion `result != 0' failed
+
+(java:3209): GLib-GObject-CRITICAL **: g_object_new: assertion `G_TYPE_IS_OBJECT (object_type)' failed
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f47e7d9e73f, pid=3209, tid=139947141232384
+#
+# JRE version: 6.0_35-b35
+# Java VM: OpenJDK 64-Bit Server VM (23.25-b01 mixed mode linux-amd64 compressed oops)
+# Derivative: IcedTea6 1.13.7
+# Distribution: Debian GNU/Linux 7.8 (wheezy), package 6b35-1.13.7-1~deb7u1
+# Problematic frame:
+# C  [libgdk-x11-2.0.so.0+0x5173f]  gdk_display_open+0x3f
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# An error report file with more information is saved as:
+# /home/vagrant/hs_err_pid3209.log
+#
+# If you would like to submit a bug report, please include
+# instructions how to reproduce the bug and visit:
+#   http://icedtea.classpath.org/bugzilla
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+vagrant@francalab-debian73:~$ 
