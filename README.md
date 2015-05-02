@@ -70,21 +70,22 @@ Gzipped hard disk image size:
 ### Sources:
 
 The Ubuntu base systems are from Ubuntu's provided official "cloud" images.
-They are from the current/ directory, so they will be updated, but hopefully
-will not break.
-
+These are from the current/ directory, so these are not guaranteed to be
+unchanged.  They will be updated by Ubuntu, and hopefully will not break.
 (Note however that the first time you run, you will download the
-currently latest copy but after that Vagrant caches the base system,
-so it will not be changed unless you remove it from your Vagrant setup)
+*current* latest copy, but after that Vagrant caches the base box for
+you, so you will not get upstream changes unless you remove it from your
+Vagrant setup)
 
-- Ubuntu images include Virtualbox guest additions
+Ubuntu images include Virtualbox guest additions (automatic window
+resize etc.) which make the result nice to work with.
 
-The Debian base system is fetched from Puppet Labs with a fixed version.
-Presumably the system on this URL will not change.
-
-- Debian image does not include the Virtualbox guest additions (i.e. no
-automatic window resize.)  (But the  shared folder functionality
-apparently works, it needs to work for Vagrant).
+The Debian base system is fetched from Puppet Labs with a fixed version
+number so presumably the system on this URL will not change, but it is
+out of our hands.
+This Debian image does not include the Virtualbox integration for
+desktop/window resize, etc. (but the  shared folder functionality
+apparently works, since it is required for Vagrant to work).
 
 
 Instructions for Virtual Machine creation
@@ -108,38 +109,42 @@ Instructions for Virtual Machine creation
 
 3. Run `vagrant up`: 
 
-   NOTE: I ran into a new bug where a new machine claims to be provisioned already
-   (it can't be...) but for that reason we give the explicit `--provision` flag.
-   It works.
+   NOTE: I ran into a strange bug where a new machine claimed to be
+   provisioned already (this should not happen...) but for that reason we
+   can always give the explicit `--provision` flag.  It shouldn't be
+   necessary, but it works so do it:
    ```bash
    $ vagrant up --provision
    ```
 
    The first time it will download the VM "base box" system from the URL.
-   The base box is cached in your vagrant environment. (~/.vagrant
-   currently)
+   The base box is cached in your vagrant environment. (~/.vagrant currently)
 
    Feel free to replace it with another box of another distro, but the
    provisioning using apt-get may need changes then.  Pull requests
    welcome.
 
-   NOTE: There will be some errors towards the end of the provisioning which
-   seem to be due to vagrant provisioning not running in a normal interactive
-   shell?
+   Feel free to add an alternative box of another distro, but the
+   provisioning code that uses apt-get might need changes then.  Pull
+   requests welcome.
 
-   You can ignore those errors.  Of course you may have some other error that I
-   have not seen yet, but using vagrant and a known base box this should be
-   quite foolproof.
+   NOTE: There will be some errors towards the end of the provisioning
+   which seem to be due to vagrant provisioning not running in a normal
+   interactive shell. You can ignore those errors.  Of course you may have
+   some other error that I have not seen yet, but using vagrant and a known
+   base box this should be quite foolproof.
 
-4. Stop the VM which is now running headless:
+4. After provisioning, stop the VM which is now running headless.
+   Update: Actually the gui=true flag is now in Vagrantfile.  Nonetheless,
+   rebooting is recommended at this stage:
 
    ```bash
     $ vagrant halt
    ```
 
-5. Locate your VM in VirtualBox GUI and boot it normally (i.e. not headless)
+5. Then locate your VM in VirtualBox GUI and boot it normally
 
-   You should soon see an LXDE graphical shell asking you to select user.
+   You should soon see an graphical shell asking you to select user.
 
    Login as `vagrant`, password `vagrant`
 
