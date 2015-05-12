@@ -30,11 +30,11 @@ DOWNLOAD_DIR=/tmp
 # assignment altogether).
 
 # ! Please consider setting the URL to a mirror near you instead !
-ECLIPSE_INSTALLER_i686="http://ftp.fau.de/eclipse/technology/epp/downloads/release/luna/SR2/eclipse-dsl-luna-SR2-linux-gtk.tar.gz"
-ECLIPSE_MD5_x686=
+ECLIPSE_INSTALLER_i686="http://ftp.fau.de/eclipse/technology/epp/downloads/release/luna/SR2/eclipse-automotive-luna-SR2-incubation-linux-gtk.tar.gz"
+ECLIPSE_MD5_x686=106b082b9c838689b4393e2dcdba0950
 
-ECLIPSE_INSTALLER_x86_64="http://ftp.fau.de/eclipse/technology/epp/downloads/release/luna/SR2/eclipse-dsl-luna-SR2-linux-gtk-x86_64.tar.gz"
-ECLIPSE_MD5_x86_64=98eeaea78478ac384667e3f05142effc
+ECLIPSE_INSTALLER_x86_64="http://ftp.fau.de/eclipse/technology/epp/downloads/release/luna/SR2/eclipse-automotive-luna-SR2-incubation-linux-gtk-x86_64.tar.gz"
+ECLIPSE_MD5_x86_64=3bd120d0ca9adf72c3462b623f837c0e
 
 # D-Bus EMF model ---------------------------------------------------
 
