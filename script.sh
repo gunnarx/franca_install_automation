@@ -4,8 +4,13 @@
 # (http://creativecommons.org/licenses/by/4.0/)
 # pull requests welcome
 
+echo "***************************************************************"
+echo " script.sh starting"
+echo "***************************************************************"
+
 # Set to "false" or "true" for debug printouts
 DEBUG=false
+MD5SUM=md5sum   # On MacOS X, the binary is "md5"
 
 debug() {
    $DEBUG && {
@@ -68,27 +73,22 @@ sanity_check_filename() {
 # dereference variable
 
 # This is a kind of weird hack, but it evaluates the variable whose name is
-# defined by the input variable.  
+# defined by the input variable.
 # example:   x=foo ; deref x, returns the value of $foo!
 deref() {
    debug "dereffing $1"
    eval echo \$$1
 }
 
-download() {
-   outfile=$(basename "$1")
-   sanity_check_filename "$outfile"
-   wget "$1" -O "$outfile" -c --no-check-certificate || die "wget failed.  Is wget installed?"
-#   curl -C - -O "$1" -O "$outfile" || die "curl failed.  Is curl installed?"
-   downloaded_file=$outfile
+get_md5() {
+   $MD5SUM "$1" | cut -b 1-32
 }
 
-untar() {
-   ensure [ -f "$1" ]
-   targetdir="$2"
-   # Use current directory as default targetdir if not specified
-   [ -n "$targetdir" ] && targetdir=.
-   tar xf "$1" -C "$2" || die "untar failed for $1"
+match_md5() {
+   f=$1
+   expect_md5=$2
+   # Succeed if expected is not defined, or if sum matches
+   [ -z "$expect_md5" -o "$(get_md5 $f)" = "$expect_md5" ]
 }
 
 md5_check() {
@@ -103,16 +103,50 @@ md5_check() {
    fi
 
    debug "Checking MD5 $wanted_md5 for $item"
-
-   # As long as <item>_MD5 is a non-empty string, perform the check
-   if [ -n "$wanted_md5" ] ; then
-      md5=$(md5sum <"$file" | cut -b 1-32)
-      if [ "$md5" != "$wanted_md5" ]  ; then
-         die "MD5 checksum ($md5) did not match predefined md5 ($wanted_md5) for item $item.  Check CONFIG file."
-      else
-         debug "MD5 ok ($item)"
-      fi
+   if match_md5 $file $wanted_md5 ; then
+      debug "MD5 ok ($item)"
+      true
+   else
+      die "MD5 checksum ($md5) did not match predefined md5 ($wanted_md5) for item $item.  Check CONFIG file."
    fi
+}
+
+
+download() {
+   $DEBUG && set -x
+   downloaded_file=
+   outfile=$(basename "$1")
+   expected_md5=$2
+   sanity_check_filename "$outfile"
+   # If already exists, we check md5 to know if it is complete and OK
+   echo is outfile there:
+   ls "$outfile"
+   echo "look above.  testing -f"
+   if [ -f "$outfile" ] ; then
+      echo "The file exists, checking..."
+      if [ -n "$expected_md5" ] ; then
+         if match_md5 $outfile $expected_md5 ; then
+            echo "File already downloaded"
+            downloaded_file=$outfile
+         fi
+      fi
+   else
+      debug "File not downloaded yet"
+   fi
+   if [ -z "$downloaded_file" ] ; then
+      wget "$1" -O "$outfile" -c --no-check-certificate || die "wget failed.  Is wget installed?"
+#   curl -C - -O "$1" -O "$outfile" || die "curl failed.  Is curl installed?"
+      downloaded_file=$outfile
+   fi
+   set +x
+}
+
+untar() {
+   ensure [ -f "$1" ]
+   targetdir="$2"
+   # Use current directory as default targetdir if not specified
+   [ -n "$targetdir" ] && targetdir=.
+   tar xf "$1" -C "$2" || die "untar failed for $1"
 }
 
 # Check hash on update site such that an update is noticed
@@ -176,7 +210,7 @@ OSTYPE=$(uname -o)
 MACHINE=$(uname -m)
 
 # Check that a few necessary variables are defined
-defined ECLIPSE_INSTALLER_$MACHINE INSTALL_DIR DOWNLOAD_DIR DBUS_EMF_UPDATE_SITE_URL GEF4_UPDATE_SITE_URL FRANCA_ARCHIVE_URL
+defined ECLIPSE_INSTALLER_$MACHINE INSTALL_DIR DOWNLOAD_DIR DBUS_EMF_UPDATE_SITE_URL GEF4_UPDATE_SITE_URL FRANCA_ARCHIVE_URL KRENDERING_SITE_URL
 
 # Override CONFIG for the download dir if running in Vagrant
 if_vagrant DOWNLOAD_DIR=/vagrant
@@ -213,7 +247,7 @@ fi
 # Get Eclipse archive
 cd "$DOWNLOAD_DIR"
 step "Downloading Eclipse installer"
-download "$ECLIPSE_INSTALLER"  # This sets a variable named $downloaded_file
+download "$ECLIPSE_INSTALLER" $(deref ECLIPSE_MD5_$MACHINE) # This sets a variable named $downloaded_file
 
 # File exists?, correct MD5?, then unpack
 [ -f "$downloaded_file" ] || die "ECLIPSE not found (not downloaded?)."
@@ -229,8 +263,11 @@ install_update_site       DBUS_EMF
 step "Installing GEF4 from update site"
 install_update_site       GEF4
 
+step "Installing Kieler rendering library required by franca.ui"
+install_update_site       KRENDERING
+
 step "Downloading Franca update site archive (.zip)"
-download "$FRANCA_ARCHIVE_URL" "$FRANCA_ARCHIVE"
+download "$FRANCA_ARCHIVE_URL" "$FRANCA_ARCHIVE_MD5"
 md5_check FRANCA_ARCHIVE "$downloaded_file"
 
 # I can't get install directly from zip file to work using command line
@@ -251,7 +288,9 @@ rm -rf "$UNPACK_DIR"
 
 step Downloading Franca examples
 cd "$WORKSPACE_DIR"                    || die "cd to WORKSPACE_DIR ($WORKSPACE_DIR) failed"
-download "$EXAMPLES_URL"
+download "$EXAMPLES_URL" "$EXAMPLES_MD5"
+step Checking MD5 sum for example
+md5_check EXAMPLES "$downloaded_file"
 EXAMPLES_FILE="$downloaded_file"
 
 cat <<MSG
