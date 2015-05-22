@@ -105,5 +105,6 @@ org.franca.generators.source
 # FRANCA EXAMPLES ----------------------------------------------------
 
 EXAMPLES_URL=https://googledrive.com/host/0B7JseVbR6jvhazEtRDVsSk9mX1k/Releases/0.9/org_franca_examples_src_2014-05-07.zip
+EXAMPLES_MD5=1c80da069a20b94feecde2e15d7ca4b8
 
 # === EOF ===

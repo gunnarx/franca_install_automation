@@ -255,6 +255,8 @@ rm -rf "$UNPACK_DIR"
 step Downloading Franca examples
 cd "$WORKSPACE_DIR"                    || die "cd to WORKSPACE_DIR ($WORKSPACE_DIR) failed"
 download "$EXAMPLES_URL"
+step Checking MD5 sum for example
+md5_check EXAMPLES "$downloaded_file"
 EXAMPLES_FILE="$downloaded_file"
 
 cat <<MSG
