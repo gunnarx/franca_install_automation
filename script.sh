@@ -4,6 +4,10 @@
 # (http://creativecommons.org/licenses/by/4.0/)
 # pull requests welcome
 
+echo "***************************************************************"
+echo " script.sh starting"
+echo "***************************************************************"
+
 # Set to "false" or "true" for debug printouts
 DEBUG=false
 MD5SUM=md5sum   # On MacOS X, the binary is "md5"
@@ -69,7 +73,7 @@ sanity_check_filename() {
 # dereference variable
 
 # This is a kind of weird hack, but it evaluates the variable whose name is
-# defined by the input variable.  
+# defined by the input variable.
 # example:   x=foo ; deref x, returns the value of $foo!
 deref() {
    debug "dereffing $1"
@@ -115,9 +119,6 @@ download() {
    expected_md5=$2
    sanity_check_filename "$outfile"
    # If already exists, we check md5 to know if it is complete and OK
-   echo is outfile there:
-   ls "$outfile"
-   echo "look above.  testing -f"
    if [ -f "$outfile" ] ; then
       echo "The file exists, checking..."
       if [ -n "$expected_md5" ] ; then
