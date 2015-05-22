@@ -176,7 +176,7 @@ OSTYPE=$(uname -o)
 MACHINE=$(uname -m)
 
 # Check that a few necessary variables are defined
-defined ECLIPSE_INSTALLER_$MACHINE INSTALL_DIR DOWNLOAD_DIR DBUS_EMF_UPDATE_SITE_URL GEF4_UPDATE_SITE_URL FRANCA_ARCHIVE_URL
+defined ECLIPSE_INSTALLER_$MACHINE INSTALL_DIR DOWNLOAD_DIR DBUS_EMF_UPDATE_SITE_URL GEF4_UPDATE_SITE_URL FRANCA_ARCHIVE_URL KRENDERING_SITE_URL
 
 # Override CONFIG for the download dir if running in Vagrant
 if_vagrant DOWNLOAD_DIR=/vagrant
@@ -228,6 +228,9 @@ install_update_site       DBUS_EMF
 
 step "Installing GEF4 from update site"
 install_update_site       GEF4
+
+step "Installing Kieler rendering library required by franca.ui"
+install_update_site       KRENDERING
 
 step "Downloading Franca update site archive (.zip)"
 download "$FRANCA_ARCHIVE_URL" "$FRANCA_ARCHIVE"
