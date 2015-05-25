@@ -119,9 +119,6 @@ download() {
    expected_md5=$2
    sanity_check_filename "$outfile"
    # If already exists, we check md5 to know if it is complete and OK
-   echo is outfile there:
-   ls "$outfile"
-   echo "look above.  testing -f"
    if [ -f "$outfile" ] ; then
       echo "The file exists, checking..."
       if [ -n "$expected_md5" ] ; then
