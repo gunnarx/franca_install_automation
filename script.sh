@@ -131,7 +131,7 @@ download() {
       debug "File not downloaded yet"
    fi
    if [ -z "$downloaded_file" ] ; then
-      wget "$1" -O "$outfile" -c --no-check-certificate || die "wget failed.  Is wget installed?"
+      wget -c "$1" -O "$outfile" -c --no-check-certificate || die "wget failed.  Is wget installed?"
 #   curl -C - -O "$1" -O "$outfile" || die "curl failed.  Is curl installed?"
       downloaded_file=$outfile
    fi
@@ -203,6 +203,7 @@ cd "$MYDIR"
 # Include config
 . ./CONFIG
 
+# Support 32 or 64 bit choice automatically
 OSTYPE=$(uname -o)
 MACHINE=$(uname -m)
 
@@ -222,10 +223,6 @@ if [ -d "$WORKSPACE_DIR" ] ; then
 else
    mkdir -p "$WORKSPACE_DIR"
 fi
-
-# Support 32 or 64 bit choice automatically
-OSTYPE=$(uname -o)
-MACHINE=$(uname -m)
 
 if [ "$OSTYPE" = "GNU/Linux" -a "$MACHINE" = "i686" ]; then
     ECLIPSE_INSTALLER=$ECLIPSE_INSTALLER_i686
