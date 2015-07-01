@@ -204,10 +204,10 @@ script.sh does not install any packages except for Eclipse + Java packages so
 for the non-Vagrant installation you need to manually install the needed
 prerequisites on your machine.
 
-This means primarily JDK 6.  Install package java-1.6.0-openjdk on fedora or
-openjdk-6-jre on Ubuntu or Debian.  Note that JDK 6, not 7 (or 8) was up until
-recently required, but refer to official Franca documentation for up to date
-information.
+This means JDK 7 as of now, but refer to official Franca documentation for
+up to date information.  Install package java-1.7.0-openjdk on fedora or
+openjdk-7-jre on Ubuntu or Debian.  (The vagrant script does this
+automatically)
 
 The script downloads and installs Eclipse.  If you have an Eclipse environment
 already that you want to use, you probably need to instead follow a manual
