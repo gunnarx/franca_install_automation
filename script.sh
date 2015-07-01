@@ -131,7 +131,7 @@ download() {
       debug "File not downloaded yet"
    fi
    if [ -z "$downloaded_file" ] ; then
-      wget "$1" -O "$outfile" -c --no-check-certificate || die "wget failed.  Is wget installed?"
+      wget -c "$1" -O "$outfile" -c --no-check-certificate || die "wget failed.  Is wget installed?"
 #   curl -C - -O "$1" -O "$outfile" || die "curl failed.  Is curl installed?"
       downloaded_file=$outfile
    fi
