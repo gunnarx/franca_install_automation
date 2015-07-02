@@ -1,6 +1,9 @@
 Automated Eclipse/Franca environment installation
 =================================================
 
+*** WARNING A recent problem found that was not caught by unit tests so the project is broken. Have asked for support and Will update this within a few days ! ***
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 Scripts related to [Franca IDL](https://code.google.com/a/eclipselabs.org/p/franca/) installation.
 
 VM or bare metal?
