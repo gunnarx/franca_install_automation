@@ -119,18 +119,21 @@ download() {
    expected_md5=$2
    sanity_check_filename "$outfile"
    # If already exists, we check md5 to know if it is complete and OK
-   if [ -f "$outfile" ] ; then
-      echo "The file exists, checking..."
+   if [ -e "$outfile" ] ; then
+      echo "File exists: $PWD/$outfile, checking..."
       if [ -n "$expected_md5" ] ; then
          if match_md5 $outfile $expected_md5 ; then
             echo "File already downloaded"
             downloaded_file=$outfile
          fi
+      else
+         echo "No MD5, can't check file completeness"
       fi
    else
       debug "File not downloaded yet"
    fi
    if [ -z "$downloaded_file" ] ; then
+      echo Downloading...
       wget -c "$1" -O "$outfile" -c --no-check-certificate || die "wget failed.  Is wget installed?"
 #   curl -C - -O "$1" -O "$outfile" || die "curl failed.  Is curl installed?"
       downloaded_file=$outfile
