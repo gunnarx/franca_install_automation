@@ -1,15 +1,13 @@
 Automated Eclipse/Franca environment installation
 =================================================
 
-*** WARNING A recent problem found that was not caught by unit tests so the project is broken. Have asked for support and Will update this within a few days ! ***
-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 Scripts related to [Franca IDL](https://code.google.com/a/eclipselabs.org/p/franca/) installation.
 
 VM or bare metal?
 -----------------
 
-If you are installing on your machine directly, skip to the end!
+If you are installing on your machine directly, skip to 
+"Installation on bare metal"
 
 If you want to create a Virtual Machine read on.
 
@@ -219,9 +217,22 @@ procedure using Franca documentation to get Franca into your environment.
 Known bugs
 ----------
 
-There is an odd bug for Unity/Ubuntu Desktop only that causes the Eclipse menus to
+1. Franca 0.9.2 includes a bug that prevents the opening the Wizard for
+creating a new Franca file.  For example by using "File->New Franca
+Interface"
+
+Workaround: Choose "File->New" instead and manually give it a .fidl suffix.  
+Proceed editing as usual.
+
+At first I thought it was a problem with this installation but it
+is a bug in Franca tooling and tracked here:
+http://code.google.com/a/eclipselabs.org/p/franca/issues/detail?id=149
+
+2. There is an odd bug for Unity/Ubuntu Desktop only that causes the Eclipse menus to
 not display at all. It seems to happen on the first boot after installation
 (and never again!) It affects also the HUD.  Simply closing and restarting
 Eclipse seems to solve the problem.  If you find any additional information,
 please feed it back.
+
+
 
