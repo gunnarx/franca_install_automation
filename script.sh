@@ -257,9 +257,6 @@ check_site_hash           DBUS_EMF
 check_site_latest_version DBUS_EMF
 install_update_site       DBUS_EMF
 
-step "Installing GEF4 from update site"
-install_update_site       GEF4
-
 step "Installing Kieler rendering library required by franca.ui"
 install_update_site       KRENDERING
 
