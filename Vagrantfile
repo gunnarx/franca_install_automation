@@ -60,7 +60,7 @@ Type=Application
 Name=Eclipse with Franca
 Name[en_US]=Eclipse with Franca
 Icon=/home/vagrant/tools/autoeclipse/eclipse/icon.xpm
-Exec=/home/vagrant/tools/autoeclipse/eclipse/eclipse
+Exec=/home/vagrant/tools/autoeclipse/eclipse/eclipse -data /home/vagrant/workspace
 EOT
 
 chmod 755 $shortcut
