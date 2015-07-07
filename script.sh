@@ -218,13 +218,16 @@ if_vagrant DOWNLOAD_DIR=/vagrant
 
 # Create install and workspace dirs
 mkdir -p "$INSTALL_DIR" || die "Can't create target dir ($INSTALL_DIR)"
-if [ -d "$WORKSPACE_DIR" ] ; then
-   echo
-   echo "NOTE the workspace dir in CONFIG exists ($WORKSPACE_DIR)!"
-   echo "I will unpack files into $WORKSPACE_DIR !"
-   warn "Remove it to make a clean installation or back up your files!"
-else
-   mkdir -p "$WORKSPACE_DIR"
+
+if [ -z "$VAGRANT" ] ; then  # No need to warn in vagrant case
+   if [ -d "$WORKSPACE_DIR" ] ; then
+      echo
+      echo "NOTE the workspace dir in CONFIG exists ($WORKSPACE_DIR)!"
+      echo "I will unpack files into $WORKSPACE_DIR !"
+      warn "Remove it to make a clean installation or back up your files!"
+   else
+      mkdir -p "$WORKSPACE_DIR"
+   fi
 fi
 
 if [ "$OSTYPE" = "GNU/Linux" -a "$MACHINE" = "i686" ]; then
