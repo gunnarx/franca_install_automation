@@ -103,6 +103,12 @@ true                  # Make sure Vagrant does not stop on error
     echo "Read the project README!"
     echo "***************************************************************"
    '
+   # Get the host keyboard layout and set that for the VM
+   kb = `xprop -root | grep XKB`
+   kb = kb.split("=")[1].split('"')[5]
+   config.vm.provision :shell, inline:
+   "echo '@setxkbmap -layout \"#{kb}\"' >> /etc/xdg/lxsession/LXDE/autostart
+   "
 
    # ----------------------------------------------
    # If VM will run some network services e.g. web browser
