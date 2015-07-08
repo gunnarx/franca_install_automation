@@ -6,9 +6,16 @@ Scripts related to [Franca IDL](https://code.google.com/a/eclipselabs.org/p/fran
 VM or bare metal?
 -----------------
 
-If you are installing on your machine directly, skip to the end!
+If you are installing on your machine directly, skip to 
+"Installation on bare metal"
 
 If you want to create a Virtual Machine read on.
+
+Corporate Environment?
+----------------------
+
+If you are in an environment that requires web access through
+a proxy, read the chapter Proxy Configuration.
 
 A note on branches (for VM)
 ---------------------------
@@ -213,12 +220,88 @@ The script downloads and installs Eclipse.  If you have an Eclipse environment
 already that you want to use, you probably need to instead follow a manual
 procedure using Franca documentation to get Franca into your environment.
 
+Proxy Configuration
+-------------------
+
+To update your vagrant environment you need first to update vagrant
+to support using a proxy - you probably need to do this download also
+through the proxy of course... ;-)
+
+For example:
+
+```bash
+$ export http_proxy="http://user:password@your-proxy-host:port"
+```
+and then:
+
+```bash
+$ vagrant plugin install vagrant-proxyconf
+```
+
+Now vagrant can use a proxy for its http(s) access.
+
+The Vagrantfile already includes support for copying settings from
+your shell environment to the virtual environment when vagrant runs.
+If http_proxy (and/or https_proxy) variables are defined as environment
+variables in your shell, these will be carried over.
+
+However, the final VM might need some adjustment if you expect it to work
+with a proxy also.  This is currently out of scope but please report your
+needs/findings and I'm sure we can find a solution.
+
+In other words, simply define in your shell, before running vagrant up:
+```bash
+$ export http_proxy="http://user:password@your-proxy-host:port"
+$ export https_proxy="http://user:password@your-proxy-host:port"
+```
+
+and so on.  The rest should follow.
+
+There might be more information available in the documentation/support
+channels of Vagrant-proxyconf plugin.
+
+
+Development/Testing information
+-------------------------------
+
+Users can disregard this:
+
+Apart from corporate environments I use an http proxy for repeated testing.
+By running a local caching proxy, the repeated downloads of files
+(everything from eclipse, franca, and all the apt-get installs) can be
+locally cached which speeds things up a lot, and reduces the load on
+networks and servers provided by others!
+
+Out of interest, from inside the VM, the host is the default gateway, so
+here is a way to get the IP of the host:
+
+```bash
+$ netstat -rn | grep "^0.0.0.0 " | cut -d " " -f10 
+```
+
+But for now I simply have it hardcoded to 10.0.2.2 which appears to be
+constant.  Presumably 10.0.2.x is a default adress scheme used by vagrant
+for the NATed network of the VM.
+
 Known bugs
 ----------
 
-There is an odd bug for Unity/Ubuntu Desktop only that causes the Eclipse menus to
+1. Franca 0.9.2 includes a bug that prevents the opening the Wizard for
+creating a new Franca file.  For example by using "File->New Franca
+Interface"
+
+Workaround: Choose "File->New" instead and manually give it a .fidl suffix.  
+Proceed editing as usual.
+
+At first I thought it was a problem with this installation but it
+is a bug in Franca tooling and tracked here:
+http://code.google.com/a/eclipselabs.org/p/franca/issues/detail?id=149
+
+2. There is an odd bug for Unity/Ubuntu Desktop only that causes the Eclipse menus to
 not display at all. It seems to happen on the first boot after installation
 (and never again!) It affects also the HUD.  Simply closing and restarting
 Eclipse seems to solve the problem.  If you find any additional information,
 please feed it back.
+
+
 
