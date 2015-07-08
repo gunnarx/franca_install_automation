@@ -5,12 +5,13 @@ die() {
    exit 1
 }
 
+echo Fetching from origin
+git fetch origin
 for br in $(git branch --list | grep -v master | sed 's/\*//' ) ; do
    [ -n "$br" ] && {
-      echo On branch: $br
       git checkout $br || die
-      git pull
-      git merge master -m "Merge master branch"
+      echo -n "Merge origin/$br " ; git merge origin/$br
+      echo -n "Merge master " ; git merge master -m "Merge master branch"
    }
 done
 
