@@ -254,6 +254,9 @@ cd "$WORKSPACE_DIR"                    || die "cd to WORKSPACE_DIR ($WORKSPACE_D
 download "$EXAMPLES_URL"
 EXAMPLES_FILE="$downloaded_file"
 
+step "Installing IPC CommonAPI C++ from update site"
+install_update_site       COMMON_API_CPP
+
 cat <<MSG
 
 Instructions:

@@ -94,4 +94,19 @@ org.franca.generators.source
 
 EXAMPLES_URL=https://googledrive.com/host/0B7JseVbR6jvhazEtRDVsSk9mX1k/Releases/0.9/org_franca_examples_src_2014-05-07.zip
 
+# COMMON API (C++) FOR IPC
+COMMON_API_CPP_VERSION="3.1.2"
+COMMON_API_CPP_SERVER="http://docs.projects.genivi.org/yamaica-update-site/CommonAPI/updatesite"
+COMMON_API_CPP_UPDATE_SITE_URL="$COMMON_API_CPP_SERVER/3.1/$COMMON_API_CPP_VERSION"
+COMMON_API_CPP_FEATURES=\
+org.genivi.commonapi.core,\
+org.genivi.commonapi.core.ui,\
+org.genivi.commonapi.core.validator,\
+org.genivi.commonapi.dbus,\
+org.genivi.commonapi.dbus.ui,\
+org.genivi.commonapi.dbus.validator,\
+org.genivi.commonapi.someip,\
+org.genivi.commonapi.someip.ui,\
+org.genivi.commonapi.someip.validator,\
+
 # === EOF ===
