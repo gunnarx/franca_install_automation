@@ -2,6 +2,10 @@
 # Part of franca_install_automation
 # License: See project dir
 
+# This is a bourne-shell script but since it includes
+# configuration data only it is called CONFIG and included
+# from another script.
+
 # INFO:
 # -------------------------------------------------------------------
 # SETTINGS
