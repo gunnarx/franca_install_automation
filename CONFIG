@@ -50,20 +50,7 @@ DBUS_EMF_UPDATE_SERVER="http://dbus-emf-model.eclipselabs.org.codespot.com/git/u
 DBUS_EMF_UPDATE_SITE_URL="$DBUS_EMF_UPDATE_SERVER/$DBUS_EMF_VERSION"
 DBUS_EMF_FEATURES=model.emf.dbusxml.feature.feature.group
 
-# GEF 4 -------------------------------------------------------------
-
-# Note: If _VERSION is not set, no particular version will be requested
-# (So Eclipse will install the latest, probably)
-# To specify a specific version, define a variable like this:
-# GEF4_VERSION=0.1.0.201311151505
-# and then:
-# GEF4_FEATURES = org.eclipse.gef4.zest.core/$GEF4_VERSION,  and so on
-# Specifying version of zest.core was required for Franca 0.8.11 but did
-# not work for 0.9.0, and probably no longer needed
-GEF4_UPDATE_SITE_URL="http://download.eclipse.org/tools/gef/gef4/updates/integration"
-GEF4_FEATURES=\
-org.eclipse.gef4.zest.layouts,\
-org.eclipse.gef4.zest.core
+# KIELER framework -------------------------------------------------------------
 
 # Kieler Pragmatics "krendering" package - a new dependency for franca.ui
 # starting with franca release 0.9.2
