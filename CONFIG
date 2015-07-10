@@ -46,19 +46,6 @@ DBUS_EMF_UPDATE_SERVER="http://dbus-emf-model.eclipselabs.org.codespot.com/git/u
 DBUS_EMF_UPDATE_SITE_URL="$DBUS_EMF_UPDATE_SERVER/$DBUS_EMF_VERSION"
 DBUS_EMF_FEATURES=model.emf.dbusxml.feature.feature.group
 
-# GEF 4 -------------------------------------------------------------
-
-# Note: If _VERSION is not set, no particular version will be requested (-->Eclipse will install the latest, probably)
-GEF4_UPDATE_SITE_URL="http://download.eclipse.org/tools/gef/gef4/updates/integration"
-GEF4_FEATURES=\
-org.eclipse.gef4.zest.layouts,\
-org.eclipse.gef4.zest.core
-
-# To specify a specific version, install like this:
-# GEF4_VERSION=0.1.0.201311151505
-# GEF4_FEATURES = ... org.eclipse.gef4.zest.core/$GEF4_VERSION
-# That was required for Franca 0.8.11 but did not work for 0.9.0
-
 # FRANCA ------------------------------------------------------------
 
 FRANCA_ARCHIVE="site_franca_0.9.1.201412191134.zip"
@@ -79,8 +66,6 @@ org.franca.core.dsl.ui.source,\
 org.franca.core.edit,\
 org.franca.core.edit.source,\
 org.franca.core.source,\
-org.franca.core.ui.addons,\
-org.franca.core.ui.addons.source,\
 org.franca.deploymodel.dsl,\
 org.franca.deploymodel.dsl.source,\
 org.franca.deploymodel.dsl.tests.base,\
@@ -93,6 +78,21 @@ org.franca.generators.source
 # FRANCA EXAMPLES ----------------------------------------------------
 
 EXAMPLES_URL=https://googledrive.com/host/0B7JseVbR6jvhazEtRDVsSk9mX1k/Releases/0.9/org_franca_examples_src_2014-05-07.zip
+
+# ECLIPSE CDT
+CDT_VERSION="8.6"
+CDT_SERVER="http://download.eclipse.org/tools/cdt/releases"
+CDT_UPDATE_SITE_URL="$CDT_SERVER/$CDT_VERSION/"
+CDT_FEATURES=\
+org.eclipse.cdt,\
+org.eclipse.cdt.feature.group,\
+org.eclipse.cdt.gdb,\
+org.eclipse.cdt.gdb.feature.group,\
+org.eclipse.cdt.platform.feature.group,\
+org.eclipse.cdt.native.feature.group,\
+org.eclipse.cdt.gnu.dsf.feature.group,\
+org.eclipse.cdt.gnu.debug.feature.group,\
+org.eclipse.cdt.ui,\
 
 # COMMON API (C++) FOR IPC
 COMMON_API_CPP_VERSION="3.1.2"
