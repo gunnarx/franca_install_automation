@@ -1,7 +1,7 @@
 #!/bin/sh
-# (C) Gunnar Andersson
-# License: CC-BY 4.0 International
-# (http://creativecommons.org/licenses/by/4.0/)
+# (C) 2014 Gunnar Andersson
+# License: CC-BY 4.0 Intl. (http://creativecommons.org/licenses/by/4.0/)
+# Git repository: https://github.com/gunnarx/franca_install_automation
 # pull requests welcome
 
 echo "***************************************************************"
@@ -14,7 +14,8 @@ MD5SUM=md5sum   # On MacOS X, the binary is "md5"
 
 debug() {
    $DEBUG && {
-      1>&2 echo $@ | sed 's/^/*DEBUG*: /'
+      echo -n '*DEBUG*: ' 1>&2
+      echo $@ 1>&2
    }
 }
 
@@ -42,7 +43,8 @@ unless_vagrant() {
 
 # Print an operation with *** in front of it
 step() {
-      echo $@ | sed 's/^/ *** /'
+      echo -n ' *** '
+      echo $@
 }
 
 # Check condition is met or die
