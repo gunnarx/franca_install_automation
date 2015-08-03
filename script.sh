@@ -155,7 +155,7 @@ install_update_site() {
       -repository "$site" \
       -destination $INSTALL_DIR/eclipse \
       -installIU "$features"
-   set +x
+   $DEBUG && set +x
 }
 
 MYDIR=$(dirname "$0")
@@ -221,6 +221,19 @@ step Checking MD5 sum for Eclipse
 md5_check ECLIPSE "$downloaded_file" $MACHINE
 untar "$downloaded_file" "$INSTALL_DIR"
 
+DEBUG=true
+step "Installing org.eclipse.remote feature"
+install_update_site PTP_REMOTE
+
+echo pause
+read
+step "Installing CDT"
+install_update_site CDT
+
+step "Installing Linux Tools"
+install_update_site LINUXTOOLS
+DEBUG=false
+
 step "Installing DBus EMF model from update site"
 check_site_hash           DBUS_EMF
 check_site_latest_version DBUS_EMF
@@ -246,9 +259,6 @@ FRANCA_UPDATE_SITE_URL="file://$UNPACK_DIR"
 step Installing Franca
 install_update_site FRANCA
 rm -rf "$UNPACK_DIR"
-
-step Installing CDT
-install_update_site CDT
 
 step Downloading Franca examples
 cd "$WORKSPACE_DIR"                    || die "cd to WORKSPACE_DIR ($WORKSPACE_DIR) failed"

@@ -20,7 +20,7 @@ WORKSPACE_DIR=$HOME/workspace
 DOWNLOAD_DIR=/tmp
 
 # URLs to latest x86 32 and 64 bit releases of Eclipse (DSL variant) follow.
-# You can update the one you need...  
+# You can update the one you need...
 
 # It is recommended to look up and specify your closest mirror URL
 # Choose appropriate mirror using:
@@ -79,6 +79,21 @@ org.franca.generators.source
 
 EXAMPLES_URL=https://googledrive.com/host/0B7JseVbR6jvhazEtRDVsSk9mX1k/Releases/0.9/org_franca_examples_src_2014-05-07.zip
 
+# ECLIPSE PTP
+# The "org.eclipse.remote" feature is needed by CDT autotools
+ECLIPSE_RELEASE="luna"
+ECLIPSE_BUILD="SR2"
+
+# org.eclipse.remote seems to exist also at
+# ptp/builds/<ECLIPSE_RELEASE>/milestones/<MILESTONE>...
+# But I found the latest versions (>2.0 needed by current autotools)
+# under the tree named /remote instead, so we'll use that:
+PTP_REMOTE_VERSION="2.0.0"
+PTP_REMOTE_SERVER="http://download.eclipse.org/tools/ptp/builds/remote"
+PTP_REMOTE_UPDATE_SITE_URL="$PTP_REMOTE_SERVER/$PTP_REMOTE_VERSION"
+PTP_REMOTE_FEATURES=\
+org.eclipse.remote.core
+
 # ECLIPSE CDT
 CDT_VERSION="8.6"
 CDT_SERVER="http://download.eclipse.org/tools/cdt/releases"
@@ -92,7 +107,8 @@ org.eclipse.cdt.platform.feature.group,\
 org.eclipse.cdt.native.feature.group,\
 org.eclipse.cdt.gnu.dsf.feature.group,\
 org.eclipse.cdt.gnu.debug.feature.group,\
-org.eclipse.cdt.ui,\
+org.eclipse.cdt.autotools.feature.group,\
+org.eclipse.cdt.ui
 
 # COMMON API (C++) FOR IPC
 COMMON_API_CPP_VERSION="3.1.2"
@@ -109,4 +125,95 @@ org.genivi.commonapi.someip,\
 org.genivi.commonapi.someip.ui,\
 org.genivi.commonapi.someip.validator,\
 
-# === EOF ===
+# Linux Tools
+
+LINUXTOOLS_VERSION="4.0.0.201506101754"
+LINUXTOOLS_SERVER="http://download.eclipse.org/linuxtools/update"
+LINUXTOOLS_UPDATE_SITE_URL="$LINUXTOOLS_SERVER"
+LINUXTOOLS_FEATURES=\
+org.eclipse.linuxtools.binutils,\
+org.eclipse.linuxtools.callgraph,\
+org.eclipse.linuxtools.callgraph.core,\
+org.eclipse.linuxtools.callgraph.feature.feature.group,\
+org.eclipse.linuxtools.callgraph.launch,\
+org.eclipse.linuxtools.cdt.libhover,\
+org.eclipse.linuxtools.cdt.libhover.devhelp,\
+org.eclipse.linuxtools.cdt.libhover.devhelp.feature.feature.group,\
+org.eclipse.linuxtools.cdt.libhover.feature.feature.group,\
+org.eclipse.linuxtools.cdt.libhover.glibc,\
+org.eclipse.linuxtools.cdt.libhover.library.docs,\
+org.eclipse.linuxtools.cdt.libhover.newlib,\
+org.eclipse.linuxtools.cdt.libhover.newlib.feature.feature.group,\
+org.eclipse.linuxtools.changelog.c.feature.group,\
+org.eclipse.linuxtools.changelog.core,\
+org.eclipse.linuxtools.changelog.cparser,\
+org.eclipse.linuxtools.changelog.doc,\
+org.eclipse.linuxtools.changelog.feature.group,\
+org.eclipse.linuxtools.changelog.java.feature.group,\
+org.eclipse.linuxtools.changelog.parsers.java,\
+org.eclipse.linuxtools.dataviewers,\
+org.eclipse.linuxtools.dataviewers.charts,\
+org.eclipse.linuxtools.dataviewers.feature.feature.group,\
+org.eclipse.linuxtools.dataviewers.piechart,\
+org.eclipse.linuxtools.gcov.core,\
+org.eclipse.linuxtools.gcov.docs,\
+org.eclipse.linuxtools.gcov.feature.group,\
+org.eclipse.linuxtools.gcov.launch,\
+org.eclipse.linuxtools.gprof,\
+org.eclipse.linuxtools.gprof.docs,\
+org.eclipse.linuxtools.gprof.feature.feature.group,\
+org.eclipse.linuxtools.gprof.launch,\
+org.eclipse.linuxtools.javadocs,\
+org.eclipse.linuxtools.javadocs.feature.feature.group,\
+org.eclipse.linuxtools.man.core,\
+org.eclipse.linuxtools.man.feature.group,\
+org.eclipse.linuxtools.oprofile.core,\
+org.eclipse.linuxtools.oprofile.doc,\
+org.eclipse.linuxtools.oprofile.feature.feature.group,\
+org.eclipse.linuxtools.oprofile.launch,\
+org.eclipse.linuxtools.oprofile.remote.feature.feature.group,\
+org.eclipse.linuxtools.oprofile.remote.launch,\
+org.eclipse.linuxtools.oprofile.ui,\
+org.eclipse.linuxtools.perf,\
+org.eclipse.linuxtools.perf.doc,\
+org.eclipse.linuxtools.perf.feature.feature.group,\
+org.eclipse.linuxtools.perf.remote.feature.feature.group,\
+org.eclipse.linuxtools.profiling.docs,\
+org.eclipse.linuxtools.profiling.feature.group,\
+org.eclipse.linuxtools.profiling.launch,\
+org.eclipse.linuxtools.profiling.launch.ui.rdt.proxy,\
+org.eclipse.linuxtools.profiling.remote.feature.group,\
+org.eclipse.linuxtools.profiling.ui,\
+org.eclipse.linuxtools.rdt.proxy,\
+org.eclipse.linuxtools.rpm.core,\
+org.eclipse.linuxtools.rpm.createrepo,\
+org.eclipse.linuxtools.rpm.feature.group,\
+org.eclipse.linuxtools.rpm.rpmlint,\
+org.eclipse.linuxtools.rpm.ui,\
+org.eclipse.linuxtools.rpm.ui.editor,\
+org.eclipse.linuxtools.rpm.ui.editor.doc,\
+org.eclipse.linuxtools.rpmstubby,\
+org.eclipse.linuxtools.ssh.proxy,\
+org.eclipse.linuxtools.systemtap.feature.group,\
+org.eclipse.linuxtools.systemtap.graphing.core,\
+org.eclipse.linuxtools.systemtap.graphing.ui,\
+org.eclipse.linuxtools.systemtap.structures,\
+org.eclipse.linuxtools.systemtap.ui.consolelog,\
+org.eclipse.linuxtools.systemtap.ui.doc,\
+org.eclipse.linuxtools.systemtap.ui.editor,\
+org.eclipse.linuxtools.systemtap.ui.ide,\
+org.eclipse.linuxtools.tools.launch.core,\
+org.eclipse.linuxtools.tools.launch.ui,\
+org.eclipse.linuxtools.valgrind.cachegrind,\
+org.eclipse.linuxtools.valgrind.core,\
+org.eclipse.linuxtools.valgrind.doc,\
+org.eclipse.linuxtools.valgrind.feature.group,\
+org.eclipse.linuxtools.valgrind.helgrind,\
+org.eclipse.linuxtools.valgrind.launch,\
+org.eclipse.linuxtools.valgrind.massif,\
+org.eclipse.linuxtools.valgrind.memcheck,\
+org.eclipse.linuxtools.valgrind.remote.feature.group,\
+org.eclipse.linuxtools.valgrind.ui,\
+org.eclipse.linuxtools.valgrind.ui.editor
+
+# === EOF ===,\
