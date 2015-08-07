@@ -1,7 +1,7 @@
 #!/bin/sh
-# (C) Gunnar Andersson
-# License: CC-BY 4.0 International
-# (http://creativecommons.org/licenses/by/4.0/)
+# (C) 2014 Gunnar Andersson
+# License: CC-BY 4.0 Intl. (http://creativecommons.org/licenses/by/4.0/)
+# Git repository: https://github.com/gunnarx/franca_install_automation
 # pull requests welcome
 
 echo "***************************************************************"
@@ -14,7 +14,8 @@ MD5SUM=md5sum   # On MacOS X, the binary is "md5"
 
 debug() {
    $DEBUG && {
-      1>&2 echo $@ | sed 's/^/*DEBUG*: /'
+      echo -n '*DEBUG*: ' 1>&2
+      echo $@ 1>&2
    }
 }
 
@@ -42,7 +43,8 @@ unless_vagrant() {
 
 # Print an operation with *** in front of it
 step() {
-      echo $@ | sed 's/^/ *** /'
+      echo -n ' *** '
+      echo $@
 }
 
 # Check condition is met or die
@@ -211,7 +213,7 @@ OSTYPE=$(uname -o)
 MACHINE=$(uname -m)
 
 # Check that a few necessary variables are defined
-defined ECLIPSE_INSTALLER_$MACHINE INSTALL_DIR DOWNLOAD_DIR DBUS_EMF_UPDATE_SITE_URL GEF4_UPDATE_SITE_URL FRANCA_ARCHIVE_URL KRENDERING_SITE_URL
+defined ECLIPSE_INSTALLER_$MACHINE INSTALL_DIR DOWNLOAD_DIR DBUS_EMF_UPDATE_SITE_URL FRANCA_ARCHIVE_URL KRENDERING_SITE_URL
 
 # Override CONFIG for the download dir if running in Vagrant
 if_vagrant DOWNLOAD_DIR=/vagrant
@@ -259,9 +261,6 @@ step "Installing DBus EMF model from update site"
 check_site_hash           DBUS_EMF
 check_site_latest_version DBUS_EMF
 install_update_site       DBUS_EMF
-
-step "Installing GEF4 from update site"
-install_update_site       GEF4
 
 step "Installing Kieler rendering library required by franca.ui"
 install_update_site       KRENDERING
