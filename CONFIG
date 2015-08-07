@@ -71,9 +71,18 @@ de.cau.cs.kieler.core.kivi
 
 # FRANCA ------------------------------------------------------------
 
-FRANCA_ARCHIVE="site_franca_0.9.2.201505211553.zip"
-FRANCA_ARCHIVE_MD5=28361f4edee92b868b619b7b11ede1bc
-FRANCA_ARCHIVE_URL="https://googledrive.com/host/0B7JseVbR6jvhazEtRDVsSk9mX1k/Releases/0.9/$FRANCA_ARCHIVE"
+#FRANCA_ARCHIVE="site_franca_0.9.2.201505211553.zip"
+#FRANCA_ARCHIVE_MD5=28361f4edee92b868b619b7b11ede1bc
+#FRANCA_RELEASE_FOLDER="0.9"
+
+FRANCA_ARCHIVE="site_franca_0.10.0.201507291433.zip"
+FRANCA_ARCHIVE_MD5=74c3e5cef73dcb36b0c8f3c00bacd555
+FRANCA_RELEASE_FOLDER="0.10"
+
+FRANCA_BASE_URL="https://googledrive.com/host/0B7JseVbR6jvhazEtRDVsSk9mX1k"
+#FRANCA_ARCHIVE_URL="$FRANCA_BASE_URL/Beta/$FRANCA_ARCHIVE"
+FRANCA_ARCHIVE_URL="$FRANCA_BASE_URL/Releases/$FRANCA_RELEASE_FOLDER/$FRANCA_ARCHIVE"
+
 FRANCA_FEATURES=\
 org.franca.connectors.dbus,\
 org.franca.connectors.dbus.source,\
@@ -102,7 +111,12 @@ org.franca.generators.source
 
 # FRANCA EXAMPLES ----------------------------------------------------
 
-EXAMPLES_URL=https://googledrive.com/host/0B7JseVbR6jvhazEtRDVsSk9mX1k/Releases/0.9/org_franca_examples_src_2014-05-07.zip
-EXAMPLES_MD5=1c80da069a20b94feecde2e15d7ca4b8
+#EXAMPLES_ARCHIVE="0.9/org_franca_examples_src_2014-05-07.zip"
+#EXAMPLES_MD5=1c80da069a20b94feecde2e15d7ca4b8
+
+EXAMPLES_ARCHIVE="0.10/org_franca_examples_src_2015-07-29.zip"
+EXAMPLES_MD5=d00c338f36b0217bdc20e153f6f7f843
+
+EXAMPLES_URL="$FRANCA_BASE_URL/Releases/$EXAMPLES_ARCHIVE"
 
 # === EOF ===
