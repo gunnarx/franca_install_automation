@@ -79,7 +79,17 @@ org.franca.generators.source
 
 EXAMPLES_URL=https://googledrive.com/host/0B7JseVbR6jvhazEtRDVsSk9mX1k/Releases/0.9/org_franca_examples_src_2014-05-07.zip
 
-# ECLIPSE PTP
+# Some CDT tools (autogen tools) require eclipse.remote
+# which requires another CDT tool (PTY).  Dependency hell?
+# No exact version specified at this time, hopefully this does not break...
+CDT_VERSION="8.6"
+CDT_SERVER="http://download.eclipse.org/tools/cdt/releases"
+PTY_UPDATE_SITE_URL="$CDT_SERVER/$CDT_VERSION"
+PTY_FEATURES=\
+org.eclipse.cdt.utils.pty
+
+# ECLIPSE PTP # -----------------------------------------------------------
+
 # The "org.eclipse.remote" feature is needed by CDT autotools
 ECLIPSE_RELEASE="luna"
 ECLIPSE_BUILD="SR2"
@@ -94,7 +104,8 @@ PTP_REMOTE_UPDATE_SITE_URL="$PTP_REMOTE_SERVER/$PTP_REMOTE_VERSION"
 PTP_REMOTE_FEATURES=\
 org.eclipse.remote.core
 
-# ECLIPSE CDT
+# ECLIPSE C/C++ Development environment (CDT)  ----------------------------
+#
 CDT_VERSION="8.6"
 CDT_SERVER="http://download.eclipse.org/tools/cdt/releases"
 CDT_UPDATE_SITE_URL="$CDT_SERVER/$CDT_VERSION/"
@@ -107,8 +118,10 @@ org.eclipse.cdt.platform.feature.group,\
 org.eclipse.cdt.native.feature.group,\
 org.eclipse.cdt.gnu.dsf.feature.group,\
 org.eclipse.cdt.gnu.debug.feature.group,\
-org.eclipse.cdt.autotools.feature.group,\
 org.eclipse.cdt.ui
+
+# Can't satisfy dependencies at this time:
+#org.eclipse.cdt.autotools.feature.group,\
 
 # COMMON API (C++) FOR IPC
 COMMON_API_CPP_VERSION="3.1.2"
@@ -178,12 +191,6 @@ org.eclipse.linuxtools.perf,\
 org.eclipse.linuxtools.perf.doc,\
 org.eclipse.linuxtools.perf.feature.feature.group,\
 org.eclipse.linuxtools.perf.remote.feature.feature.group,\
-org.eclipse.linuxtools.profiling.docs,\
-org.eclipse.linuxtools.profiling.feature.group,\
-org.eclipse.linuxtools.profiling.launch,\
-org.eclipse.linuxtools.profiling.launch.ui.rdt.proxy,\
-org.eclipse.linuxtools.profiling.remote.feature.group,\
-org.eclipse.linuxtools.profiling.ui,\
 org.eclipse.linuxtools.rdt.proxy,\
 org.eclipse.linuxtools.rpm.core,\
 org.eclipse.linuxtools.rpm.createrepo,\
@@ -216,4 +223,12 @@ org.eclipse.linuxtools.valgrind.remote.feature.group,\
 org.eclipse.linuxtools.valgrind.ui,\
 org.eclipse.linuxtools.valgrind.ui.editor
 
+
+#Profiling UI requires autotools which won't install atm.
+#org.eclipse.linuxtools.profiling.docs,\
+#org.eclipse.linuxtools.profiling.feature.group,\
+#org.eclipse.linuxtools.profiling.launch,\
+#org.eclipse.linuxtools.profiling.launch.ui.rdt.proxy,\
+#org.eclipse.linuxtools.profiling.remote.feature.group,\
+#org.eclipse.linuxtools.profiling.ui,\
 # === EOF ===,\
