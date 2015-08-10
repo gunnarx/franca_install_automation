@@ -230,9 +230,9 @@ read
 step "Installing CDT"
 install_update_site CDT
 
-step "Installing Linux Tools"
-install_update_site LINUXTOOLS
-DEBUG=false
+#step "Installing Linux Tools"
+#install_update_site LINUXTOOLS
+#DEBUG=false
 
 step "Installing DBus EMF model from update site"
 check_site_hash           DBUS_EMF

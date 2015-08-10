@@ -124,7 +124,7 @@ org.eclipse.cdt.ui
 #org.eclipse.cdt.autotools.feature.group,\
 
 # COMMON API (C++) FOR IPC
-COMMON_API_CPP_VERSION="3.1.2"
+COMMON_API_CPP_VERSION="3.1.3"
 COMMON_API_CPP_SERVER="http://docs.projects.genivi.org/yamaica-update-site/CommonAPI/updatesite"
 COMMON_API_CPP_UPDATE_SITE_URL="$COMMON_API_CPP_SERVER/3.1/$COMMON_API_CPP_VERSION"
 COMMON_API_CPP_FEATURES=\
