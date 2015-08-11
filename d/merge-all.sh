@@ -5,12 +5,13 @@ die() {
    exit 1
 }
 
-for br in $(git branch --list | grep -v master | sed 's/\*//' ) ; do
+echo Fetching from origin
+git fetch origin
+for br in $(git branch --list | grep -v master | grep -v deprecated= | sed 's/\*//' ) ; do
    [ -n "$br" ] && {
-      echo On branch: $br
       git checkout $br || die
-      git pull
-      git merge master -m "Merge master branch"
+      echo -n "Merge origin/$br " ; git merge origin/$br
+      echo -n "Merge master " ; git merge master -m "Merge master branch"
    }
 done
 

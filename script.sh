@@ -1,7 +1,7 @@
 #!/bin/sh
-# (C) Gunnar Andersson
-# License: CC-BY 4.0 International
-# (http://creativecommons.org/licenses/by/4.0/)
+# (C) 2014 Gunnar Andersson
+# License: CC-BY 4.0 Intl. (http://creativecommons.org/licenses/by/4.0/)
+# Git repository: https://github.com/gunnarx/franca_install_automation
 # pull requests welcome
 
 echo "***************************************************************"
@@ -14,7 +14,8 @@ MD5SUM=md5sum   # On MacOS X, the binary is "md5"
 
 debug() {
    $DEBUG && {
-      1>&2 echo $@ | sed 's/^/*DEBUG*: /'
+      echo -n '*DEBUG*: ' 1>&2
+      echo $@ 1>&2
    }
 }
 
@@ -42,7 +43,8 @@ unless_vagrant() {
 
 # Print an operation with *** in front of it
 step() {
-      echo $@ | sed 's/^/ *** /'
+      echo -n ' *** '
+      echo $@
 }
 
 # Check condition is met or die
@@ -211,21 +213,24 @@ OSTYPE=$(uname -o)
 MACHINE=$(uname -m)
 
 # Check that a few necessary variables are defined
-defined ECLIPSE_INSTALLER_$MACHINE INSTALL_DIR DOWNLOAD_DIR DBUS_EMF_UPDATE_SITE_URL GEF4_UPDATE_SITE_URL FRANCA_ARCHIVE_URL KRENDERING_SITE_URL
+defined ECLIPSE_INSTALLER_$MACHINE INSTALL_DIR DOWNLOAD_DIR DBUS_EMF_UPDATE_SITE_URL FRANCA_ARCHIVE_URL KRENDERING_SITE_URL
 
 # Override CONFIG for the download dir if running in Vagrant
 if_vagrant DOWNLOAD_DIR=/vagrant
 
 # Create install and workspace dirs
 mkdir -p "$INSTALL_DIR" || die "Can't create target dir ($INSTALL_DIR)"
+
 if [ -d "$WORKSPACE_DIR" ] ; then
-   echo
-   echo "NOTE the workspace dir in CONFIG exists ($WORKSPACE_DIR)!"
-   echo "I will unpack files into $WORKSPACE_DIR !"
-   warn "Remove it to make a clean installation or back up your files!"
-else
-   mkdir -p "$WORKSPACE_DIR"
+   if [ -z "$VAGRANT" ] ; then  # No need to warn in vagrant case
+      echo
+      echo "NOTE the workspace dir in CONFIG exists ($WORKSPACE_DIR)!"
+      echo "I will unpack files into $WORKSPACE_DIR !"
+      warn "Remove it to make a clean installation or back up your files!"
+   fi
 fi
+
+mkdir -p "$WORKSPACE_DIR"
 
 if [ "$OSTYPE" = "GNU/Linux" -a "$MACHINE" = "i686" ]; then
     ECLIPSE_INSTALLER=$ECLIPSE_INSTALLER_i686
@@ -257,31 +262,11 @@ check_site_hash           DBUS_EMF
 check_site_latest_version DBUS_EMF
 install_update_site       DBUS_EMF
 
-step "Installing GEF4 from update site"
-install_update_site       GEF4
-
 step "Installing Kieler rendering library required by franca.ui"
 install_update_site       KRENDERING
 
-step "Downloading Franca update site archive (.zip)"
-download "$FRANCA_ARCHIVE_URL" "$FRANCA_ARCHIVE_MD5"
-md5_check FRANCA_ARCHIVE "$downloaded_file"
-
-# I can't get install directly from zip file to work using command line
-# invocation --installIU).  Is it supposed to work?)
-# Anyhow for now unpack zip manually, then install. That works. 
-
-step Unpacking Franca update site archive
-UNPACK_DIR=$DOWNLOAD_DIR/tmp.$$
-mkdir -p "$UNPACK_DIR"            || die "mkdir UNPACK_DIR ($UNPACK_DIR) failed"
-cd "$UNPACK_DIR"                  || die "cd to UNPACK_DIR ($UNPACK_DIR) failed"
-unzip -q "$DOWNLOAD_DIR/$downloaded_file" || die "unzip $DOWNLOAD_DIR/$downloaded_file failed"
-cd -
-
-FRANCA_UPDATE_SITE_URL="file://$UNPACK_DIR"
-step Installing Franca
-install_update_site FRANCA
-rm -rf "$UNPACK_DIR"
+step "Installing Franca from update site"
+install_update_site       FRANCA
 
 step Downloading Franca examples
 cd "$WORKSPACE_DIR"                    || die "cd to WORKSPACE_DIR ($WORKSPACE_DIR) failed"

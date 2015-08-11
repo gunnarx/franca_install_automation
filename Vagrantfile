@@ -1,16 +1,38 @@
 # -*- mode: ruby -*-
-# vim: set ft=ruby sw=3 ts=3 et:
+# vim: set ft=ruby sw=4 ts=4 tw=0 et:
 
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-   config.vm.box = "precise64"
 
-   config.vm.hostname = "francalab-precise64"
+   # This allows to set a web proxy from outside the vagrant environment by
+   # passing it in the shell environment variable.
+
+   if Vagrant.has_plugin?("vagrant-proxyconf")
+      if ENV['http_proxy']
+         puts 'NOTE: Found WEB PROXY defined in shell environment.  Will reuse the following settings inside Vagrant:'
+
+         config.proxy.http = ENV['http_proxy'] || "not defined"
+         config.proxy.https = ENV['https_proxy'] || "not defined"
+         config.proxy.no_proxy = "localhost,127.0.0.1"
+
+         # Print settings, but try to protect password if by chance 
+         # user:pass was defined as part of Proxy URL (no guarantees!)
+         puts "$http_proxy = #{config.proxy.http.sub(/(\w+:\/\/)(\w+):(\S+)@/,'\1\2:**************@')}"
+         puts "$https_proxy = #{config.proxy.https.sub(/(\w+:\/\/)(\w+):(\S+)@/,'\1\2:**************@')}"
+         puts "No proxy for #{config.proxy.no_proxy}"
+      end
+   else
+      puts "Vagrant has no proxy plugin => skipped proxy configuration."
+   end
+
+   config.vm.box = "trusty64"
+
+   config.vm.hostname = "francalab-trusty64"
 
    # If above box does not exist locally, fetch it here:
-   config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/precise/current/precise-server-cloudimg-amd64-vagrant-disk1.box"
+   config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
 
    # To run eclipse we need more than default RAM 512MB And we might as well
    # set a useful name also, which I prefer to have equal to the hostname that
@@ -60,7 +82,7 @@ Type=Application
 Name=Eclipse with Franca
 Name[en_US]=Eclipse with Franca
 Icon=/home/vagrant/tools/autoeclipse/eclipse/icon.xpm
-Exec=/home/vagrant/tools/autoeclipse/eclipse/eclipse
+Exec=/home/vagrant/tools/autoeclipse/eclipse/eclipse -data /home/vagrant/workspace
 EOT
 
 chmod 755 $shortcut
