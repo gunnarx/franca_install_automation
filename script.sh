@@ -221,18 +221,11 @@ step Checking MD5 sum for Eclipse
 md5_check ECLIPSE "$downloaded_file" $MACHINE
 untar "$downloaded_file" "$INSTALL_DIR"
 
-DEBUG=true
-step "Installing org.eclipse.remote feature"
-install_update_site PTP_REMOTE
-
-echo pause
-read
 step "Installing CDT"
 install_update_site CDT
 
-#step "Installing Linux Tools"
-#install_update_site LINUXTOOLS
-#DEBUG=false
+step "Installing Linux Tools"
+install_update_site LINUXTOOLS
 
 step "Installing DBus EMF model from update site"
 check_site_hash           DBUS_EMF

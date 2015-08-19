@@ -94,16 +94,6 @@ org.eclipse.cdt.utils.pty
 ECLIPSE_RELEASE="luna"
 ECLIPSE_BUILD="SR2"
 
-# org.eclipse.remote seems to exist also at
-# ptp/builds/<ECLIPSE_RELEASE>/milestones/<MILESTONE>...
-# But I found the latest versions (>2.0 needed by current autotools)
-# under the tree named /remote instead, so we'll use that:
-PTP_REMOTE_VERSION="2.0.0"
-PTP_REMOTE_SERVER="http://download.eclipse.org/tools/ptp/builds/remote"
-PTP_REMOTE_UPDATE_SITE_URL="$PTP_REMOTE_SERVER/$PTP_REMOTE_VERSION"
-PTP_REMOTE_FEATURES=\
-org.eclipse.remote.core
-
 # ECLIPSE C/C++ Development environment (CDT)  ----------------------------
 #
 CDT_VERSION="8.6"
@@ -119,9 +109,6 @@ org.eclipse.cdt.native.feature.group,\
 org.eclipse.cdt.gnu.dsf.feature.group,\
 org.eclipse.cdt.gnu.debug.feature.group,\
 org.eclipse.cdt.ui
-
-# Can't satisfy dependencies at this time:
-#org.eclipse.cdt.autotools.feature.group,\
 
 # COMMON API (C++) FOR IPC
 COMMON_API_CPP_VERSION="3.1.3"
@@ -223,12 +210,4 @@ org.eclipse.linuxtools.valgrind.remote.feature.group,\
 org.eclipse.linuxtools.valgrind.ui,\
 org.eclipse.linuxtools.valgrind.ui.editor
 
-
-#Profiling UI requires autotools which won't install atm.
-#org.eclipse.linuxtools.profiling.docs,\
-#org.eclipse.linuxtools.profiling.feature.group,\
-#org.eclipse.linuxtools.profiling.launch,\
-#org.eclipse.linuxtools.profiling.launch.ui.rdt.proxy,\
-#org.eclipse.linuxtools.profiling.remote.feature.group,\
-#org.eclipse.linuxtools.profiling.ui,\
 # === EOF ===,\
