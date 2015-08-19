@@ -50,6 +50,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       vb.customize [ "modifyvm", :id, "--vram", "128" ]
    end
 
+   # Make sure proxy settings affect also sudo commands
+   # (by default the environment is cleared for sudo)
+   config.vm.provision :shell, inline:
+      'sudo echo "Defaults	env_keep = \"http_proxy https_proxy ftp_proxy\"" >>/etc/sudoers' 
+
    # Warning to user
    config.vm.provision :shell, inline:
       'echo "***************************************************************"
