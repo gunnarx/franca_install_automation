@@ -13,7 +13,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       if ENV['http_proxy']
          puts 'NOTE: Found WEB PROXY defined in shell environment.  Will reuse the following settings inside Vagrant:'
 
-         config.proxy.http = ENV['http_proxy'] || "not defined"
+         config.proxy.ftp   = ENV['ftp_proxy']   || "not defined"
+         config.proxy.http  = ENV['http_proxy']  || "not defined"
          config.proxy.https = ENV['https_proxy'] || "not defined"
          config.proxy.no_proxy = "localhost,127.0.0.1"
 
@@ -21,7 +22,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
          # user:pass was defined as part of Proxy URL (no guarantees!)
          puts "$http_proxy = #{config.proxy.http.sub(/(\w+:\/\/)(\w+):(\S+)@/,'\1\2:**************@')}"
          puts "$https_proxy = #{config.proxy.https.sub(/(\w+:\/\/)(\w+):(\S+)@/,'\1\2:**************@')}"
-         puts "No proxy for #{config.proxy.no_proxy}"
+         puts "$ftp_proxy = #{config.proxy.http.sub(/(\w+:\/\/)(\w+):(\S+)@/,'\1\2:**************@')}"
+         puts "Bypass proxy for #{config.proxy.no_proxy}"
       end
    else
       puts "Vagrant has no proxy plugin => skipped proxy configuration."
