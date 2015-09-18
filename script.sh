@@ -125,8 +125,10 @@ download() {
       echo "File exists: $PWD/$outfile, checking..."
       if [ -n "$expected_md5" ] ; then
          if match_md5 $outfile $expected_md5 ; then
-            echo "File already downloaded"
-            downloaded_file=$outfile
+            echo "File ($outfile) already downloaded"
+            downloaded_file="$outfile"
+         else
+            echo "MD5 check, expected $expected_md5, not matched"
          fi
       else
          echo "No MD5, can't check file completeness"
