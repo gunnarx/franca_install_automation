@@ -206,7 +206,8 @@ if_vagrant MYDIR=/vagrant
 cd "$MYDIR"
 
 # Include config
-. ./CONFIG
+[ -f ./CONFIG ] || die "CONFIG file missing?"
+. ./CONFIG      || die "Failure when sourcing CONFIG"
 
 # Support 32 or 64 bit choice automatically
 OSTYPE=$(uname -o)
