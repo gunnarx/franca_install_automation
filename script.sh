@@ -206,7 +206,8 @@ if_vagrant MYDIR=/vagrant
 cd "$MYDIR"
 
 # Include config
-. ./CONFIG
+[ -f ./CONFIG ] || die "CONFIG file missing?"
+. ./CONFIG      || die "Failure when sourcing CONFIG"
 
 # Support 32 or 64 bit choice automatically
 OSTYPE=$(uname -o)
@@ -265,25 +266,8 @@ install_update_site       DBUS_EMF
 step "Installing Kieler rendering library required by franca.ui"
 install_update_site       KRENDERING
 
-step "Downloading Franca update site archive (.zip)"
-download "$FRANCA_ARCHIVE_URL" "$FRANCA_ARCHIVE_MD5"
-md5_check FRANCA_ARCHIVE "$downloaded_file"
-
-# I can't get install directly from zip file to work using command line
-# invocation --installIU).  Is it supposed to work?)
-# Anyhow for now unpack zip manually, then install. That works. 
-
-step Unpacking Franca update site archive
-UNPACK_DIR=$DOWNLOAD_DIR/tmp.$$
-mkdir -p "$UNPACK_DIR"            || die "mkdir UNPACK_DIR ($UNPACK_DIR) failed"
-cd "$UNPACK_DIR"                  || die "cd to UNPACK_DIR ($UNPACK_DIR) failed"
-unzip -q "$DOWNLOAD_DIR/$downloaded_file" || die "unzip $DOWNLOAD_DIR/$downloaded_file failed"
-cd -
-
-FRANCA_UPDATE_SITE_URL="file://$UNPACK_DIR"
-step Installing Franca
-install_update_site FRANCA
-rm -rf "$UNPACK_DIR"
+step "Installing Franca from update site"
+install_update_site       FRANCA
 
 step Downloading Franca examples
 cd "$WORKSPACE_DIR"                    || die "cd to WORKSPACE_DIR ($WORKSPACE_DIR) failed"

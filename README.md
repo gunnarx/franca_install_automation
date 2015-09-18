@@ -30,16 +30,21 @@ If you just want to go ahead and do a quick test, choose precise64-lxde
 
 ### Branches / flavors:
 
-* precise64-lxde  -- Ubuntu Precise Pangolin 12.04 LTS, with LXDE desktop
 * trusty64-lxde   -- Ubuntu Trusty Tahr 14.04 LTS, with LXDE desktop
 * debian_7.3-lxde -- Debian 7.3, with LXDE desktop
 * trusty64-unity  -- Ubuntu Trusty Tahr 14.04 LTS, with standard Ubuntu (Unity) desktop
                      (This is huge. Also read KNOWN BUGS)
 
-All images are x86 64-bit versions.
+Branches named deprecated* are no longer kept up to date with changes,
+and may be removed in the future.
+
+Other branch names are likely work-in-progress.  Try them only if you need
+the very latest not yet merged functionality.
 
 There are tags describing franca-version, eclipse-version, and operating
 system, as well as *-stable tags
+
+All images are x86 64-bit versions.
 
 The stable tags are an easy way to get the latest stable, but generally
 branches should be kept in working state, and the more specific tags are

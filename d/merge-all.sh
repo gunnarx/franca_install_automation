@@ -7,7 +7,7 @@ die() {
 
 echo Fetching from origin
 git fetch origin
-for br in $(git branch --list | grep -v master | sed 's/\*//' ) ; do
+for br in $(git branch --list | grep -v master | grep -v deprecated= | sed 's/\*//' ) ; do
    [ -n "$br" ] && {
       git checkout $br || die
       echo -n "Merge origin/$br " ; git merge origin/$br
