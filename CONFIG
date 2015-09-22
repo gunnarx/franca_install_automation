@@ -106,6 +106,9 @@ org.franca.generators.source
 
 # FRANCA EXAMPLES ---------------------------------------------------------
 
+# Workaround for <https://github.com/gunnarx/franca_install_automation/issues/23>
+FRANCA_BASE_URL="https://googledrive.com/host/0B7JseVbR6jvhazEtRDVsSk9mX1k"
+
 EXAMPLES_ARCHIVE="0.10/org_franca_examples_src_2015-07-29.zip"
 EXAMPLES_MD5=d00c338f36b0217bdc20e153f6f7f843
 EXAMPLES_URL="$FRANCA_BASE_URL/Releases/$EXAMPLES_ARCHIVE"
