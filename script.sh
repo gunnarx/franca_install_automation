@@ -224,9 +224,6 @@ untar "$downloaded_file" "$INSTALL_DIR"
 step "Installing CDT"
 install_update_site CDT
 
-step "Installing Linux Tools"
-install_update_site LINUXTOOLS
-
 step "Installing DBus EMF model from update site"
 check_site_hash           DBUS_EMF
 check_site_latest_version DBUS_EMF
