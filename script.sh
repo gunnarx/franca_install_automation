@@ -166,7 +166,7 @@ check_site_latest_version() {
    url=$(deref ${1}_UPDATE_SERVER)
    version=$(deref ${1}_VERSION)
    $DEBUG && {
-      echo DEBUG: All versions:
+      echo Listing all versions for your information:
       curl -s "$url/" | egrep '[0-9]\.[0-9]\.[0-9]' | sed 's/^/DEBUG: /'
    }
 
@@ -233,7 +233,7 @@ if [ -d "$WORKSPACE_DIR" ] ; then
    fi
 fi
 
-mkdir -p "$WORKSPACE_DIR"
+mkdir -p "$WORKSPACE_DIR" || die "Fail creating $WORKSPACE_DIR"
 
 if [ "$OSTYPE" = "GNU/Linux" -a "$MACHINE" = "i686" ]; then
     ECLIPSE_INSTALLER=$ECLIPSE_INSTALLER_i686

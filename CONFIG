@@ -108,6 +108,7 @@ org.franca.generators.source
 
 EXAMPLES_ARCHIVE="0.10/org_franca_examples_src_2015-07-29.zip"
 EXAMPLES_MD5=d00c338f36b0217bdc20e153f6f7f843
+FRANCA_BASE_URL="https://googledrive.com/host/0B7JseVbR6jvhazEtRDVsSk9mX1k"
 EXAMPLES_URL="$FRANCA_BASE_URL/Releases/$EXAMPLES_ARCHIVE"
 
 # === EOF ===
