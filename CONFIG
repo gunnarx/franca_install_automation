@@ -88,12 +88,6 @@ PTY_UPDATE_SITE_URL="$CDT_SERVER/$CDT_VERSION"
 PTY_FEATURES=\
 org.eclipse.cdt.utils.pty
 
-# ECLIPSE PTP # -----------------------------------------------------------
-
-# The "org.eclipse.remote" feature is needed by CDT autotools
-ECLIPSE_RELEASE="luna"
-ECLIPSE_BUILD="SR2"
-
 # ECLIPSE C/C++ Development environment (CDT)  ----------------------------
 #
 CDT_VERSION="8.6"
