@@ -11,6 +11,7 @@ echo "***************************************************************"
 # Set to "false" or "true" for debug printouts
 DEBUG=false
 MD5SUM=md5sum   # On MacOS X, the binary is "md5"
+PREFERRED_JAVA_VERSION=1.7
 
 debug() {
    $DEBUG && {
@@ -312,3 +313,5 @@ MSG
 echo
 echo "All Done. You may now start eclipse by running: $INSTALL_DIR/eclipse/eclipse"
 
+java -version >/dev/null 2>&1 || warn "Could not run java executable to check version!?"
+java -version 2>&1 | fgrep -q $PREFERRED_JAVA_VERSION || warn "Your java version is not $PREFERRED_JAVA_VERSION? -- some of the eclipse features may _silently_ fail. WARNING\!"
