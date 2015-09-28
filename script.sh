@@ -6,6 +6,8 @@
 
 # Set to "false" or "true" for debug printouts
 DEBUG=false
+MD5SUM=md5sum   # On MacOS X, the binary is "md5"
+PREFERRED_JAVA_VERSION=1.7
 
 debug() {
    $DEBUG && {
@@ -106,7 +108,7 @@ md5_check() {
 
    # As long as <item>_MD5 is a non-empty string, perform the check
    if [ -n "$wanted_md5" ] ; then
-      md5=$(md5sum <"$file" | cut -b 1-32)
+      md5=$($MD5SUM <"$file" | cut -b 1-32)
       if [ "$md5" != "$wanted_md5" ]  ; then
          die "MD5 checksum ($md5) did not match predefined md5 ($wanted_md5) for item $item.  Check CONFIG file."
       else
@@ -285,3 +287,5 @@ MSG
 echo
 echo "All Done. You may now start eclipse by running: $INSTALL_DIR/eclipse/eclipse"
 
+java -version >/dev/null 2>&1 || warn "Could not run java executable to check version!?"
+java -version 2>&1 | fgrep -q $PREFERRED_JAVA_VERSION || warn "Your java version is not $PREFERRED_JAVA_VERSION? -- some of the eclipse features may _silently_ fail. WARNING\!"
