@@ -36,10 +36,19 @@ if_vagrant() {
 unless_vagrant() {
    [ -z "$VAGRANT" ] && $@
 }
+# Print a major header
+section() {
+      # Using printf because "echo -n" is not fully portable
+      echo
+      printf '********************************************************************\n'
+      printf '*** ' ; echo $@
+      printf '********************************************************************\n'
+}
 
 # Print an operation with *** in front of it
 step() {
-      echo $@ | sed 's/^/ *** /'
+      # Using printf because "echo -n" is not fully portable
+      printf '********************************************************************\n'
 }
 
 # Check condition is met or die
@@ -214,7 +223,7 @@ fi
 
 # Get Eclipse archive
 cd "$DOWNLOAD_DIR"
-step "Downloading Eclipse installer"
+section "Downloading Eclipse installer"
 download "$ECLIPSE_INSTALLER"  # This sets a variable named $downloaded_file
 
 # File exists?, correct MD5?, then unpack
@@ -223,15 +232,15 @@ step Checking MD5 sum for Eclipse
 md5_check ECLIPSE "$downloaded_file" $MACHINE
 untar "$downloaded_file" "$INSTALL_DIR"
 
-step "Installing CDT"
+section "Installing CDT"
 install_update_site CDT
 
-step "Installing DBus EMF model from update site"
+section "Installing DBus EMF model from update site"
 check_site_hash           DBUS_EMF
 check_site_latest_version DBUS_EMF
 install_update_site       DBUS_EMF
 
-step "Downloading Franca update site archive (.zip)"
+section "Downloading Franca update site archive (.zip)"
 download "$FRANCA_ARCHIVE_URL" "$FRANCA_ARCHIVE"
 md5_check FRANCA_ARCHIVE "$downloaded_file"
 
@@ -248,16 +257,16 @@ cd -
 
 # "Update Site" is now a local directory:
 FRANCA_UPDATE_SITE_URL="file://$UNPACK_DIR"
-step Installing Franca
+section "Installing Franca"
 install_update_site FRANCA
 rm -rf "$UNPACK_DIR"
 
-step Downloading Franca examples
+section "Downloading Franca examples"
 cd "$WORKSPACE_DIR"                    || die "cd to WORKSPACE_DIR ($WORKSPACE_DIR) failed"
 download "$EXAMPLES_URL"
 EXAMPLES_FILE="$downloaded_file"
 
-step "Installing IPC CommonAPI C++ from update site"
+section "Installing IPC CommonAPI C++ from update site"
 install_update_site       COMMON_API_CPP
 
 cat <<MSG
