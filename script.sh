@@ -224,6 +224,9 @@ untar "$downloaded_file" "$INSTALL_DIR"
 step "Installing CDT"
 install_update_site CDT
 
+step "Installing org.eclipse.remote feature"
+install_update_site PTP_REMOTE
+
 step "Installing DBus EMF model from update site"
 check_site_hash           DBUS_EMF
 check_site_latest_version DBUS_EMF
