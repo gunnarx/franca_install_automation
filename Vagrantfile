@@ -41,13 +41,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    # was defined above, but to make it unique a timestamp is added also.
    # Increase video RAM as well, it doesn't cost much and we will run
    # graphical desktops after all.
-   vmname = config.vm.hostname + "-" + `date +%Y%m%d%H%M`.to_s
-   vmname.chomp!      # Without this there is a newline character in the name :-o
+   # vmname = config.vm.hostname + "-" + `date +%Y%m%d%H%M`.to_s
+   # vmname.chomp!      # Without this there is a newline character in the name :-o
    config.vm.provider :virtualbox do |vb|
       # Don't boot with headless mode
       vb.gui = true
 
-      vb.customize [ "modifyvm", :id, "--name", vmname ]
+      # vb.customize [ "modifyvm", :id, "--name", vmname ]
       vb.customize [ "modifyvm", :id, "--memory", "1536" ]
       vb.customize [ "modifyvm", :id, "--vram", "128" ]
    end
