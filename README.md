@@ -6,7 +6,8 @@ Scripts related to [Franca IDL](https://code.google.com/a/eclipselabs.org/p/fran
 VM or bare metal?
 -----------------
 
-If you are installing on your machine directly, skip to the end!
+If you are installing on your machine directly, skip to 
+"Installation on bare metal"
 
 If you want to create a Virtual Machine read on.
 
@@ -29,16 +30,21 @@ If you just want to go ahead and do a quick test, choose precise64-lxde
 
 ### Branches / flavors:
 
-* precise64-lxde  -- Ubuntu Precise Pangolin 12.04 LTS, with LXDE desktop
 * trusty64-lxde   -- Ubuntu Trusty Tahr 14.04 LTS, with LXDE desktop
 * debian_7.3-lxde -- Debian 7.3, with LXDE desktop
 * trusty64-unity  -- Ubuntu Trusty Tahr 14.04 LTS, with standard Ubuntu (Unity) desktop
                      (This is huge. Also read KNOWN BUGS)
 
-All images are x86 64-bit versions.
+Branches named deprecated* are no longer kept up to date with changes,
+and may be removed in the future.
+
+Other branch names are likely work-in-progress.  Try them only if you need
+the very latest not yet merged functionality.
 
 There are tags describing franca-version, eclipse-version, and operating
 system, as well as *-stable tags
+
+All images are x86 64-bit versions.
 
 The stable tags are an easy way to get the latest stable, but generally
 branches should be kept in working state, and the more specific tags are
@@ -76,21 +82,22 @@ Gzipped hard disk image size:
 ### Sources:
 
 The Ubuntu base systems are from Ubuntu's provided official "cloud" images.
-They are from the current/ directory, so they will be updated, but hopefully
-will not break.
-
+These are from the current/ directory, so these are not guaranteed to be
+unchanged.  They will be updated by Ubuntu, and hopefully will not break.
 (Note however that the first time you run, you will download the
-currently latest copy but after that Vagrant caches the base system,
-so it will not be changed unless you remove it from your Vagrant setup)
+*current* latest copy, but after that Vagrant caches the base box for
+you, so you will not get upstream changes unless you remove it from your
+Vagrant setup)
 
-- Ubuntu images include Virtualbox guest additions
+Ubuntu images include Virtualbox guest additions (automatic window
+resize etc.) which make the result nice to work with.
 
-The Debian base system is fetched from Puppet Labs with a fixed version.
-Presumably the system on this URL will not change.
-
-- Debian image does not include the Virtualbox guest additions (i.e. no
-automatic window resize.)  (But the  shared folder functionality
-apparently works, it needs to work for Vagrant).
+The Debian base system is fetched from Puppet Labs with a fixed version
+number so presumably the system on this URL will not change, but it is
+out of our hands.
+This Debian image does not include the Virtualbox integration for
+desktop/window resize, etc. (but the  shared folder functionality
+apparently works, since it is required for Vagrant to work).
 
 
 Instructions for Virtual Machine creation
@@ -114,9 +121,10 @@ Instructions for Virtual Machine creation
 
 3. Run `vagrant up`: 
 
-   NOTE: I ran into a new bug where a new machine claims to be provisioned already
-   (it can't be...) but for that reason we give the explicit `--provision` flag.
-   It works.
+   NOTE: I ran into a strange bug where a new machine claimed to be
+   provisioned already (this should not happen...) but for that reason we
+   can always give the explicit `--provision` flag.  It shouldn't be
+   necessary, but it works so do it:
    ```bash
    $ vagrant up --provision
    ```
@@ -125,27 +133,27 @@ Instructions for Virtual Machine creation
    The base box is cached in your vagrant environment. (~/.vagrant
    currently)
 
-   Feel free to replace it with another box of another distro, but the
-   provisioning using apt-get may need changes then.  Pull requests
-   welcome.
+   Feel free to add an alternative box of another distro, but the
+   provisioning code that uses apt-get might need changes then.  Pull
+   requests welcome.
 
-   NOTE: There will be some errors towards the end of the provisioning which
-   seem to be due to vagrant provisioning not running in a normal interactive
-   shell?
+   NOTE: There will be some errors towards the end of the provisioning
+   which seem to be due to vagrant provisioning not running in a normal
+   interactive shell. You can ignore those errors.  Of course you may have
+   some other error that I have not seen yet, but using vagrant and a known
+   base box this should be quite foolproof.
 
-   You can ignore those errors.  Of course you may have some other error that I
-   have not seen yet, but using vagrant and a known base box this should be
-   quite foolproof.
-
-4. Stop the VM which is now running headless:
+4. After provisioning, stop the VM which is now running headless.
+   Update: Actually the gui=true flag is now in Vagrantfile.  Nonetheless,
+   rebooting is recommended at this stage:
 
    ```bash
     $ vagrant halt
    ```
 
-5. Locate your VM in VirtualBox GUI and boot it normally (i.e. not headless)
+5. Then locate your VM in VirtualBox GUI and boot it normally
 
-   You should soon see an LXDE graphical shell asking you to select user.
+   You should soon see an graphical shell asking you to select user.
 
    Login as `vagrant`, password `vagrant`
 
@@ -208,10 +216,10 @@ script.sh does not install any packages except for Eclipse + Java packages so
 for the non-Vagrant installation you need to manually install the needed
 prerequisites on your machine.
 
-This means primarily JDK 6.  Install package java-1.6.0-openjdk on fedora or
-openjdk-6-jre on Ubuntu or Debian.  Note that JDK 6, not 7 (or 8) was up until
-recently required, but refer to official Franca documentation for up to date
-information.
+This means JDK 7 as of now, but refer to official Franca documentation for
+up to date information.  Install package java-1.7.0-openjdk on fedora or
+openjdk-7-jre on Ubuntu or Debian.  (The vagrant script does this
+automatically)
 
 The script downloads and installs Eclipse.  If you have an Eclipse environment
 already that you want to use, you probably need to instead follow a manual
@@ -283,9 +291,22 @@ for the NATed network of the VM.
 Known bugs
 ----------
 
-There is an odd bug for Unity/Ubuntu Desktop only that causes the Eclipse menus to
+1. Franca 0.9.2 includes a bug that prevents the opening the Wizard for
+creating a new Franca file.  For example by using "File->New Franca
+Interface"
+
+Workaround: Choose "File->New" instead and manually give it a .fidl suffix.  
+Proceed editing as usual.
+
+At first I thought it was a problem with this installation but it
+is a bug in Franca tooling and tracked here:
+http://code.google.com/a/eclipselabs.org/p/franca/issues/detail?id=149
+
+2. There is an odd bug for Unity/Ubuntu Desktop only that causes the Eclipse menus to
 not display at all. It seems to happen on the first boot after installation
 (and never again!) It affects also the HUD.  Simply closing and restarting
 Eclipse seems to solve the problem.  If you find any additional information,
 please feed it back.
+
+
 

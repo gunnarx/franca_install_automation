@@ -2,8 +2,12 @@
 # Part of franca_install_automation
 # License: See project dir
 
+# This is a bourne-shell script but since it includes
+# configuration data only it is called CONFIG and included
+# from another script.
+
 # INFO:
-# -------------------------------------------------------------------
+# -------------------------------------------------------------------------
 # SETTINGS
 
 # Special case for Vagrant (affects later definitions)
@@ -19,13 +23,20 @@ WORKSPACE_DIR=$HOME/workspace
 # be reset to /vagrant instead
 DOWNLOAD_DIR=/tmp
 
+# Eclipse distribution ----------------------------------------------------
+
 # URLs to latest x86 32 and 64 bit releases of Eclipse (DSL variant) follow.
 # You can update the one you need...
 
 # It is recommended to look up and specify your closest mirror URL
-# Choose appropriate mirror using:
-# http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/luna/SR2/eclipse-dsl-luna-SR2-linux-gtk-x86_64.tar.gz
+# Choose another appropriate mirror by putting this URL *in your web browser*
+# (it does not work as part of this CONFIG), and then add the URL here.
+# http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads"
 
+# We use FAU here as one possible choice.
+ECLIPSE_MIRROR_FAU_DE="http://ftp.fau.de/eclipse/technology/epp/downloads"
+
+USE_ECLIPSE_MIRROR="$ECLIPSE_MIRROR_FAU_DE"
 # NOTE: You can set _MD5 variables to empty to skip MD5 check (just remove the
 # assignment altogether).
 
@@ -36,7 +47,7 @@ ECLIPSE_MD5_x686=
 ECLIPSE_INSTALLER_x86_64="http://ftp.fau.de/eclipse/technology/epp/downloads/release/luna/SR2/eclipse-dsl-luna-SR2-linux-gtk-x86_64.tar.gz"
 ECLIPSE_MD5_x86_64=98eeaea78478ac384667e3f05142effc
 
-# D-Bus EMF model ---------------------------------------------------
+# D-Bus EMF model ---------------------------------------------------------
 
 # Note: Here _VERSION is necessary I think, because of the way
 # we do this download...
@@ -75,7 +86,7 @@ org.franca.deploymodel.dsl.ui.source,\
 org.franca.generators,\
 org.franca.generators.source
 
-# FRANCA EXAMPLES ----------------------------------------------------
+# FRANCA EXAMPLES ---------------------------------------------------------
 
 EXAMPLES_URL=https://googledrive.com/host/0B7JseVbR6jvhazEtRDVsSk9mX1k/Releases/0.9/org_franca_examples_src_2014-05-07.zip
 

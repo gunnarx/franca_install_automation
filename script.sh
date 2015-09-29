@@ -1,8 +1,12 @@
 #!/bin/sh
-# (C) Gunnar Andersson
-# License: CC-BY 4.0 International
-# (http://creativecommons.org/licenses/by/4.0/)
+# (C) 2014 Gunnar Andersson
+# License: CC-BY 4.0 Intl. (http://creativecommons.org/licenses/by/4.0/)
+# Git repository: https://github.com/gunnarx/franca_install_automation
 # pull requests welcome
+
+echo "***************************************************************"
+echo " script.sh starting"
+echo "***************************************************************"
 
 # Set to "false" or "true" for debug printouts
 DEBUG=false
@@ -11,7 +15,9 @@ PREFERRED_JAVA_VERSION=1.7
 
 debug() {
    $DEBUG && {
-      1>&2 echo $@ | sed 's/^/*DEBUG*: /'
+      # Using printf because "echo -n" is not fully portable
+      printf '*DEBUG*: ' 1>&2
+      echo $@ 1>&2
    }
 }
 
@@ -38,7 +44,6 @@ unless_vagrant() {
 }
 # Print a major header
 section() {
-      # Using printf because "echo -n" is not fully portable
       echo
       printf '********************************************************************\n'
       printf '*** ' ; echo $@
@@ -47,7 +52,6 @@ section() {
 
 # Print an operation with *** in front of it
 step() {
-      # Using printf because "echo -n" is not fully portable
       printf '********************************************************************\n'
 }
 
@@ -79,27 +83,22 @@ sanity_check_filename() {
 # dereference variable
 
 # This is a kind of weird hack, but it evaluates the variable whose name is
-# defined by the input variable.  
+# defined by the input variable.
 # example:   x=foo ; deref x, returns the value of $foo!
 deref() {
    debug "dereffing $1"
    eval echo \$$1
 }
 
-download() {
-   outfile=$(basename "$1")
-   sanity_check_filename "$outfile"
-   wget "$1" -O "$outfile" -c --no-check-certificate || die "wget failed.  Is wget installed?"
-#   curl -C - -O "$1" -O "$outfile" || die "curl failed.  Is curl installed?"
-   downloaded_file=$outfile
+get_md5() {
+   $MD5SUM "$1" | cut -b 1-32
 }
 
-untar() {
-   ensure [ -f "$1" ]
-   targetdir="$2"
-   # Use current directory as default targetdir if not specified
-   [ -n "$targetdir" ] && targetdir=.
-   tar xf "$1" -C "$2" || die "untar failed for $1"
+match_md5() {
+   f=$1
+   expect_md5=$2
+   # Succeed if expected is not defined, or if sum matches
+   [ -z "$expect_md5" -o "$(get_md5 $f)" = "$expect_md5" ]
 }
 
 md5_check() {
@@ -114,16 +113,51 @@ md5_check() {
    fi
 
    debug "Checking MD5 $wanted_md5 for $item"
-
-   # As long as <item>_MD5 is a non-empty string, perform the check
-   if [ -n "$wanted_md5" ] ; then
-      md5=$($MD5SUM <"$file" | cut -b 1-32)
-      if [ "$md5" != "$wanted_md5" ]  ; then
-         die "MD5 checksum ($md5) did not match predefined md5 ($wanted_md5) for item $item.  Check CONFIG file."
-      else
-         debug "MD5 ok ($item)"
-      fi
+   if match_md5 $file $wanted_md5 ; then
+      debug "MD5 ok ($item)"
+      true
+   else
+      die "MD5 checksum ($md5) did not match predefined md5 ($wanted_md5) for item $item.  Check CONFIG file."
    fi
+}
+
+download() {
+   $DEBUG && set -x
+   downloaded_file=
+   outfile=$(basename "$1")
+   expected_md5=$2
+   sanity_check_filename "$outfile"
+   # If already exists, we check md5 to know if it is complete and OK
+   if [ -e "$outfile" ] ; then
+      echo "File exists: $PWD/$outfile, checking..."
+      if [ -n "$expected_md5" ] ; then
+         if match_md5 $outfile $expected_md5 ; then
+            echo "File ($outfile) already downloaded"
+            downloaded_file="$outfile"
+         else
+            echo "MD5 check, expected $expected_md5, not matched"
+         fi
+      else
+         echo "No MD5, can't check file completeness"
+      fi
+   else
+      debug "File not downloaded yet"
+   fi
+   if [ -z "$downloaded_file" ] ; then
+      echo Downloading...
+      wget -c "$1" -O "$outfile" -c --no-check-certificate || die "wget failed.  Is wget installed?"
+#   curl -C - -O "$1" -O "$outfile" || die "curl failed.  Is curl installed?"
+      downloaded_file=$outfile
+   fi
+   set +x
+}
+
+untar() {
+   ensure [ -f "$1" ]
+   targetdir="$2"
+   # Use current directory as default targetdir if not specified
+   [ -n "$targetdir" ] && targetdir=.
+   tar xf "$1" -C "$2" || die "untar failed for $1"
 }
 
 # Check hash on update site such that an update is noticed
@@ -139,7 +173,7 @@ check_site_latest_version() {
    url=$(deref ${1}_UPDATE_SERVER)
    version=$(deref ${1}_VERSION)
    $DEBUG && {
-      echo DEBUG: All versions:
+      echo Listing all versions for your information:
       curl -s "$url/" | egrep '[0-9]\.[0-9]\.[0-9]' | sed 's/^/DEBUG: /'
    }
 
@@ -181,31 +215,32 @@ if_vagrant MYDIR=/vagrant
 cd "$MYDIR"
 
 # Include config
-. ./CONFIG
+[ -f ./CONFIG ] || die "CONFIG file missing?"
+. ./CONFIG      || die "Failure when sourcing CONFIG"
 
+# Support 32 or 64 bit choice automatically
 OSTYPE=$(uname -o)
 MACHINE=$(uname -m)
 
 # Check that a few necessary variables are defined
-defined ECLIPSE_INSTALLER_$MACHINE INSTALL_DIR DOWNLOAD_DIR DBUS_EMF_UPDATE_SITE_URL FRANCA_ARCHIVE_URL
+defined ECLIPSE_INSTALLER_$MACHINE INSTALL_DIR DOWNLOAD_DIR DBUS_EMF_UPDATE_SITE_URL FRANCA_ARCHIVE_URL KRENDERING_SITE_URL
 
 # Override CONFIG for the download dir if running in Vagrant
 if_vagrant DOWNLOAD_DIR=/vagrant
 
 # Create install and workspace dirs
 mkdir -p "$INSTALL_DIR" || die "Can't create target dir ($INSTALL_DIR)"
+
 if [ -d "$WORKSPACE_DIR" ] ; then
-   echo
-   echo "NOTE the workspace dir in CONFIG exists ($WORKSPACE_DIR)!"
-   echo "I will unpack files into $WORKSPACE_DIR !"
-   warn "Remove it to make a clean installation or back up your files!"
-else
-   mkdir -p "$WORKSPACE_DIR"
+   if [ -z "$VAGRANT" ] ; then  # No need to warn in vagrant case
+      echo
+      echo "NOTE the workspace dir in CONFIG exists ($WORKSPACE_DIR)!"
+      echo "I will unpack files into $WORKSPACE_DIR !"
+      warn "Remove it to make a clean installation or back up your files!"
+   fi
 fi
 
-# Support 32 or 64 bit choice automatically
-OSTYPE=$(uname -o)
-MACHINE=$(uname -m)
+mkdir -p "$WORKSPACE_DIR" || die "Fail creating $WORKSPACE_DIR"
 
 if [ "$OSTYPE" = "GNU/Linux" -a "$MACHINE" = "i686" ]; then
     ECLIPSE_INSTALLER=$ECLIPSE_INSTALLER_i686
@@ -224,7 +259,7 @@ fi
 # Get Eclipse archive
 cd "$DOWNLOAD_DIR"
 section "Downloading Eclipse installer"
-download "$ECLIPSE_INSTALLER"  # This sets a variable named $downloaded_file
+download "$ECLIPSE_INSTALLER" $(deref ECLIPSE_MD5_$MACHINE) # This sets a variable named $downloaded_file
 
 # File exists?, correct MD5?, then unpack
 [ -f "$downloaded_file" ] || die "ECLIPSE not found (not downloaded?)."
@@ -263,7 +298,9 @@ rm -rf "$UNPACK_DIR"
 
 section "Downloading Franca examples"
 cd "$WORKSPACE_DIR"                    || die "cd to WORKSPACE_DIR ($WORKSPACE_DIR) failed"
-download "$EXAMPLES_URL"
+download "$EXAMPLES_URL" "$EXAMPLES_MD5"
+step Checking MD5 sum for example
+md5_check EXAMPLES "$downloaded_file"
 EXAMPLES_FILE="$downloaded_file"
 
 section "Installing IPC CommonAPI C++ from update site"
@@ -287,10 +324,10 @@ project browser.  When you have started eclipse, go to Workspace, then select
    under /src, open "org.franca.examples.basic.tests"
 
    Right click on for example AllTests.java
-   and select Run As "JUnit Test".
+   and select Run As "JUnit Test".  You should get a green bar result.
 
-   But from now on you should instead read the Franca documentation for up to
-   date instructions on this stuff.
+   But from now on you should instead read the Franca documentation for up
+   to date instructions on this stuff.
 MSG
 
 echo

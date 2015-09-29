@@ -13,15 +13,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       if ENV['http_proxy']
          puts 'NOTE: Found WEB PROXY defined in shell environment.  Will reuse the following settings inside Vagrant:'
 
-         config.proxy.http = ENV['http_proxy'] || "not defined"
+         config.proxy.http  = ENV['http_proxy']  || "not defined"
          config.proxy.https = ENV['https_proxy'] || "not defined"
+         config.proxy.ftp   = ENV['ftp_proxy']   || "not defined"
          config.proxy.no_proxy = "localhost,127.0.0.1"
 
          # Print settings, but try to protect password if by chance 
          # user:pass was defined as part of Proxy URL (no guarantees!)
          puts "$http_proxy = #{config.proxy.http.sub(/(\w+:\/\/)(\w+):(\S+)@/,'\1\2:**************@')}"
          puts "$https_proxy = #{config.proxy.https.sub(/(\w+:\/\/)(\w+):(\S+)@/,'\1\2:**************@')}"
-         puts "No proxy for #{config.proxy.no_proxy}"
+         puts "$ftp_proxy = #{config.proxy.http.sub(/(\w+:\/\/)(\w+):(\S+)@/,'\1\2:**************@')}"
+         puts "Bypass proxy for #{config.proxy.no_proxy}"
       end
    else
       puts "Vagrant has no proxy plugin => skipped proxy configuration."
@@ -29,10 +31,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
    config.vm.box = "trusty64"
 
-	config.vm.hostname = "francalab-trusty64"
+   config.vm.hostname = "francalab-trusty64"
 
-	# If above box does not exist locally, fetch it here:
-	config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
+   # If above box does not exist locally, fetch it here:
+   config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
 
    # To run eclipse we need more than default RAM 512MB And we might as well
    # set a useful name also, which I prefer to have equal to the hostname that
@@ -49,6 +51,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       vb.customize [ "modifyvm", :id, "--memory", "1536" ]
       vb.customize [ "modifyvm", :id, "--vram", "128" ]
    end
+
+   # Make sure proxy settings affect also sudo commands
+   # (by default the environment is cleared for sudo)
+   config.vm.provision :shell, inline:
+      'sudo echo "Defaults	env_keep = \"http_proxy https_proxy ftp_proxy\"" >>/etc/sudoers' 
 
    # Warning to user
    config.vm.provision :shell, inline:
@@ -82,7 +89,7 @@ Type=Application
 Name=Eclipse with Franca
 Name[en_US]=Eclipse with Franca
 Icon=/home/vagrant/tools/autoeclipse/eclipse/icon.xpm
-Exec=/home/vagrant/tools/autoeclipse/eclipse/eclipse
+Exec=/home/vagrant/tools/autoeclipse/eclipse/eclipse -data /home/vagrant/workspace
 EOT
 
 chmod 755 $shortcut
