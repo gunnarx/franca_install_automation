@@ -11,6 +11,7 @@ echo "***************************************************************"
 # Set to "false" or "true" for debug printouts
 DEBUG=false
 MD5SUM=md5sum   # On MacOS X, the binary is "md5"
+PREFERRED_JAVA_VERSION=1.7
 
 debug() {
    $DEBUG && {
@@ -40,11 +41,18 @@ if_vagrant() {
 unless_vagrant() {
    [ -z "$VAGRANT" ] && $@
 }
+# Print a major header
+section() {
+      # Using printf because "echo -n" is not fully portable
+      printf '********************************************************************\n'
+      printf '*** ' ; echo $@
+      printf '********************************************************************\n'
+}
 
 # Print an operation with *** in front of it
 step() {
-      echo -n ' *** '
-      echo $@
+      # Using printf because "echo -n" is not fully portable
+      printf '********************************************************************\n'
 }
 
 # Check condition is met or die
@@ -260,18 +268,18 @@ step Checking MD5 sum for Eclipse
 md5_check ECLIPSE "$downloaded_file" $MACHINE
 untar "$downloaded_file" "$INSTALL_DIR"
 
-step "Installing DBus EMF model from update site"
+section "Installing DBus EMF model from update site"
 check_site_hash           DBUS_EMF
 check_site_latest_version DBUS_EMF
 install_update_site       DBUS_EMF
 
-step "Installing Kieler rendering library required by franca.ui"
+section "Installing Kieler rendering library required by franca.ui"
 install_update_site       KRENDERING
 
 step "Installing Franca from update site"
 install_update_site       FRANCA
 
-step Downloading Franca examples
+section Downloading Franca examples
 cd "$WORKSPACE_DIR"                    || die "cd to WORKSPACE_DIR ($WORKSPACE_DIR) failed"
 download "$EXAMPLES_URL" "$EXAMPLES_MD5"
 step Checking MD5 sum for example
@@ -305,3 +313,5 @@ MSG
 echo
 echo "All Done. You may now start eclipse by running: $INSTALL_DIR/eclipse/eclipse"
 
+java -version >/dev/null 2>&1 || warn "Could not run java executable to check version!?"
+java -version 2>&1 | fgrep -q $PREFERRED_JAVA_VERSION || warn "Your java version is not $PREFERRED_JAVA_VERSION? -- some of the eclipse features may _silently_ fail. WARNING\!"
