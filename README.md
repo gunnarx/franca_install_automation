@@ -30,6 +30,12 @@ If you just want to go ahead and do a quick test, choose precise64-lxde
 
 ### Branches / flavors:
 
+The following branch installs C++ Common API support in addition to Franca.
+* cpp_common_api  -- Ubuntu Trusty Tahr 14.04 LTS, with LXDE desktop
+                     and C++ Common API support (recommended).
+
+The following branches install only Franca Tooling - the tip of the branch
+is typically installing the latest Franca version.
 * trusty64-lxde   -- Ubuntu Trusty Tahr 14.04 LTS, with LXDE desktop
 * debian_7.3-lxde -- Debian 7.3, with LXDE desktop
 * trusty64-unity  -- Ubuntu Trusty Tahr 14.04 LTS, with standard Ubuntu (Unity) desktop
