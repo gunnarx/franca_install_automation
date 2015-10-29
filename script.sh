@@ -75,6 +75,11 @@ warn() {
    unless_vagrant read
 }
 
+# Print a note, no pause
+note() {
+   echo "NOTE: $1"
+}
+
 # This is kind of useless...
 sanity_check_filename() {
    [ -z "$1" ] && die "Filename empty."
@@ -180,7 +185,7 @@ check_site_latest_version() {
    latest=$(curl -s "$url/" | egrep '[0-9]\.[0-9]\.[0-9]' | sed 's/.*\([0-9]\.[0-9]\.[0-9]\).*/\1/' | sort -n | tail -1)
    debug "latest: $latest"
    if [ "$latest" != "$version" ] ; then
-      warn "There appears to be a later version than $version for $1"
+      note "There appears to be a later version than $version for $1, but you requested $version, so we move on."
    fi
 }
 
