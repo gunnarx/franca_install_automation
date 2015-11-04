@@ -1,7 +1,7 @@
 Automated Eclipse/Franca environment installation
 =================================================
 
-Scripts related to [Franca IDL](https://code.google.com/a/eclipselabs.org/p/franca/) installation.
+Scripts related to [Franca IDL](https://github.com/franca/franca) installation.
 
 VM or bare metal?
 -----------------
