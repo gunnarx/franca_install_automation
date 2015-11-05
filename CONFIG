@@ -106,8 +106,8 @@ org.franca.generators.source
 
 # FRANCA EXAMPLES ---------------------------------------------------------
 
-EXAMPLES_ARCHIVE="0.10/org_franca_examples_src_2015-07-29.zip"
-EXAMPLES_MD5=d00c338f36b0217bdc20e153f6f7f843
+EXAMPLES_ARCHIVE="0.10/org_franca_examples_src_2015-10-28.zip"
+EXAMPLES_MD5="ffbbef3db813821e032a9161fd45fe34"
 FRANCA_BASE_URL="https://googledrive.com/host/0B7JseVbR6jvhazEtRDVsSk9mX1k"
 EXAMPLES_URL="$FRANCA_BASE_URL/Releases/$EXAMPLES_ARCHIVE"
 
