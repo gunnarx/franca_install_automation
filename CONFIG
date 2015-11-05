@@ -86,9 +86,6 @@ org.franca.deploymodel.dsl.ui.source,\
 org.franca.generators,\
 org.franca.generators.source
 
-# FRANCA EXAMPLES ---------------------------------------------------------
-
-EXAMPLES_URL=https://googledrive.com/host/0B7JseVbR6jvhazEtRDVsSk9mX1k/Releases/0.9/org_franca_examples_src_2014-05-07.zip
 
 # Some CDT tools (autogen tools) require eclipse.remote
 # which requires another CDT tool (PTY).  Dependency hell?
@@ -130,5 +127,10 @@ org.genivi.commonapi.someip,\
 org.genivi.commonapi.someip.ui,\
 org.genivi.commonapi.someip.validator,\
 
+# FRANCA EXAMPLES ---------------------------------------------------------
+EXAMPLES_ARCHIVE="0.10/org_franca_examples_src_2015-10-28.zip"
+EXAMPLES_MD5="ffbbef3db813821e032a9161fd45fe34"
+FRANCA_BASE_URL="https://googledrive.com/host/0B7JseVbR6jvhazEtRDVsSk9mX1k"
+EXAMPLES_URL="$FRANCA_BASE_URL/Releases/$EXAMPLES_ARCHIVE"
 
-# === EOF ===,\
+# === EOF ===

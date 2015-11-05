@@ -31,26 +31,31 @@ If you just want to go ahead and do a quick test, choose precise64-lxde
 ### Branches / flavors:
 
 The following branch installs C++ Common API support in addition to Franca.
+Compatibility requires this to stay on an older Franca version.
 * cpp_common_api  -- Ubuntu Trusty Tahr 14.04 LTS, with LXDE desktop
                      and C++ Common API support (recommended).
 
 The following branches install only Franca Tooling - the tip of the branch
 is typically installing the latest Franca version.
-* trusty64-lxde   -- Ubuntu Trusty Tahr 14.04 LTS, with LXDE desktop
-* debian_7.3-lxde -- Debian 7.3, with LXDE desktop
+* trusty64-lxde   -- Ubuntu Trusty Tahr 14.04 LTS, with LXDE desktop (recommended)
 * trusty64-unity  -- Ubuntu Trusty Tahr 14.04 LTS, with standard Ubuntu (Unity) desktop
-                     (This is huge. Also read KNOWN BUGS)
+                     (Warning: This is very big and takes a long time to
+                      install. Also read KNOWN BUGS)
+* debian_7.3-lxde -- Debian 7.3, with LXDE desktop (broken at this time)
 
-Branches named deprecated* are no longer kept up to date with changes,
-and may be removed in the future.
+Branches named deprecated= are no longer kept up to date with changes,
+and will likely be removed soon.
 
-Other branch names are likely work-in-progress.  Try them only if you need
-the very latest not yet merged functionality.
+Branches named broken= are broken, probably for quite some time - because
+if a break can be easily fixed it will be, and not renamed of course.
+
+Branches not listed above are likely work-in-progress.  Try them only if
+you need the very latest not yet merged functionality.
 
 There are tags describing franca-version, eclipse-version, and operating
 system, as well as *-stable tags
 
-All images are x86 64-bit versions.
+All VM images are x86 64-bit versions.
 
 The stable tags are an easy way to get the latest stable, but generally
 branches should be kept in working state, and the more specific tags are
