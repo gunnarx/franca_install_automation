@@ -249,7 +249,17 @@ step Installing Franca
 install_update_site FRANCA
 rm -rf "$UNPACK_DIR"
 
+step "Installing Artop packages from update site"
+install_update_site       ARTOP
+
+step "Installing IONAS packages from update site"
+install_update_site       IONAS
+
+echo STOPPPHERE
+exit
+
 step Downloading Franca examples
+
 cd "$WORKSPACE_DIR"                    || die "cd to WORKSPACE_DIR ($WORKSPACE_DIR) failed"
 download "$EXAMPLES_URL"
 EXAMPLES_FILE="$downloaded_file"

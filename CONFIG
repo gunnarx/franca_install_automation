@@ -94,4 +94,25 @@ org.franca.generators.source
 
 EXAMPLES_URL=https://googledrive.com/host/0B7JseVbR6jvhazEtRDVsSk9mX1k/Releases/0.9/org_franca_examples_src_2014-05-07.zip
 
+
+# IONAS  ------------------------------------------------------------------
+
+# Instructions: Use Eclipse LUNA and Franca 0.9.0
+
+IONAS_UPDATE_SITE_URL="http://docs.projects.genivi.org/ionas-ui-update-site"
+ORBIT_UPDATE_SITE_URL="http://download.eclipse.org/tools/orbit/downloads/drops/R20140525021250/repository/"
+SPHINX_UPDATE_SITE_URL="http://download.eclipse.org/sphinx/updates/releases/0.8.x"
+ARTOP_UPDATE_SITE_URL="https://www.artop.org/containers/artop-sdk-update-site-4.2"
+
+ARTOP_FEATURES=\
+org.artop.aal.autosar411,\
+org.artop.aal.common
+
+IONAS_FEATURES=\
+org.autosar.ionas.feature.feature.group,\
+org.genivi.ionas.feature.feature.group
+
+
+#
+#
 # === EOF ===
