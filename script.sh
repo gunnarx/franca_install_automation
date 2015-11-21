@@ -78,8 +78,15 @@ deref() {
 download() {
    outfile=$(basename "$1")
    sanity_check_filename "$outfile"
-   wget "$1" -O "$outfile" -c --no-check-certificate || die "wget failed.  Is wget installed?"
-#   curl -C - -O "$1" -O "$outfile" || die "curl failed.  Is curl installed?"
+   if [ -x "$(which curl 2>&1)" ] ; then
+      # REMOVED the continuation because on file length unknown curl croaks...
+      # TODO: Insert file/md5 check instead
+      curl --location --progress-bar "$1" -o "$outfile" | tr '#' '.' || die "curl failed.  Is curl installed?"
+   elif [ -x "$(which wget 2>&1)" ] ; then
+      wget "$1" -O "$outfile" -c --no-check-certificate || die "wget failed.  Is wget installed?"
+   else
+      die "Download failed, can't find either curl or wget installed(?)"
+   fi
    downloaded_file=$outfile
 }
 
