@@ -154,15 +154,12 @@ install_update_site() {
    site=$(deref ${1}_UPDATE_SITE_URL)
    features=$(deref ${1}_FEATURES)
 
-   debug "Installing from update site $1"
-
    $DEBUG && set -x
    $INSTALL_DIR/eclipse/eclipse -nosplash \
       -application org.eclipse.equinox.p2.director \
       -repository "$site" \
       -destination $INSTALL_DIR/eclipse \
       -installIU "$features"
-   set +x
 }
 
 MYDIR=$(dirname "$0")
