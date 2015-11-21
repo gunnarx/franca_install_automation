@@ -287,11 +287,16 @@ step "Unpacking Eclipse"
 md5_check ECLIPSE "$downloaded_file" $MACHINE
 untar "$downloaded_file" "$INSTALL_DIR"
 
+# TBD - Orbit not yet required (have not reached this dependency yet?)
 #step "Installing ICU4J/Orbit"
 #install_update_site       ORBIT
 
-step "Installing EMF Workspace"
-install_update_site       EMF
+install_site_archive EMF_VALIDATION
+
+install_site_archive EMF_TRANSACTION
+
+step "Installing EMF Workspace from update site"
+install_update_site  EMF
 
 step "Installing DBus EMF model from update site"
 check_site_hash           DBUS_EMF
@@ -304,17 +309,14 @@ install_update_site       DBUS_EMF
 
 step "Downloading Sphinx update site archive (.zip)"
 download "$SPHINX_ARCHIVE_URL" "$SPHINX_ARCHIVE"
-#md5_check SPHINX_ARCHIVE "$downloaded_file"
+md5_check SPHINX_ARCHIVE "$downloaded_file"
+unpack_site_archive SPHINX "$downloaded_file"
 
-step "Unpacking Sphinx update site archive"
-UNPACK_DIR=$DOWNLOAD_DIR/tmp.$$
-mkdir -p "$UNPACK_DIR"            || die "mkdir UNPACK_DIR ($UNPACK_DIR) failed"
-cd "$UNPACK_DIR"                  || die "cd to UNPACK_DIR ($UNPACK_DIR) failed"
-unzip -q "$DOWNLOAD_DIR/$downloaded_file" || die "unzip $DOWNLOAD_DIR/$downloaded_file failed"
-
-# It's not very nice, whoever packed up the sphinx zip-file did not use a
-# relative path, so this huge ugly path is of the path inside the zip.
-# Let's move the content out of there...
+# It's not very nice - whoever set up the creation of zip-file for sphinx
+# from their CI system did not use a sane root for the archive, so this
+# huge ugly path is inside the zip... 
+# So let's first move the content out of there...
+cd "$UNPACK_DIR"
 mv home/hudson/genie.sphinx/.hudson/jobs/sphinx-0.8-luna-publish/workspace/releng/org.eclipse.sphinx.releng.builds/updates/* . || die "path fix for zipfile failed -- has it changed in the archive? - please check script for details"
 rm -r home || die "some weird non-writable file can't be deleted?"
 cd -
@@ -337,16 +339,19 @@ UNPACK_DIR=$DOWNLOAD_DIR/tmp.$$
 mkdir -p "$UNPACK_DIR"            || die "mkdir UNPACK_DIR ($UNPACK_DIR) failed"
 cd "$UNPACK_DIR"                  || die "cd to UNPACK_DIR ($UNPACK_DIR) failed"
 unzip -q "$DOWNLOAD_DIR/$downloaded_file" || die "unzip $DOWNLOAD_DIR/$downloaded_file failed"
-cd -
+cd - >/dev/null
 
 FRANCA_UPDATE_SITE_URL="file://$UNPACK_DIR"
 step Installing Franca
 install_update_site FRANCA
 rm -rf "$UNPACK_DIR"
 
+step "Installing ARTOP tools"
+get_local_file "$ARTOP_ARCHIVE"
+unpack_site_archive ARTOP "$downloaded_file"
+ARTOP_UPDATE_SITE_URL="file:///$UNPACK_DIR"
+install_update_site ARTOP
 
-step "Installing Artop packages from update site"
-install_update_site       ARTOP
 
 step "Installing IONAS packages from update site"
 install_update_site       IONAS
