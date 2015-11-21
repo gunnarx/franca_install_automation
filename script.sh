@@ -233,8 +233,9 @@ check_site_hash           DBUS_EMF
 check_site_latest_version DBUS_EMF
 install_update_site       DBUS_EMF
 
-step "Installing GEF4 from update site"
-install_update_site       GEF4
+# Temporarily removed because of GEF4 failure (UI install for 0.9.1 is broken because of this)
+#step "Installing GEF4 from update site"
+#install_update_site       GEF4
 
 step "Downloading Sphinx update site archive (.zip)"
 download "$SPHINX_ARCHIVE_URL" "$SPHINX_ARCHIVE"

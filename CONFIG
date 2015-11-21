@@ -80,8 +80,6 @@ org.franca.core.dsl.ui.source,\
 org.franca.core.edit,\
 org.franca.core.edit.source,\
 org.franca.core.source,\
-org.franca.core.ui.addons,\
-org.franca.core.ui.addons.source,\
 org.franca.deploymodel.dsl,\
 org.franca.deploymodel.dsl.source,\
 org.franca.deploymodel.dsl.tests.base,\
@@ -90,6 +88,10 @@ org.franca.deploymodel.dsl.ui,\
 org.franca.deploymodel.dsl.ui.source,\
 org.franca.generators,\
 org.franca.generators.source
+
+# Temporarily removed because of GEF4 failure (UI install for 0.9.1 is broken because of this)
+#org.franca.core.ui.addons,\
+#org.franca.core.ui.addons.source,\
 
 # FRANCA EXAMPLES ----------------------------------------------------
 
