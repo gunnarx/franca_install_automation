@@ -218,8 +218,15 @@ download "$ECLIPSE_INSTALLER"  # This sets a variable named $downloaded_file
 # File exists?, correct MD5?, then unpack
 [ -f "$downloaded_file" ] || die "ECLIPSE not found (not downloaded?)."
 step Checking MD5 sum for Eclipse
+step "Unpacking Eclipse"
 md5_check ECLIPSE "$downloaded_file" $MACHINE
 untar "$downloaded_file" "$INSTALL_DIR"
+
+#step "Installing ICU4J/Orbit"
+#install_update_site       ORBIT
+
+step "Installing EMF Workspace"
+install_update_site       EMF
 
 step "Installing DBus EMF model from update site"
 check_site_hash           DBUS_EMF
@@ -228,6 +235,28 @@ install_update_site       DBUS_EMF
 
 step "Installing GEF4 from update site"
 install_update_site       GEF4
+
+step "Downloading Sphinx update site archive (.zip)"
+download "$SPHINX_ARCHIVE_URL" "$SPHINX_ARCHIVE"
+#md5_check SPHINX_ARCHIVE "$downloaded_file"
+
+step "Unpacking Sphinx update site archive"
+UNPACK_DIR=$DOWNLOAD_DIR/tmp.$$
+mkdir -p "$UNPACK_DIR"            || die "mkdir UNPACK_DIR ($UNPACK_DIR) failed"
+cd "$UNPACK_DIR"                  || die "cd to UNPACK_DIR ($UNPACK_DIR) failed"
+unzip -q "$DOWNLOAD_DIR/$downloaded_file" || die "unzip $DOWNLOAD_DIR/$downloaded_file failed"
+
+# It's not very nice, whoever packed up the sphinx zip-file did not use a
+# relative path, so this huge ugly path is of the path inside the zip.
+# Let's move the content out of there...
+mv home/hudson/genie.sphinx/.hudson/jobs/sphinx-0.8-luna-publish/workspace/releng/org.eclipse.sphinx.releng.builds/updates/* . || die "path fix for zipfile failed -- has it changed in the archive? - please check script for details"
+rm -r home || die "some weird non-writable file can't be deleted?"
+cd -
+
+SPHINX_UPDATE_SITE_URL="file://$UNPACK_DIR"
+step "Installing Sphinx"
+install_update_site SPHINX
+rm -rf "$UNPACK_DIR"
 
 step "Downloading Franca update site archive (.zip)"
 download "$FRANCA_ARCHIVE_URL" "$FRANCA_ARCHIVE"
@@ -248,6 +277,7 @@ FRANCA_UPDATE_SITE_URL="file://$UNPACK_DIR"
 step Installing Franca
 install_update_site FRANCA
 rm -rf "$UNPACK_DIR"
+
 
 step "Installing Artop packages from update site"
 install_update_site       ARTOP

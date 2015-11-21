@@ -36,6 +36,7 @@ ECLIPSE_MD5_x686=
 ECLIPSE_INSTALLER_x86_64="http://ftp.fau.de/eclipse/technology/epp/downloads/release/luna/SR2/eclipse-dsl-luna-SR2-linux-gtk-x86_64.tar.gz"
 ECLIPSE_MD5_x86_64=98eeaea78478ac384667e3f05142effc
 
+
 # D-Bus EMF model ---------------------------------------------------
 
 # Note: Here _VERSION is necessary I think, because of the way
@@ -100,9 +101,14 @@ EXAMPLES_URL=https://googledrive.com/host/0B7JseVbR6jvhazEtRDVsSk9mX1k/Releases/
 # Instructions: Use Eclipse LUNA and Franca 0.9.0
 
 IONAS_UPDATE_SITE_URL="http://docs.projects.genivi.org/ionas-ui-update-site"
-ORBIT_UPDATE_SITE_URL="http://download.eclipse.org/tools/orbit/downloads/drops/R20140525021250/repository/"
-SPHINX_UPDATE_SITE_URL="http://download.eclipse.org/sphinx/updates/releases/0.8.x"
+ORBIT_UPDATE_SITE_URL="http://download.eclipse.org/tools/orbit/downloads/drops/R20140525021250/repository"
+#ORBIT_UPDATE_SITE_URL="http://download.eclipse.org/tools/orbit/downloads/drops/R20150124073747/repository"
+#SPHINX_UPDATE_SITE_URL="http://download.eclipse.org/sphinx/updates/0.9.x/features"
 ARTOP_UPDATE_SITE_URL="https://www.artop.org/containers/artop-sdk-update-site-4.2"
+
+SPHINX_ARCHIVE="sphinx-Update-0.8.0.zip"
+SPHINX_ARCHIVE_MD5=
+SPHINX_ARCHIVE_URL="http://mirror.netcologne.de/eclipse/sphinx/$SPHINX_ARCHIVE"
 
 ARTOP_FEATURES=\
 org.artop.aal.autosar411,\
@@ -112,6 +118,23 @@ IONAS_FEATURES=\
 org.autosar.ionas.feature.feature.group,\
 org.genivi.ionas.feature.feature.group
 
+SPHINX_FEATURES=\
+org.eclipse.sphinx.emf
+
+#ORBIT_FEATURES=\
+#com.ibm.icu
+
+EMF_UPDATE_SITE_URL="http://download.eclipse.org/modeling/emf/updates/"
+EMF_FEATURES=\
+org.eclipse.emf.transaction,\
+org.eclipse.emf.workspace
+
+# Try an absolute version
+# Or try some earlier directory...
+#org.eclipse.emf.workspace.doc_1.2.0.v200805130238-11-7w311916241349
+
+#org.eclipse.emf.validation,\
+#
 
 #
 #
