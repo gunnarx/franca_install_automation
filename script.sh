@@ -162,6 +162,67 @@ install_update_site() {
       -installIU "$features"
 }
 
+get_local_file() {
+
+   file="$1"
+   cd "$MYDIR"
+
+   step "Get $1 software archive locally"
+   done=false
+   [ -f "./$file" ] && { path="./$file" ; done=true ; }
+   while ! $done ; do
+      echo "I need the file $file to be provided by you locally."
+      echo "Please provide a path to the file (relative to CWD is ok but avoid ~/ \$HOME or similar)"
+      echo "You are now in $PWD"
+      echo -n "Path: "
+      read path
+      [ -d "$path" -a -f "$path/$file" ] && path="$path/$file"
+      [ -f "$path" ] && done=true
+      [ ! -f "$path" ] && { echo "Let's see..." ; ls -l "$path" ; echo "No - try again." ; }
+   done
+
+   cp "$path" "$DOWNLOAD_DIR"
+   downloaded_file="$file"
+   cd - >/dev/null
+}
+
+unpack_site_archive() {
+   step "Unpacking archive $2 for $1"
+   UNPACK_DIR=$DOWNLOAD_DIR/tmp.$$
+   mkdir -p "$UNPACK_DIR"            || die "mkdir UNPACK_DIR ($UNPACK_DIR) failed"
+   cd "$UNPACK_DIR"                  || die "cd to UNPACK_DIR ($UNPACK_DIR) failed"
+   unzip -q "$DOWNLOAD_DIR/$downloaded_file" || die "unzip $DOWNLOAD_DIR/$downloaded_file failed"
+   cd - >/dev/null
+}
+
+install_site_archive() {
+   step "Downloading update site archive (.zip) for $1"
+   archive=$(deref ${1}_ARCHIVE)
+   url=$(deref ${1}_ARCHIVE_URL)
+   download "$url" "$archive"
+   md5_check "$1" "$downloaded_file"
+   unpack_site_archive "$1" "$downloaded_file"
+
+   step "Installing $1 from local update site (unpacked archive)"
+   eval ${1}_UPDATE_SITE_URL="file://$UNPACK_DIR"
+   install_update_site $1
+
+   cd "$DOWNLOAD_DIR"
+   rm -rf "$UNPACK_DIR"
+}
+
+user_pass() {
+   site=$1
+   echo "Please write your login for update site $site"
+   echo "User name: "
+   read user
+   echo "Password: "
+   read pass
+   eval ${1}_USER="$user"
+   eval ${1}_PASS="$pass"
+}
+
+
 MYDIR=$(dirname "$0")
 ORIGDIR="$PWD"
 
