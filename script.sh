@@ -121,6 +121,7 @@ md5_check() {
    fi
 }
 
+
 download() {
    cd "$DOWNLOAD_DIR"
    $DEBUG && set -x
@@ -196,12 +197,22 @@ _install_update_site() {
    site="$(deref ${1}_UPDATE_SITE_URL)"
    features="$(deref ${1}_FEATURES)"
 
+   debug "Installing from update site $1"
+
    $DEBUG && set -x
    $INSTALL_DIR/eclipse/eclipse -nosplash \
       -application org.eclipse.equinox.p2.director \
       -repository "$site" \
       -destination $INSTALL_DIR/eclipse \
       -installIU "$features"
+
+   if [ $? -eq 0 ] ; then
+      echo "Success"
+   else
+      echo "Fail"
+   fi
+
+   $DEBUG && set +x
 }
 
 get_local_file() {
@@ -353,37 +364,9 @@ download "$ECLIPSE_INSTALLER" $(deref ECLIPSE_MD5_$MACHINE) # This sets a variab
 
 # File exists?, correct MD5?, then unpack
 [ -f "$downloaded_file" ] || die "ECLIPSE not found (not downloaded?)."
-step Checking MD5 sum for Eclipse
 md5_check ECLIPSE "$downloaded_file" $MACHINE
 step "Unpacking Eclipse to $INSTALL_DIR"
 untar "$downloaded_file" "$INSTALL_DIR"
-
-# TBD - Orbit not yet required (have not reached this dependency yet?)
-#step "Installing ICU4J/Orbit"
-#install_update_site       ORBIT
-
-step "Installing DBus EMF model from update site"
-check_site_hash           DBUS_EMF
-check_site_latest_version DBUS_EMF
-install_update_site       DBUS_EMF
-
-# Temporarily removed because of GEF4 failure (UI install for 0.9.1 is broken because of this)
-#step "Installing GEF4 from update site"
-#install_update_site       GEF4
-
-step "Downloading Sphinx update site archive (.zip)"
-download "$SPHINX_ARCHIVE_URL" "$SPHINX_ARCHIVE"
-md5_check SPHINX_ARCHIVE "$downloaded_file"
-unpack_site_archive SPHINX "$downloaded_file"
-
-# It's not very nice - whoever set up the creation of zip-file for sphinx
-# from their CI system did not use a sane root for the archive, so this
-# huge ugly path is inside the zip... 
-# So let's first move the content out of there...
-cd "$UNPACK_DIR"
-mv home/hudson/genie.sphinx/.hudson/jobs/sphinx-0.8-luna-publish/workspace/releng/org.eclipse.sphinx.releng.builds/updates/* . || die "path fix for zipfile failed -- has it changed in the archive? - please check script for details"
-rm -r home || die "some weird non-writable file can't be deleted?"
-cd -
 
 install_online_update_site MWE
 
@@ -403,6 +386,7 @@ install_site_archive       GMF_RUNTIME
 install_online_update_site XTEND
 
 install_site_archive       XPAND
+
 
 section "Installing: SPHINX (archive file)"
 step "Downloading Sphinx update site archive (.zip)"
@@ -443,11 +427,6 @@ install_local_file         ARTOP
 
 install_online_update_site IONAS
 
-step Downloading Franca examples
-
-cd "$WORKSPACE_DIR"                    || die "cd to WORKSPACE_DIR ($WORKSPACE_DIR) failed"
-download "$EXAMPLES_URL"
-EXAMPLES_FILE="$downloaded_file"
 cat <<MSG
 
 Instructions:
