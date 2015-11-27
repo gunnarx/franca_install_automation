@@ -97,8 +97,7 @@ match_md5() {
    f=$1
    expect_md5=$2
    # Succeed if expected is not defined, or if sum matches
-   md5=$(get_md5 "$f")
-   [ -z "$expect_md5" -o "$md5" = "$expect_md5" ]
+   [ -z "$expect_md5" -o "$(get_md5 $f)" = "$expect_md5" ]
 }
 
 md5_check() {
@@ -343,7 +342,6 @@ fi
 
 mkdir -p "$WORKSPACE_DIR" || die "Fail creating $WORKSPACE_DIR"
 
-
 if [ "$OSTYPE" = "GNU/Linux" -a "$MACHINE" = "i686" ]; then
     ECLIPSE_INSTALLER=$ECLIPSE_INSTALLER_i686
 elif [ "$OSTYPE" = "GNU/Linux" -a "$MACHINE" = "x86_64" ]; then
@@ -360,6 +358,8 @@ fi
 
 # Get Eclipse archive
 section "Installing: Eclipse"
+cd "$DOWNLOAD_DIR"
+step "Downloading Eclipse installer"
 download "$ECLIPSE_INSTALLER" $(deref ECLIPSE_MD5_$MACHINE) # This sets a variable named $downloaded_file
 
 # File exists?, correct MD5?, then unpack
@@ -426,6 +426,13 @@ install_site_archive       FRANCA
 install_local_file         ARTOP
 
 install_online_update_site IONAS
+
+section Downloading Franca examples
+cd "$WORKSPACE_DIR"                    || die "cd to WORKSPACE_DIR ($WORKSPACE_DIR) failed"
+download "$EXAMPLES_URL" "$EXAMPLES_MD5"
+step Checking MD5 sum for example
+md5_check EXAMPLES "$downloaded_file"
+EXAMPLES_FILE="$downloaded_file"
 
 cat <<MSG
 

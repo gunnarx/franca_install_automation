@@ -1,24 +1,47 @@
 # -*- mode: ruby -*-
-# vim: set ft=ruby sw=3 ts=3 et:
+# vim: set ft=ruby sw=4 ts=4 tw=0 et:
 
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-	config.vm.box = "trusty64"
 
-	config.vm.hostname = "francalab-trusty64"
+   # This allows to set a web proxy from outside the vagrant environment by
+   # passing it in the shell environment variable.
 
-	# If above box does not exist locally, fetch it here:
-	config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
+   if Vagrant.has_plugin?("vagrant-proxyconf")
+      if ENV['http_proxy']
+         puts 'NOTE: Found WEB PROXY defined in shell environment.  Will reuse the following settings inside Vagrant:'
+
+         config.proxy.ftp   = ENV['ftp_proxy']   || "not defined"
+         config.proxy.http  = ENV['http_proxy']  || "not defined"
+         config.proxy.https = ENV['https_proxy'] || "not defined"
+         config.proxy.no_proxy = "localhost,127.0.0.1"
+
+         # Print settings, but try to protect password if by chance 
+         # user:pass was defined as part of Proxy URL (no guarantees!)
+         puts "$http_proxy = #{config.proxy.http.sub(/(\w+:\/\/)(\w+):(\S+)@/,'\1\2:**************@')}"
+         puts "$https_proxy = #{config.proxy.https.sub(/(\w+:\/\/)(\w+):(\S+)@/,'\1\2:**************@')}"
+         puts "$ftp_proxy = #{config.proxy.http.sub(/(\w+:\/\/)(\w+):(\S+)@/,'\1\2:**************@')}"
+         puts "Bypass proxy for #{config.proxy.no_proxy}"
+      end
+   else
+      puts "Vagrant has no proxy plugin => skipped proxy configuration."
+   end
+
+   config.vm.box = "trusty64"
+
+   config.vm.hostname = "francalab-trusty64"
+
+   # If above box does not exist locally, fetch it here:
+   config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
 
    # To run eclipse we need more than default RAM 512MB And we might as well
    # set a useful name also, which I prefer to have equal to the hostname that
    # was defined above, but to make it unique a timestamp is added also.
    # Increase video RAM as well, it doesn't cost much and we will run
    # graphical desktops after all.
-   vmname = config.vm.hostname + "-" + `date +%Y%m%d%H%M`.to_s
-   vmname.chomp!      # Without this there is a newline character in the name :-o
+   vmname = config.vm.hostname + "-" + Time.now.strftime("%Y%m%d%H%M")
    config.vm.provider :virtualbox do |vb|
       # Don't boot with headless mode
       vb.gui = true
@@ -27,6 +50,22 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       vb.customize [ "modifyvm", :id, "--memory", "1536" ]
       vb.customize [ "modifyvm", :id, "--vram", "128" ]
    end
+
+   # Magic fix "mesg n" (exists in /root/.profile on Ubuntu) to not run
+   # during provisioning, which means we avoid the annoying "Stdin is not a
+   # tty" error printed from "mesg n"
+   # Docs/credits: http://foo-o-rama.com/vagrant--stdin-is-not-a-tty--fix.html
+   config.vm.provision "fix-no-tty", type: "shell" do |s|
+      s.privileged = false
+      s.inline = "if [ -w /root/.profile ] ; then
+         sudo sed -i '/tty/!s/mesg n/tty -s \\&\\& mesg n/' /root/.profile
+      fi"
+   end
+
+   # Make sure proxy settings affect also sudo commands
+   # (by default the environment is cleared for sudo)
+   config.vm.provision :shell, inline:
+      'sudo echo "Defaults	env_keep = \"http_proxy https_proxy ftp_proxy\"" >>/etc/sudoers' 
 
    # Warning to user
    config.vm.provision :shell, inline:
@@ -43,7 +82,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
    # Install prerequisites
    config.vm.provision :shell, inline:
-      'sudo apt-get update; sudo apt-get install -y wget unzip openjdk-6-jre'
+      'sudo apt-get update; sudo apt-get install -y wget unzip openjdk-7-jre'
 
    # Run the eclipse + franca installer script
    config.vm.provision :shell, :path => "script.sh"
@@ -60,7 +99,7 @@ Type=Application
 Name=Eclipse with Franca
 Name[en_US]=Eclipse with Franca
 Icon=/home/vagrant/tools/autoeclipse/eclipse/icon.xpm
-Exec=/home/vagrant/tools/autoeclipse/eclipse/eclipse
+Exec=/home/vagrant/tools/autoeclipse/eclipse/eclipse -data /home/vagrant/workspace
 EOT
 
 chmod 755 $shortcut
@@ -91,14 +130,12 @@ true                  # Make sure Vagrant does not stop on error
     echo "terminal.  So you can ignore them and try the VM."
     echo "***************************************************************"
     echo
-    echo "Provisioning is done, now halt the VM by typing:"
+    echo "Provisioning is done, now reboot the VM by typing:"
     echo
-    echo "$ vagrant halt"
+    echo "$ vagrant reload"
     echo
-    echo "Then reboot with a GUI from Virtualbox, i.e. not using vagrant..."
-    echo "Log in as vagrant, password: vagrant"
-    echo "Eclipse is in ~vagrant/tools/autoeclipse/eclipse and should be "
-    echo "available as an icon on the desktop also."
+    echo "Eclipse is in ~vagrant/tools/autoeclipse/eclipse and should"
+    echo "also be available as an icon on the desktop."
     echo
     echo "Read the project README!"
     echo "***************************************************************"

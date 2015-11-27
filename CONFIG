@@ -75,6 +75,12 @@ de.cau.cs.kieler.core.kivi
 
 # FRANCA ------------------------------------------------------------------
 
+# Update site disappeared now, not used
+FRANCA_VERSION="0.10.0.201507291433"
+FRANCA_UPDATE_SERVER="https://franca.github.io/franca/update_site/releases"
+FRANCA_UPDATE_SITE_URL="$FRANCA_UPDATE_SERVER/$FRANCA_VERSION"
+
+# Using archive in script
 #FRANCA_VERSION="0.9.1.201412191134"
 #FRANCA_ARCHIVE_MD5="0957918d4f3002083d1ec48c2f5905e8"
 FRANCA_VERSION="0.10.0.201507291433"
