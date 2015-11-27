@@ -2,8 +2,12 @@
 # Part of franca_install_automation
 # License: See project dir
 
+# This is a bourne-shell script but since it includes
+# configuration data only it is called CONFIG and included
+# from another script.
+
 # INFO:
-# -------------------------------------------------------------------
+# -------------------------------------------------------------------------
 # SETTINGS
 
 # Special case for Vagrant (affects later definitions)
@@ -19,52 +23,64 @@ WORKSPACE_DIR=$HOME/workspace
 # be reset to /vagrant instead
 DOWNLOAD_DIR=/tmp
 
+# Eclipse distribution ----------------------------------------------------
+
 # URLs to latest x86 32 and 64 bit releases of Eclipse (DSL variant) follow.
 # You can update the one you need...  
 
 # It is recommended to look up and specify your closest mirror URL
-# Choose appropriate mirror using:
-# http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/luna/SR2/eclipse-dsl-luna-SR2-linux-gtk-x86_64.tar.gz
+# Choose another appropriate mirror by putting this URL *in your web browser*
+# (it does not work as part of this CONFIG), and then add the URL here.
+# http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads"
+# We use FAU here as one possible choice.
+ECLIPSE_MIRROR_FAU_DE="http://ftp.fau.de/eclipse"
 
-# NOTE: You can set _MD5 variables to empty to skip MD5 check (just remove the
-# assignment altogether).
+# $MIRROR is used for later downloads also.
+MIRROR="$ECLIPSE_MIRROR_FAU_DE"
 
-# ! Please consider setting the URL to a mirror near you instead !
-ECLIPSE_INSTALLER_i686="http://ftp.fau.de/eclipse/technology/epp/downloads/release/luna/SR2/eclipse-dsl-luna-SR2-linux-gtk.tar.gz"
-ECLIPSE_MD5_x686=
+# NOTE: You can set _MD5 variables to empty to skip MD5 check (just remove the assignment altogether).
+ECLIPSE_INSTALLER_i686="$MIRROR/technology/epp/downloads/release/mars/R/eclipse-dsl-mars-R-linux-gtk.tar.gz"
+ECLIPSE_MD5_x686=80c4e3d0dbe204fbf476de08df0fcf18
 
-ECLIPSE_INSTALLER_x86_64="http://ftp.fau.de/eclipse/technology/epp/downloads/release/luna/SR2/eclipse-dsl-luna-SR2-linux-gtk-x86_64.tar.gz"
-ECLIPSE_MD5_x86_64=98eeaea78478ac384667e3f05142effc
+ECLIPSE_INSTALLER_x86_64="$MIRROR/technology/epp/downloads/release/mars/R/eclipse-dsl-mars-R-linux-gtk-x86_64.tar.gz"
+ECLIPSE_MD5_x86_64=6c2d45de8874b71a4eba19afe584acf6
 
-
-# D-Bus EMF model ---------------------------------------------------
+# D-Bus EMF model ---------------------------------------------------------
 
 # Note: Here _VERSION is necessary I think, because of the way
 # we do this download...
-DBUS_EMF_VERSION=0.7.8
-DBUS_EMF_UPDATE_SITE_HASH=f9db6c26f742   # This is something that exists on the web page - I figured why not check it.
+DBUS_EMF_VERSION=0.8.0
+DBUS_EMF_UPDATE_SITE_HASH=1605fd0922ff   # This is something that exists on the web page - I figured why not check it.
 DBUS_EMF_UPDATE_SERVER="http://dbus-emf-model.eclipselabs.org.codespot.com/git/update_site/releases"
 DBUS_EMF_UPDATE_SITE_URL="$DBUS_EMF_UPDATE_SERVER/$DBUS_EMF_VERSION"
 DBUS_EMF_FEATURES=model.emf.dbusxml.feature.feature.group
 
-# GEF 4 -------------------------------------------------------------
+# KIELER framework --------------------------------------------------------
 
-# Note: If _VERSION is not set, no particular version will be requested (-->Eclipse will install the latest, probably)
-GEF4_UPDATE_SITE_URL="http://download.eclipse.org/tools/gef/gef4/updates/integration"
-GEF4_FEATURES=\
-org.eclipse.gef4.zest.layouts,\
-org.eclipse.gef4.zest.core
+# Kieler Pragmatics "krendering" package - a new dependency for franca.ui
+# starting with franca release 0.9.2
+KRENDERING_VERSION="release_pragmatics_2015-02"
+KRENDERING_UPDATE_SERVER="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite"
+KRENDERING_UPDATE_SITE_URL="$KRENDERING_UPDATE_SERVER/$KRENDERING_VERSION"
+KRENDERING_FEATURES=\
+de.cau.cs.kieler.core.krendering,\
+de.cau.cs.kieler.core.krendering.extensions,\
+de.cau.cs.kieler.kiml,\
+de.cau.cs.kieler.klay.layered,\
+de.cau.cs.kieler.klighd,\
+de.cau.cs.kieler.klighd.xtext,\
+de.cau.cs.kieler.klighd.ui,\
+de.cau.cs.kieler.klighd.piccolo,\
+de.cau.cs.kieler.core.kivi
 
-# To specify a specific version, install like this:
-# GEF4_VERSION=0.1.0.201311151505
-# GEF4_FEATURES = ... org.eclipse.gef4.zest.core/$GEF4_VERSION
-# That was required for Franca 0.8.11 but did not work for 0.9.0
+# FRANCA ------------------------------------------------------------------
 
-# FRANCA ------------------------------------------------------------
-
-FRANCA_ARCHIVE="site_franca_0.9.1.201412191134.zip"
-FRANCA_ARCHIVE_MD5=0957918d4f3002083d1ec48c2f5905e8
-FRANCA_ARCHIVE_URL="https://googledrive.com/host/0B7JseVbR6jvhazEtRDVsSk9mX1k/Releases/0.9/$FRANCA_ARCHIVE"
+#FRANCA_VERSION="0.9.1.201412191134"
+#FRANCA_ARCHIVE_MD5="0957918d4f3002083d1ec48c2f5905e8"
+FRANCA_VERSION="0.10.0.201507291433"
+FRANCA_ARCHIVE="site_franca_${FRANCA_VERSION}.zip"
+FRANCA_ARCHIVE_MD5="74c3e5cef73dcb36b0c8f3c00bacd555"
+FRANCA_ARCHIVE_URL="https://googledrive.com/host/0B7JseVbR6jvhazEtRDVsSk9mX1k/Releases/0.10/$FRANCA_ARCHIVE"
 FRANCA_FEATURES=\
 org.franca.connectors.dbus,\
 org.franca.connectors.dbus.source,\
@@ -80,6 +96,8 @@ org.franca.core.dsl.ui.source,\
 org.franca.core.edit,\
 org.franca.core.edit.source,\
 org.franca.core.source,\
+org.franca.core.ui.addons,\
+org.franca.core.ui.addons.source,\
 org.franca.deploymodel.dsl,\
 org.franca.deploymodel.dsl.source,\
 org.franca.deploymodel.dsl.tests.base,\
@@ -87,63 +105,131 @@ org.franca.deploymodel.dsl.tests.base.source,\
 org.franca.deploymodel.dsl.ui,\
 org.franca.deploymodel.dsl.ui.source,\
 org.franca.generators,\
-org.franca.generators.source
+org.franca.generators.source,\
+org.franca.ui.feature.group
 
-# Temporarily removed because of GEF4 failure (UI install for 0.9.1 is broken because of this)
-#org.franca.core.ui.addons,\
-#org.franca.core.ui.addons.source,\
+# FRANCA EXAMPLES ---------------------------------------------------------
 
-# FRANCA EXAMPLES ----------------------------------------------------
+EXAMPLES_ARCHIVE="0.10/org_franca_examples_src_2015-10-28.zip"
+EXAMPLES_MD5="ffbbef3db813821e032a9161fd45fe34"
+FRANCA_BASE_URL="https://googledrive.com/host/0B7JseVbR6jvhazEtRDVsSk9mX1k"
+EXAMPLES_URL="$FRANCA_BASE_URL/Releases/$EXAMPLES_ARCHIVE"
 
-EXAMPLES_URL=https://googledrive.com/host/0B7JseVbR6jvhazEtRDVsSk9mX1k/Releases/0.9/org_franca_examples_src_2014-05-07.zip
+# MWE    ------------------------------------------------------------------
 
+MWE_UPDATE_SITE_URL="http://download.eclipse.org/modeling/emft/mwe/updates/"
+MWE_FEATURES=\
+org.eclipse.emf.mwe.ui
 
-# IONAS  ------------------------------------------------------------------
-
-#ORBIT_UPDATE_SITE_URL="http://download.eclipse.org/tools/orbit/downloads/drops/R20140525021250/repository"
-#ORBIT_UPDATE_SITE_URL="http://download.eclipse.org/tools/orbit/downloads/drops/R20150124073747/repository"
-#ORBIT_FEATURES=\
-#com.ibm.icu
+# SPHINX ------------------------------------------------------------------
 
 # SPHINX update site no longer offers 0.8.0 version -> use archive file
-SPHINX_ARCHIVE="sphinx-Update-0.8.0.zip"
-SPHINX_ARCHIVE_MD5=
-SPHINX_ARCHIVE_URL="http://mirror.netcologne.de/eclipse/sphinx/$SPHINX_ARCHIVE"
+SPHINX_ARCHIVE="sphinx-Update-0.9.1.zip"
+SPHINX_ARCHIVE_MD5="0d144bc355120278a9277ca88489c11b"
+SPHINX_ARCHIVE_URL="$MIRROR/sphinx/$SPHINX_ARCHIVE"
 SPHINX_FEATURES=\
 org.eclipse.sphinx.emf,\
-org.eclipse.sphinx.emf.workspace
+org.eclipse.sphinx.emf.workspace,\
+org.eclipse.sphinx.emf.editors.forms,\
+org.eclipse.sphinx.emf.explorer,\
+org.eclipse.sphinx.emf.validation,\
+org.eclipse.sphinx.emf.validation.ui,\
+org.eclipse.sphinx.gmf.runtime.ui,\
+org.eclipse.sphinx.xtendxpand,\
+org.eclipse.sphinx.xtendxpand.ui
+
+# XPAND -------------------------------------------------------------------
+
+XPAND_VERSION="2.1.0/R201505260349"
+XPAND_ARCHIVE="m2t-xpand-Update-2.1.0.zip"
+XPAND_ARCHIVE_MD5="bb157d8a9e317d428f9a33840611fdee"
+XPAND_ARCHIVE_SITE="$MIRROR/modeling/m2t/xpand/downloads/drops/"
+XPAND_ARCHIVE_URL="$XPAND_ARCHIVE_SITE/$XPAND_VERSION/$XPAND_ARCHIVE"
+XPAND_FEATURES=\
+org.eclipse.xpand.ui
+
+# EMF_VALIDATION ----------------------------------------------------------
+
+# I could not make dependencies work with update site, so here is instead
+# each part separately from their respective update site archives.
+EMF_VALIDATION_ARCHIVE="emf-validation-Update-1.8.0.zip"
+EMF_VALIDATION_ARCHIVE_MD5="bd734e4462c4ebbd5ce994f48ec08757"
+EMF_VALIDATION_ARCHIVE_VERSION="1.8.0/R201405281429"
+EMF_VALIDATION_ARCHIVE_SITE="$MIRROR/modeling/emf/validation/downloads/drops"
+EMF_VALIDATION_ARCHIVE_URL="$EMF_VALIDATION_ARCHIVE_SITE/$EMF_VALIDATION_ARCHIVE_VERSION/$EMF_VALIDATION_ARCHIVE"
+EMF_VALIDATION_FEATURES=\
+org.eclipse.emf.validation,\
+org.eclipse.emf.validation.ocl,\
+org.eclipse.emf.validation.ui
+
+# EMF_TRANSACTION ---------------------------------------------------------
+
+EMF_TRANSACTION_ARCHIVE="emf-transaction-Update-1.8.0.zip"
+EMF_TRANSACTION_ARCHIVE_MD5="c538e87543e42fdc065bf7a41aa6e17d"
+EMF_TRANSACTION_ARCHIVE_VERSION="1.8.0/R201405281451"
+EMF_TRANSACTION_ARCHIVE_SITE="$MIRROR/modeling/emf/transaction/downloads/drops"
+EMF_TRANSACTION_ARCHIVE_URL="$EMF_TRANSACTION_ARCHIVE_SITE/$EMF_TRANSACTION_ARCHIVE_VERSION/$EMF_TRANSACTION_ARCHIVE" 
+EMF_TRANSACTION_FEATURES=\
+org.eclipse.emf.transaction,\
+org.eclipse.emf.transaction.ui,\
+org.eclipse.emf.workspace,\
+org.eclipse.emf.workspace.ui
+
+# GMF_RUNTIME -------------------------------------------------------------
+
+# Later versions (2.2.2) exist - this is what IONAS dependencies installs
+GMF_RUNTIME_ARCHIVE="gmf-sdk-runtime-1.8.1.zip"  # also tried 1.7.0/R201306111432
+GMF_RUNTIME_ARCHIVE_MD5="4672edf198ae22c97b556d37d0bb9391"
+GMF_RUNTIME_VERSION="1.8.1/R201408201453"
+GMF_RUNTIME_ARCHIVE_URL="$MIRROR/modeling/gmp/gmf-runtime/downloads/drops/$GMF_RUNTIME_VERSION/$GMF_RUNTIME_ARCHIVE"
+GMF_RUNTIME_FEATURES=\
+org.eclipse.gmf.runtime.emf.core,\
+org.eclipse.gmf.runtime.diagram.core,\
+org.eclipse.gmf.runtime.diagram.ui,\
+org.eclipse.gmf.runtime.diagram.ui.resources.editor,\
+org.eclipse.gmf.runtime.diagram.ui.resources.editor.ide,\
+org.eclipse.gmf.runtime.diagram.ui.providers,\
+org.eclipse.gmf.runtime.diagram.ui.providers.ide,\
+org.eclipse.gmf.runtime.diagram.ui.render,\
+
+# GMF_NOTATION     --------------------------------------------------------
+
+GMF_NOTATION_ARCHIVE="gmf-sdk-notation-1.8.0.zip"
+GMF_NOTATION_ARCHIVE_MD5="b3d3ba8d83ce1b6c94b0500fe85360aa"
+GMF_NOTATION_VERSION="1.8.0/R201405281433"
+GMF_NOTATION_ARCHIVE_URL="$MIRROR/modeling/gmp/gmf-notation/downloads/drops/$GMF_NOTATION_VERSION/$GMF_NOTATION_ARCHIVE"
+GMF_NOTATION_FEATURES=\
+org.eclipse.gmf.runtime.notation
+
+# XTEND     ---------------------------------------------------------------
+
+XTEND_UPDATE_SITE_URL="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"
+XTEND_FEATURES=\
+org.eclipse.xtend.util.stdlib,\
+org.eclipse.xtend.shared.ui,\
+org.eclipse.xtend.check.ui
+
+# ARTOP     ---------------------------------------------------------------
 
 ARTOP_ARCHIVE="artop-Update-4.2.1.zip"
-ARTOP_ARCHIVE_MD5=
+ARTOP_ARCHIVE_MD5="5d2801b62f5fd04926cbdadbe8900907"
 ARTOP_FEATURES=\
 org.artop.aal.autosar411,\
-org.artop.aal.common
+org.artop.aal.common,\
+org.artop.examples.feature.group
 
+# MDT_OCL   ---------------------------------------------------------------
+
+MDT_OCL_ARCHIVE_URL="http://download.eclipse.org/modeling/mdt/ocl/downloads/drops/6.1.0/N201511091302/mdt-ocl-Update-N201511091302.zip"
+MDT_OCL_ARCHIVE_MD5="553cd1f85ac603580aa32f8672982183"
+MDT_OCL_FEATURES=\
+org.eclipse.ocl.ecore
+
+# IONAS  ------------------------------------------------------------------
+#
 IONAS_UPDATE_SITE_URL="http://docs.projects.genivi.org/ionas-ui-update-site"
 IONAS_FEATURES=\
 org.autosar.ionas.feature.feature.group,\
 org.genivi.ionas.feature.feature.group
-
-# This is not as nice, but I could not make dependencies work with update
-# site, so here is instead each part separately from their respective
-# update site archives.
-EMF_VALIDATION_ARCHIVE="emf-validation-Update-1.8.0.zip"
-EMF_VALIDATION_ARCHIVE_VERSION="1.8.0/R201405281429"
-EMF_VALIDATION_ARCHIVE_SITE="http://ftp.fau.de/eclipse/modeling/emf/validation/downloads/drops"
-EMF_VALIDATION_ARCHIVE_URL="$EMF_VALIDATION_ARCHIVE_SITE/$EMF_VALIDATION_ARCHIVE_VERSION/$EMF_VALIDATION_ARCHIVE"
-EMF_VALIDATION_FEATURES=\
-org.eclipse.emf.validation,\
-
-EMF_TRANSACTION_ARCHIVE="emf-transaction-Update-1.8.0.zip"
-EMF_TRANSACTION_ARCHIVE_VERSION="1.8.0/R201405281451"
-EMF_TRANSACTION_ARCHIVE_SITE="http://ftp.fau.de/eclipse/modeling/emf/transaction/downloads/drops"
-EMF_TRANSACTION_ARCHIVE_URL="$EMF_TRANSACTION_ARCHIVE_SITE/$EMF_TRANSACTION_ARCHIVE_VERSION/$EMF_TRANSACTION_ARCHIVE" 
-EMF_TRANSACTION_FEATURES=\
-org.eclipse.emf.transaction,\
-
-# EMF Workspace - let's get this one from the update site
-EMF_UPDATE_SITE_URL="http://download.eclipse.org/modeling/emf/updates/"
-EMF_FEATURES=\
-org.eclipse.emf.workspace
 
 # === EOF ===
