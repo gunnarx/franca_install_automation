@@ -429,8 +429,8 @@ install_online_update_site IONAS
 
 cat <<MSG
 
-Instructions:
--------------
+Instructions for IONAS
+----------------------
 
 Unpack the package from AUTOSAR "CONC_610_...IntegrationOfNonARSystems" separately.
 To import relevant files into Workspace, go to the Workspace, then select
