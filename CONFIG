@@ -2,63 +2,61 @@
 # Part of franca_install_automation
 # License: See project dir
 
-# This is a bourne-shell script but since it includes
-# configuration data only it is called CONFIG and included
-# from another script.
+# This is a bourne-shell script but since it includes only configuration
+# data it is called CONFIG.  It is sourced from another script.
 
-# INFO:
-# -------------------------------------------------------------------------
-# SETTINGS
-
-# Special case for Vagrant (affects later definitions)
+# Use special setting for Vagrant
 if_vagrant HOME=/home/vagrant
 
-# Where to install eclipse?
-# INSTALL_DIR=/usr/local   # requires root...
-INSTALL_DIR=$HOME/tools/autoeclipse
-WORKSPACE_DIR=$HOME/workspace
+# ------------------------------------------------------------------------
+# SETTINGS <- edit these if you wish
+
+# Where to install eclipse and eclipse workspace?
+INSTALL_DIR="$HOME/tools/autoeclipse"
+WORKSPACE_DIR="$HOME/workspace"
 
 # Set Download dir
 # NOTE: If script is used to provision a vagrant box, this will always
 # be reset to /vagrant instead
-DOWNLOAD_DIR=/tmp
+DOWNLOAD_DIR="/tmp"
 
-# Eclipse distribution ----------------------------------------------------
+# Eclipse distribution ---------------------------------------------------
 
 # URLs to latest x86 32 and 64 bit releases of Eclipse (DSL variant) follow.
-# You can update the one you need...  
+# You can update the one you need...
 
 # It is recommended to look up and specify your closest mirror URL
-# Choose another appropriate mirror by putting this URL *in your web browser*
-# (it does not work as part of this CONFIG), and then add the URL here.
+# Choose another appropriate mirror by putting the following URL *in your
+# web browser* (it does not work as part of this CONFIG), and then find a
+# mirror and add the URL here.
+# Be careful of the base directory which differs.  For example FAU uses
+# eclipse/*, other sites might have it under pub/eclipse/* etc.
 # http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads"
+
 # We use FAU here as one possible choice.
-ECLIPSE_MIRROR_FAU_DE="http://ftp.fau.de/eclipse"
+ECLIPSE_MIRROR="http://ftp.fau.de/eclipse"
 
-# $MIRROR is used for later downloads also.
-MIRROR="$ECLIPSE_MIRROR_FAU_DE"
+# NOTE: You can set _MD5 variables to empty to skip MD5 check (just remove the assignment altogether)
+# but it is used to determine if files are already downloaded to save time.
 
-# NOTE: You can set _MD5 variables to empty to skip MD5 check (just remove the assignment altogether).
-ECLIPSE_INSTALLER_i686="$MIRROR/technology/epp/downloads/release/mars/R/eclipse-dsl-mars-R-linux-gtk.tar.gz"
-ECLIPSE_MD5_x686=80c4e3d0dbe204fbf476de08df0fcf18
+ECLIPSE_INSTALLER_i686="$ECLIPSE_MIRROR/technology/epp/downloads/release/mars/R/eclipse-dsl-mars-R-linux-gtk.tar.gz"
+ECLIPSE_MD5_x686="80c4e3d0dbe204fbf476de08df0fcf18"
 
-ECLIPSE_INSTALLER_x86_64="$MIRROR/technology/epp/downloads/release/mars/R/eclipse-dsl-mars-R-linux-gtk-x86_64.tar.gz"
-ECLIPSE_MD5_x86_64=6c2d45de8874b71a4eba19afe584acf6
+ECLIPSE_INSTALLER_x86_64="$ECLIPSE_MIRROR/technology/epp/downloads/release/mars/R/eclipse-dsl-mars-R-linux-gtk-x86_64.tar.gz"
+ECLIPSE_MD5_x86_64="6c2d45de8874b71a4eba19afe584acf6"
 
-# D-Bus EMF model ---------------------------------------------------------
+# D-Bus EMF model --------------------------------------------------------
 
-# Note: Here _VERSION is necessary I think, because of the way
-# we do this download...
 DBUS_EMF_VERSION=0.8.0
-DBUS_EMF_UPDATE_SITE_HASH=1605fd0922ff   # This is something that exists on the web page - I figured why not check it.
+DBUS_EMF_UPDATE_SITE_HASH=1605fd0922ff   # Something that exists on the web page - I figured why not check it.
 DBUS_EMF_UPDATE_SERVER="http://dbus-emf-model.eclipselabs.org.codespot.com/git/update_site/releases"
 DBUS_EMF_UPDATE_SITE_URL="$DBUS_EMF_UPDATE_SERVER/$DBUS_EMF_VERSION"
-DBUS_EMF_FEATURES=model.emf.dbusxml.feature.feature.group
+DBUS_EMF_FEATURES=\
+model.emf.dbusxml.feature.feature.group
 
-# KIELER framework --------------------------------------------------------
+# KIELER framework -------------------------------------------------------
 
-# Kieler Pragmatics "krendering" package - a new dependency for franca.ui
-# starting with franca release 0.9.2
+# Kieler Pragmatics "krendering" package is required by franca.ui >=0.9.2
 KRENDERING_VERSION="release_pragmatics_2015-02"
 KRENDERING_UPDATE_SERVER="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite"
 KRENDERING_UPDATE_SITE_URL="$KRENDERING_UPDATE_SERVER/$KRENDERING_VERSION"
@@ -73,16 +71,8 @@ de.cau.cs.kieler.klighd.ui,\
 de.cau.cs.kieler.klighd.piccolo,\
 de.cau.cs.kieler.core.kivi
 
-# FRANCA ------------------------------------------------------------------
+# FRANCA -----------------------------------------------------------------
 
-# Update site disappeared now, not used
-FRANCA_VERSION="0.10.0.201507291433"
-FRANCA_UPDATE_SERVER="https://franca.github.io/franca/update_site/releases"
-FRANCA_UPDATE_SITE_URL="$FRANCA_UPDATE_SERVER/$FRANCA_VERSION"
-
-# Using archive in script
-#FRANCA_VERSION="0.9.1.201412191134"
-#FRANCA_ARCHIVE_MD5="0957918d4f3002083d1ec48c2f5905e8"
 FRANCA_VERSION="0.10.0.201507291433"
 FRANCA_ARCHIVE="site_franca_${FRANCA_VERSION}.zip"
 FRANCA_ARCHIVE_MD5="74c3e5cef73dcb36b0c8f3c00bacd555"
@@ -114,25 +104,24 @@ org.franca.generators,\
 org.franca.generators.source,\
 org.franca.ui.feature.group
 
-# FRANCA EXAMPLES ---------------------------------------------------------
+# FRANCA EXAMPLES --------------------------------------------------------
 
 EXAMPLES_ARCHIVE="0.10/org_franca_examples_src_2015-10-28.zip"
 EXAMPLES_MD5="ffbbef3db813821e032a9161fd45fe34"
 FRANCA_BASE_URL="https://googledrive.com/host/0B7JseVbR6jvhazEtRDVsSk9mX1k"
 EXAMPLES_URL="$FRANCA_BASE_URL/Releases/$EXAMPLES_ARCHIVE"
 
-# MWE    ------------------------------------------------------------------
+# MWE    -----------------------------------------------------------------
 
 MWE_UPDATE_SITE_URL="http://download.eclipse.org/modeling/emft/mwe/updates/"
 MWE_FEATURES=\
 org.eclipse.emf.mwe.ui
 
-# SPHINX ------------------------------------------------------------------
+# SPHINX -----------------------------------------------------------------
 
-# SPHINX update site no longer offers 0.8.0 version -> use archive file
-SPHINX_ARCHIVE="sphinx-Update-0.9.1.zip"
+SPHINX_ARCHIVE="sphinx-Update-0.9.1.zip" # 0.8.0 originally in README
 SPHINX_ARCHIVE_MD5="0d144bc355120278a9277ca88489c11b"
-SPHINX_ARCHIVE_URL="$MIRROR/sphinx/$SPHINX_ARCHIVE"
+SPHINX_ARCHIVE_URL="$ECLIPSE_MIRROR/sphinx/$SPHINX_ARCHIVE"
 SPHINX_FEATURES=\
 org.eclipse.sphinx.emf,\
 org.eclipse.sphinx.emf.workspace,\
@@ -144,36 +133,38 @@ org.eclipse.sphinx.gmf.runtime.ui,\
 org.eclipse.sphinx.xtendxpand,\
 org.eclipse.sphinx.xtendxpand.ui
 
-# XPAND -------------------------------------------------------------------
+# XPAND ------------------------------------------------------------------
 
 XPAND_VERSION="2.1.0/R201505260349"
 XPAND_ARCHIVE="m2t-xpand-Update-2.1.0.zip"
 XPAND_ARCHIVE_MD5="bb157d8a9e317d428f9a33840611fdee"
-XPAND_ARCHIVE_SITE="$MIRROR/modeling/m2t/xpand/downloads/drops/"
+XPAND_ARCHIVE_SITE="$ECLIPSE_MIRROR/modeling/m2t/xpand/downloads/drops/"
 XPAND_ARCHIVE_URL="$XPAND_ARCHIVE_SITE/$XPAND_VERSION/$XPAND_ARCHIVE"
 XPAND_FEATURES=\
 org.eclipse.xpand.ui
 
-# EMF_VALIDATION ----------------------------------------------------------
+# ------------------------------------------------------------------------
+# Several EMF features are available in an update site but I could not make
+# it work so here is each individual feature as its own archive.
 
-# I could not make dependencies work with update site, so here is instead
-# each part separately from their respective update site archives.
+# EMF_VALIDATION ---------------------------------------------------------
+
 EMF_VALIDATION_ARCHIVE="emf-validation-Update-1.8.0.zip"
 EMF_VALIDATION_ARCHIVE_MD5="bd734e4462c4ebbd5ce994f48ec08757"
 EMF_VALIDATION_ARCHIVE_VERSION="1.8.0/R201405281429"
-EMF_VALIDATION_ARCHIVE_SITE="$MIRROR/modeling/emf/validation/downloads/drops"
+EMF_VALIDATION_ARCHIVE_SITE="$ECLIPSE_MIRROR/modeling/emf/validation/downloads/drops"
 EMF_VALIDATION_ARCHIVE_URL="$EMF_VALIDATION_ARCHIVE_SITE/$EMF_VALIDATION_ARCHIVE_VERSION/$EMF_VALIDATION_ARCHIVE"
 EMF_VALIDATION_FEATURES=\
 org.eclipse.emf.validation,\
 org.eclipse.emf.validation.ocl,\
 org.eclipse.emf.validation.ui
 
-# EMF_TRANSACTION ---------------------------------------------------------
+# EMF_TRANSACTION --------------------------------------------------------
 
 EMF_TRANSACTION_ARCHIVE="emf-transaction-Update-1.8.0.zip"
 EMF_TRANSACTION_ARCHIVE_MD5="c538e87543e42fdc065bf7a41aa6e17d"
 EMF_TRANSACTION_ARCHIVE_VERSION="1.8.0/R201405281451"
-EMF_TRANSACTION_ARCHIVE_SITE="$MIRROR/modeling/emf/transaction/downloads/drops"
+EMF_TRANSACTION_ARCHIVE_SITE="$ECLIPSE_MIRROR/modeling/emf/transaction/downloads/drops"
 EMF_TRANSACTION_ARCHIVE_URL="$EMF_TRANSACTION_ARCHIVE_SITE/$EMF_TRANSACTION_ARCHIVE_VERSION/$EMF_TRANSACTION_ARCHIVE" 
 EMF_TRANSACTION_FEATURES=\
 org.eclipse.emf.transaction,\
@@ -181,13 +172,12 @@ org.eclipse.emf.transaction.ui,\
 org.eclipse.emf.workspace,\
 org.eclipse.emf.workspace.ui
 
-# GMF_RUNTIME -------------------------------------------------------------
+# GMF_RUNTIME ------------------------------------------------------------
 
-# Later versions (2.2.2) exist - this is what IONAS dependencies installs
-GMF_RUNTIME_ARCHIVE="gmf-sdk-runtime-1.8.1.zip"  # also tried 1.7.0/R201306111432
+GMF_RUNTIME_ARCHIVE="gmf-sdk-runtime-1.8.1.zip"
 GMF_RUNTIME_ARCHIVE_MD5="4672edf198ae22c97b556d37d0bb9391"
 GMF_RUNTIME_VERSION="1.8.1/R201408201453"
-GMF_RUNTIME_ARCHIVE_URL="$MIRROR/modeling/gmp/gmf-runtime/downloads/drops/$GMF_RUNTIME_VERSION/$GMF_RUNTIME_ARCHIVE"
+GMF_RUNTIME_ARCHIVE_URL="$ECLIPSE_MIRROR/modeling/gmp/gmf-runtime/downloads/drops/$GMF_RUNTIME_VERSION/$GMF_RUNTIME_ARCHIVE"
 GMF_RUNTIME_FEATURES=\
 org.eclipse.gmf.runtime.emf.core,\
 org.eclipse.gmf.runtime.diagram.core,\
@@ -198,16 +188,16 @@ org.eclipse.gmf.runtime.diagram.ui.providers,\
 org.eclipse.gmf.runtime.diagram.ui.providers.ide,\
 org.eclipse.gmf.runtime.diagram.ui.render,\
 
-# GMF_NOTATION     --------------------------------------------------------
+# GMF_NOTATION     -------------------------------------------------------
 
 GMF_NOTATION_ARCHIVE="gmf-sdk-notation-1.8.0.zip"
 GMF_NOTATION_ARCHIVE_MD5="b3d3ba8d83ce1b6c94b0500fe85360aa"
 GMF_NOTATION_VERSION="1.8.0/R201405281433"
-GMF_NOTATION_ARCHIVE_URL="$MIRROR/modeling/gmp/gmf-notation/downloads/drops/$GMF_NOTATION_VERSION/$GMF_NOTATION_ARCHIVE"
+GMF_NOTATION_ARCHIVE_URL="$ECLIPSE_MIRROR/modeling/gmp/gmf-notation/downloads/drops/$GMF_NOTATION_VERSION/$GMF_NOTATION_ARCHIVE"
 GMF_NOTATION_FEATURES=\
 org.eclipse.gmf.runtime.notation
 
-# XTEND     ---------------------------------------------------------------
+# XTEND     --------------------------------------------------------------
 
 XTEND_UPDATE_SITE_URL="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"
 XTEND_FEATURES=\
@@ -215,7 +205,7 @@ org.eclipse.xtend.util.stdlib,\
 org.eclipse.xtend.shared.ui,\
 org.eclipse.xtend.check.ui
 
-# ARTOP     ---------------------------------------------------------------
+# ARTOP     --------------------------------------------------------------
 
 ARTOP_ARCHIVE="artop-Update-4.2.1.zip"
 ARTOP_ARCHIVE_MD5="5d2801b62f5fd04926cbdadbe8900907"
@@ -224,15 +214,15 @@ org.artop.aal.autosar411,\
 org.artop.aal.common,\
 org.artop.examples.feature.group
 
-# MDT_OCL   ---------------------------------------------------------------
+# MDT_OCL   --------------------------------------------------------------
 
 MDT_OCL_ARCHIVE_URL="http://download.eclipse.org/modeling/mdt/ocl/downloads/drops/6.1.0/N201511091302/mdt-ocl-Update-N201511091302.zip"
 MDT_OCL_ARCHIVE_MD5="553cd1f85ac603580aa32f8672982183"
 MDT_OCL_FEATURES=\
 org.eclipse.ocl.ecore
 
-# IONAS  ------------------------------------------------------------------
-#
+# IONAS  -----------------------------------------------------------------
+
 IONAS_UPDATE_SITE_URL="http://docs.projects.genivi.org/ionas-ui-update-site"
 IONAS_FEATURES=\
 org.autosar.ionas.feature.feature.group,\
