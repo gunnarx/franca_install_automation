@@ -377,7 +377,7 @@ install_online_update_site DBUS_EMF
 
 install_online_update_site KRENDERING
 
-install_online_update_site FRANCA
+install_site_archive       FRANCA
 
 section Downloading Franca examples
 cd "$WORKSPACE_DIR"                    || die "cd to WORKSPACE_DIR ($WORKSPACE_DIR) failed"
