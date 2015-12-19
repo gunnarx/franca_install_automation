@@ -120,7 +120,6 @@ md5_check() {
    fi
 }
 
-
 download() {
    cd "$DOWNLOAD_DIR"
    $DEBUG && set -x
@@ -281,6 +280,18 @@ install_local_file() {
 
 }
 
+install() {
+   # Which type of installation it is, is decided by which variables are
+   # defined in CONFIG. Then call the corresponding installation function.
+   if [ -n "$(deref ${1}_UPDATE_SITE_URL)" ] ; then
+      install_online_update_site $1
+   elif [ -n "$(deref ${1}_ARCHIVE_URL)" ] ; then
+      install_site_archive $1
+   else
+      die "install(): For $1 I can find either ${1}_UPDATE_SITE_URL or ${1}_ARCHIVE_URL defined. Giving up."
+   fi
+}
+
 user_pass() {
    site=$1
    echo "Please write your login for update site $site"
@@ -368,21 +379,21 @@ md5_check ECLIPSE "$downloaded_file" $MACHINE
 step "Unpacking Eclipse to $INSTALL_DIR"
 untar "$downloaded_file" "$INSTALL_DIR"
 
-install_online_update_site MWE
+install MWE
 
-install_site_archive       MDT_OCL
+install MDT_OCL
 
-install_site_archive       EMF_VALIDATION
+install EMF_VALIDATION
 
-install_site_archive       EMF_TRANSACTION
+install EMF_TRANSACTION
 
-install_site_archive       GMF_NOTATION
+install GMF_NOTATION
 
-install_site_archive       GMF_RUNTIME
+install GMF_RUNTIME
 
-install_online_update_site XTEND
+install XTEND
 
-install_site_archive       XPAND
+install XPAND
 
 section "Installing: SPHINX (archive file)"
 step "Downloading Sphinx update site archive (.zip)"
@@ -411,17 +422,17 @@ section "Checking DBus EMF model on update site"
 check_site_hash            DBUS_EMF
 check_site_latest_version  DBUS_EMF
 
-install_online_update_site DBUS_EMF
+install DBUS_EMF
 
-install_online_update_site KRENDERING
+install KRENDERING
 
-install_site_archive       FRANCA
+install FRANCA
 
 # ARTOP needs special download with login, therefore the user is required
 # to provide the site archive locally.  We will ask for it here.
 install_local_file         ARTOP
 
-install_online_update_site IONAS
+install IONAS
 
 section Downloading Franca examples
 cd "$WORKSPACE_DIR"                    || die "cd to WORKSPACE_DIR ($WORKSPACE_DIR) failed"
