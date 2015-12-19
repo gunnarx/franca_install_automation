@@ -376,9 +376,6 @@ install_site_archive       EMF_VALIDATION
 
 install_site_archive       EMF_TRANSACTION
 
-#install_online_update_site  EMF_RUNTIME
-#install_site_archive EMF_RUNTIME
-
 install_site_archive       GMF_NOTATION
 
 install_site_archive       GMF_RUNTIME
@@ -386,7 +383,6 @@ install_site_archive       GMF_RUNTIME
 install_online_update_site XTEND
 
 install_site_archive       XPAND
-
 
 section "Installing: SPHINX (archive file)"
 step "Downloading Sphinx update site archive (.zip)"
