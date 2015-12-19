@@ -448,7 +448,7 @@ To import relevant files into Workspace, go to the Workspace, then select
    Select the directory "Test" from the unpacked AUTOSAR archive and hit OK.
    Hit Finish to import/copy into workspace.
 
-   At the moment, no further instructions available here for usage, sorry.
+At the moment, i don't know any more instructions for ionas usage, sorry.
 MSG
 
 echo
