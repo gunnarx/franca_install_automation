@@ -202,6 +202,7 @@ _install_update_site() {
       echo "Success"
    else
       echo "Fail"
+      [ $EXIT_ON_FAILURE -eq "true" ] && exit 1  # <- needs to be set in environment
    fi
 
    $DEBUG && set +x
@@ -347,7 +348,7 @@ download "$ECLIPSE_INSTALLER" $(deref ECLIPSE_MD5_$MACHINE) # This sets a variab
 [ -f "$downloaded_file" ] || die "ECLIPSE not found (not downloaded?)."
 md5_check ECLIPSE "$downloaded_file" $MACHINE
 step "Unpacking Eclipse to $INSTALL_DIR"
-untar "$downloaded_file" "$INSTALL_DIR"
+untar "$downloaded_file" "$INSTALL_DIR" || die
 
 # Not sure really why I still do this check... It's legacy :)
 section "Checking DBus EMF model on update site"
