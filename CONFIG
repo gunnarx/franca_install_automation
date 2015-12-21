@@ -2,63 +2,61 @@
 # Part of franca_install_automation
 # License: See project dir
 
-# This is a bourne-shell script but since it includes
-# configuration data only it is called CONFIG and included
-# from another script.
+# This is a bourne-shell script but since it includes only configuration
+# data it is called CONFIG.  It is sourced from another script.
 
-# INFO:
-# -------------------------------------------------------------------------
-# SETTINGS
-
-# Special case for Vagrant (affects later definitions)
+# Use special setting for Vagrant
 if_vagrant HOME=/home/vagrant
 
-# Where to install eclipse?
-# INSTALL_DIR=/usr/local   # requires root...
-INSTALL_DIR=$HOME/tools/autoeclipse
-WORKSPACE_DIR=$HOME/workspace
+# ------------------------------------------------------------------------
+# SETTINGS <- edit these if you wish
+
+# Where to install eclipse and eclipse workspace?
+INSTALL_DIR="$HOME/tools/autoeclipse"
+WORKSPACE_DIR="$HOME/workspace"
 
 # Set Download dir
 # NOTE: If script is used to provision a vagrant box, this will always
 # be reset to /vagrant instead
-DOWNLOAD_DIR=/tmp
+DOWNLOAD_DIR="/tmp"
 
-# Eclipse distribution ----------------------------------------------------
+# Eclipse distribution ---------------------------------------------------
 
 # URLs to latest x86 32 and 64 bit releases of Eclipse (DSL variant) follow.
-# You can update the one you need...  
+# You can update the one you need...
 
 # It is recommended to look up and specify your closest mirror URL
-# Choose another appropriate mirror by putting this URL *in your web browser*
-# (it does not work as part of this CONFIG), and then add the URL here.
+# Choose another appropriate mirror by putting the following URL *in your
+# web browser* (it does not work as part of this CONFIG), and then find a
+# mirror and add the URL here.
+# Be careful of the base directory which differs.  For example FAU uses
+# eclipse/*, other sites might have it under pub/eclipse/* etc.
 # http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads"
 
 # We use FAU here as one possible choice.
-ECLIPSE_MIRROR_FAU_DE="http://ftp.fau.de/eclipse/technology/epp/downloads"
+ECLIPSE_MIRROR="http://ftp.fau.de/eclipse"
 
-USE_ECLIPSE_MIRROR="$ECLIPSE_MIRROR_FAU_DE"
+# NOTE: You can set _MD5 variables to empty to skip MD5 check (just remove the assignment altogether)
+# but it is used to determine if files are already downloaded to save time.
 
-# NOTE: You can set _MD5 variables to empty to skip MD5 check (just remove the assignment altogether).
-ECLIPSE_INSTALLER_i686="$USE_ECLIPSE_MIRROR/release/mars/R/eclipse-dsl-mars-R-linux-gtk.tar.gz"
-ECLIPSE_MD5_x686=80c4e3d0dbe204fbf476de08df0fcf18
+ECLIPSE_INSTALLER_i686="$ECLIPSE_MIRROR/technology/epp/downloads/release/mars/R/eclipse-dsl-mars-R-linux-gtk.tar.gz"
+ECLIPSE_MD5_x686="80c4e3d0dbe204fbf476de08df0fcf18"
 
-ECLIPSE_INSTALLER_x86_64="$USE_ECLIPSE_MIRROR/release/mars/R/eclipse-dsl-mars-R-linux-gtk-x86_64.tar.gz"
-ECLIPSE_MD5_x86_64=6c2d45de8874b71a4eba19afe584acf6
+ECLIPSE_INSTALLER_x86_64="$ECLIPSE_MIRROR/technology/epp/downloads/release/mars/R/eclipse-dsl-mars-R-linux-gtk-x86_64.tar.gz"
+ECLIPSE_MD5_x86_64="6c2d45de8874b71a4eba19afe584acf6"
 
-# D-Bus EMF model ---------------------------------------------------------
+# D-Bus EMF model --------------------------------------------------------
 
-# Note: Here _VERSION is necessary I think, because of the way
-# we do this download...
 DBUS_EMF_VERSION=0.8.0
-DBUS_EMF_UPDATE_SITE_HASH=1605fd0922ff   # This is something that exists on the web page - I figured why not check it.
+DBUS_EMF_UPDATE_SITE_HASH=1605fd0922ff   # Something that exists on the web page - I figured why not check it.
 DBUS_EMF_UPDATE_SERVER="http://dbus-emf-model.eclipselabs.org.codespot.com/git/update_site/releases"
 DBUS_EMF_UPDATE_SITE_URL="$DBUS_EMF_UPDATE_SERVER/$DBUS_EMF_VERSION"
-DBUS_EMF_FEATURES=model.emf.dbusxml.feature.feature.group
+DBUS_EMF_FEATURES=\
+model.emf.dbusxml.feature.feature.group
 
-# KIELER framework --------------------------------------------------------
+# KIELER framework -------------------------------------------------------
 
-# Kieler Pragmatics "krendering" package - a new dependency for franca.ui
-# starting with franca release 0.9.2
+# Kieler Pragmatics "krendering" package is required by franca.ui >=0.9.2
 KRENDERING_VERSION="release_pragmatics_2015-02"
 KRENDERING_UPDATE_SERVER="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite"
 KRENDERING_UPDATE_SITE_URL="$KRENDERING_UPDATE_SERVER/$KRENDERING_VERSION"
@@ -73,11 +71,12 @@ de.cau.cs.kieler.klighd.ui,\
 de.cau.cs.kieler.klighd.piccolo,\
 de.cau.cs.kieler.core.kivi
 
-# FRANCA ------------------------------------------------------------------
+# FRANCA -----------------------------------------------------------------
 
 FRANCA_VERSION="0.10.0.201507291433"
-FRANCA_UPDATE_SERVER="https://franca.github.io/franca/update_site/releases"
-FRANCA_UPDATE_SITE_URL="$FRANCA_UPDATE_SERVER/$FRANCA_VERSION"
+FRANCA_ARCHIVE="site_franca_${FRANCA_VERSION}.zip"
+FRANCA_ARCHIVE_MD5="74c3e5cef73dcb36b0c8f3c00bacd555"
+FRANCA_ARCHIVE_URL="https://googledrive.com/host/0B7JseVbR6jvhazEtRDVsSk9mX1k/Releases/0.10/$FRANCA_ARCHIVE"
 FRANCA_FEATURES=\
 org.franca.connectors.dbus,\
 org.franca.connectors.dbus.source,\
@@ -104,7 +103,7 @@ org.franca.deploymodel.dsl.ui.source,\
 org.franca.generators,\
 org.franca.generators.source
 
-# FRANCA EXAMPLES ---------------------------------------------------------
+# FRANCA EXAMPLES --------------------------------------------------------
 
 EXAMPLES_ARCHIVE="0.10/org_franca_examples_src_2015-10-28.zip"
 EXAMPLES_MD5="ffbbef3db813821e032a9161fd45fe34"
