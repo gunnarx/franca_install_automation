@@ -23,6 +23,7 @@ debug() {
 die() {
    echo "Something went wrong.  Message: "
    echo "$@"
+   [ -n "$ORIGDIR" ] && cd "$ORIGDIR"
    exit 1
 }
 
@@ -41,7 +42,8 @@ if_vagrant() {
 unless_vagrant() {
    [ -z "$VAGRANT" ] && $@
 }
-# Print a major header
+
+# Print a section header
 section() {
       # Using printf because "echo -n" is not fully portable
       printf '********************************************************************\n'
@@ -56,7 +58,7 @@ step() {
 
 # Check condition is met or die
 ensure() {
-   $* || die "Condition not met: $*"
+   $@ || die "Condition not met: $*"
 }
 
 # Check that variable(s) have been defined
@@ -66,7 +68,7 @@ defined() {
    done
 }
 
-# Print a warning and pause 
+# Print a warning and pause
 # (it will not pause in Vagrant provisioning because there is no terminal)
 warn() {
    echo "WARNING: $1"
@@ -74,20 +76,11 @@ warn() {
    unless_vagrant read
 }
 
-# This is kind of useless...
-sanity_check_filename() {
-   [ -z "$1" ] && die "Filename empty."
-}
-
-# dereference variable
-
+# dereference variable:
 # This is a kind of weird hack, but it evaluates the variable whose name is
-# defined by the input variable.
-# example:   x=foo ; deref x, returns the value of $foo !
-deref() {
-   debug "dereffing $1"
-   eval echo \$$1
-}
+# given by the input.  It is used extensively in this program.
+# E.g.: If x=foo ; deref x returns foo and deref $x returns the value of $foo
+deref() { eval echo \$$1 ; }
 
 get_md5() {
    $MD5SUM "$1" | cut -b 1-32
@@ -120,14 +113,12 @@ md5_check() {
    fi
 }
 
-
 download() {
    cd "$DOWNLOAD_DIR"
    $DEBUG && set -x
    downloaded_file=
    outfile=$(basename "$1")
    expected_md5=$2
-   sanity_check_filename "$outfile"
    # If already exists, we check md5 to know if it is complete and OK
    if [ -f "$outfile" ] ; then
       echo -n "File exists: $PWD/$outfile, checking..."
@@ -137,7 +128,7 @@ download() {
             downloaded_file="$outfile"
          else
             echo
-            echo "File completeness MD5 check: expected $expected_md5, not matched"
+            echo "File completeness check: expected MD5 $expected_md5 not matched"
          fi
       else
          echo "No MD5 given, can't check file completeness"
@@ -147,7 +138,7 @@ download() {
    fi
    if [ -z "$downloaded_file" ] ; then
       echo Downloading...
-#      wget -c "$1" -O "$outfile" -c --no-check-certificate || die "wget failed.  Is wget installed?"
+#     wget -c "$1" -O "$outfile" -c --no-check-certificate || die "wget failed.  Is wget installed?"
       curl -L -# -O "$1"  || die "curl failed.  Is curl installed?"
       downloaded_file=$outfile
    fi
@@ -158,7 +149,7 @@ untar() {
    ensure [ -f "$1" ]
    targetdir="$2"
    # Use current directory as default targetdir if not specified
-   [ -n "$targetdir" ] && targetdir=.
+   [ -z "$targetdir" ] && targetdir=.
    tar xf "$1" -C "$2" || die "untar failed for $1"
 }
 
@@ -186,10 +177,11 @@ check_site_latest_version() {
    fi
 }
 
+# Calling Eclipse to install an update site, local or remote:
+# http://stackoverflow.com/questions/7163970/how-do-you-automate-the-installation-of-eclipse-plugins-with-command-line
+# http://help.eclipse.org/indigo/index.jsp?topic=%2Forg.eclipse.platform.doc.user%2Ftasks%2Frunning_eclipse.htm
+# http://help.eclipse.org/helios/index.jsp?topic=/org.eclipse.platform.doc.isv/guide/p2_director.html
 _install_update_site() {
-   # http://stackoverflow.com/questions/7163970/how-do-you-automate-the-installation-of-eclipse-plugins-with-command-line
-   # http://help.eclipse.org/indigo/index.jsp?topic=%2Forg.eclipse.platform.doc.user%2Ftasks%2Frunning_eclipse.htm
-   # http://help.eclipse.org/helios/index.jsp?topic=/org.eclipse.platform.doc.isv/guide/p2_director.html
 
    cd "$MYDIR"
 
@@ -199,6 +191,7 @@ _install_update_site() {
    debug "Installing from update site $1"
 
    $DEBUG && set -x
+
    $INSTALL_DIR/eclipse/eclipse -nosplash \
       -application org.eclipse.equinox.p2.director \
       -repository "$site" \
@@ -209,6 +202,7 @@ _install_update_site() {
       echo "Success"
    else
       echo "Fail"
+      [ $EXIT_ON_FAILURE -eq "true" ] && exit 1  # <- needs to be set in environment
    fi
 
    $DEBUG && set +x
@@ -225,7 +219,7 @@ get_local_file() {
    while ! $done ; do
       echo "I need the file $file to be provided by you locally."
       echo "Please provide a path to the file (or the directory it is in)."
-      echo "Path that is relative to current directory ($PWD) is ok."
+      echo "A path that is relative to current directory ($PWD) is OK."
       echo -n "Path: "
       read path
       path="${path/\~/$HOME}"  # We need to expand ~ manually
@@ -278,18 +272,6 @@ install_local_file() {
    archivefile=$(deref ${1}_ARCHIVE)
    get_local_file "$archivefile"
    _install_archive "$1"
-
-}
-
-user_pass() {
-   site=$1
-   echo "Please write your login for update site $site"
-   echo "User name: "
-   read user
-   echo "Password: "
-   read pass
-   eval ${1}_USER="$user"
-   eval ${1}_PASS="$pass"
 }
 
 ORIGDIR="$PWD"
@@ -316,10 +298,10 @@ MACHINE=$(uname -m)
 # Check that a few necessary variables are defined
 defined ECLIPSE_INSTALLER_$MACHINE INSTALL_DIR DOWNLOAD_DIR DBUS_EMF_UPDATE_SITE_URL FRANCA_ARCHIVE_URL KRENDERING_SITE_URL
 
-# Override CONFIG for the download dir if running in Vagrant
+# If running in Vagrant, override the download dir defined in CONFIG
 if_vagrant DOWNLOAD_DIR=/vagrant
 
-# Create install and workspace dirs
+# Create installation and workspace dirs
 if [ -d "$INSTALL_DIR/eclipse" ] ; then
    if [ -z "$VAGRANT" ] ; then  # No need to warn in vagrant case
       echo
@@ -352,8 +334,7 @@ elif [ "$OSTYPE" = "???" -a "$MACHINE" = "???" ]; then
     #ECLIPSE_MD5=???
     :
 else
-    echo "ERROR: Unknown (OSTYPE=$OSTYPE, MACHINE=$MACHINE)" >/dev/stderr
-    exit 1
+    die "ERROR: Unknown (OSTYPE=$OSTYPE, MACHINE=$MACHINE)"
 fi
 
 # Get Eclipse archive
@@ -362,11 +343,11 @@ cd "$DOWNLOAD_DIR"
 step "Downloading Eclipse installer"
 download "$ECLIPSE_INSTALLER" $(deref ECLIPSE_MD5_$MACHINE) # This sets a variable named $downloaded_file
 
-# File exists?, correct MD5?, then unpack
+# Downloaded? - check MD5 and then unpack
 [ -f "$downloaded_file" ] || die "ECLIPSE not found (not downloaded?)."
 md5_check ECLIPSE "$downloaded_file" $MACHINE
 step "Unpacking Eclipse to $INSTALL_DIR"
-untar "$downloaded_file" "$INSTALL_DIR"
+untar "$downloaded_file" "$INSTALL_DIR" || die
 
 install_online_update_site MWE
 
@@ -452,3 +433,6 @@ echo "All Done. You may now start eclipse by running: $INSTALL_DIR/eclipse/eclip
 
 java -version >/dev/null 2>&1 || warn "Could not run java executable to check version!?"
 java -version 2>&1 | fgrep -q $PREFERRED_JAVA_VERSION || warn "Your java version is not $PREFERRED_JAVA_VERSION? -- some of the eclipse features may _silently_ fail. WARNING\!"
+
+cd "$ORIGDIR"
+
