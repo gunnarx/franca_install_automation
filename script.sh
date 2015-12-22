@@ -192,10 +192,10 @@ _install_update_site() {
 
    $DEBUG && set -x
 
-   $INSTALL_DIR/eclipse/eclipse -nosplash \
+   $ECLIPSE_INSTALL_DIR/eclipse/eclipse -nosplash \
       -application org.eclipse.equinox.p2.director \
       -repository "$site" \
-      -destination $INSTALL_DIR/eclipse \
+      -destination $ECLIPSE_INSTALL_DIR/eclipse \
       -installIU "$features"
 
    if [ $? -eq 0 ] ; then
@@ -296,33 +296,33 @@ OSTYPE=$(uname -o)
 MACHINE=$(uname -m)
 
 # Check that a few necessary variables are defined
-defined ECLIPSE_INSTALLER_$MACHINE INSTALL_DIR DOWNLOAD_DIR DBUS_EMF_UPDATE_SITE_URL FRANCA_ARCHIVE_URL KRENDERING_SITE_URL
+defined ECLIPSE_INSTALLER_$MACHINE ECLIPSE_INSTALL_DIR DOWNLOAD_DIR DBUS_EMF_UPDATE_SITE_URL FRANCA_ARCHIVE_URL KRENDERING_SITE_URL
 
 # If running in Vagrant, override the download dir defined in CONFIG
 if_vagrant DOWNLOAD_DIR=/vagrant
 
 # Create installation and workspace dirs
-if [ -d "$INSTALL_DIR/eclipse" ] ; then
+if [ -d "$ECLIPSE_INSTALL_DIR/eclipse" ] ; then
    if [ -z "$VAGRANT" ] ; then  # No need to warn in vagrant case
       echo
-      echo "NOTE the eclipse installation dir exists ($INSTALL_DIR/eclipse)!"
+      echo "NOTE the eclipse installation dir exists ($ECLIPSE_INSTALL_DIR/eclipse)!"
       echo "It is usually not a problem but to make a clean install you may want to remove it"
       warn "Remove installation dir if you want to make a clean install."
    fi
 fi
 
-mkdir -p "$INSTALL_DIR" || die "Can't create target dir ($INSTALL_DIR)"
+mkdir -p "$ECLIPSE_INSTALL_DIR" || die "Can't create target dir ($INSTALL_DIR)"
 
-if [ -d "$WORKSPACE_DIR" ] ; then
+if [ -d "$ECLIPSE_WORKSPACE_DIR" ] ; then
    if [ -z "$VAGRANT" ] ; then  # No need to warn in vagrant case
       echo
-      echo "NOTE the workspace dir in CONFIG exists ($WORKSPACE_DIR)!"
-      echo "I will unpack a few example files into $WORKSPACE_DIR !"
+      echo "NOTE the workspace dir in CONFIG exists ($ECLIPSE_WORKSPACE_DIR)!"
+      echo "I will unpack a few example files into $ECLIPSE_WORKSPACE_DIR !"
       warn "If your workspace content is important you may want to back up your files!"
    fi
 fi
 
-mkdir -p "$WORKSPACE_DIR" || die "Fail creating $WORKSPACE_DIR"
+mkdir -p "$ECLIPSE_WORKSPACE_DIR" || die "Fail creating $ECLIPSE_WORKSPACE_DIR"
 
 if [ "$OSTYPE" = "GNU/Linux" -a "$MACHINE" = "i686" ]; then
     ECLIPSE_INSTALLER=$ECLIPSE_INSTALLER_i686
@@ -405,7 +405,7 @@ install_local_file         ARTOP
 install_online_update_site IONAS
 
 section Downloading Franca examples
-cd "$WORKSPACE_DIR"                    || die "cd to WORKSPACE_DIR ($WORKSPACE_DIR) failed"
+cd "$ECLIPSE_WORKSPACE_DIR" || die "cd to ECLIPSE_WORKSPACE_DIR ($ECLIPSE_WORKSPACE_DIR) failed"
 download "$EXAMPLES_URL" "$EXAMPLES_MD5"
 step Checking MD5 sum for example
 md5_check EXAMPLES "$downloaded_file"

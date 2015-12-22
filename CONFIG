@@ -12,8 +12,8 @@ if_vagrant HOME=/home/vagrant
 # SETTINGS <- edit these if you wish
 
 # Where to install eclipse and eclipse workspace?
-INSTALL_DIR="$HOME/tools/autoeclipse"
-WORKSPACE_DIR="$HOME/workspace"
+[ -z "$ECLIPSE_INSTALL_DIR" ] && ECLIPSE_INSTALL_DIR="$HOME/tools/autoeclipse"
+[ -z "$ECLIPSE_WORKSPACE_DIR" ] && ECLIPSE_WORKSPACE_DIR="$HOME/workspace"
 
 # Set Download dir
 # NOTE: If script is used to provision a vagrant box, this will always
