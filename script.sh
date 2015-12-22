@@ -219,13 +219,24 @@ _install_update_site() {
 }
 
 get_local_file() {
-
-   file="$1"
    cd "$MYDIR"
+   file=$(deref ${1}_ARCHIVE)
 
-   step "Find $1 software archive locally"
+   step "Find $file software archive locally"
+
+   # defined using environment variable?
+   loc="$(deref ${1}_ARCHIVE_LOCAL_DIR)"
+   if [ -n "$loc" ] ; then
+      path="$loc/$file"
+   else
+      path="./$file"  # Let's try current directory, might work
+   fi
+
+   # Found already?
    done=false
-   [ -f "./$file" ] && { path="./$file" ; done=true ; }
+   [ -f "$path" ] && done=true
+
+   # if not, ask user interactively
    while ! $done ; do
       echo "I need the file $file to be provided by you locally."
       echo "Please provide a path to the file (or the directory it is in)."
@@ -280,7 +291,7 @@ install_local_file() {
    cd "$MYDIR"
    section "Installing local file for $1"
    archivefile=$(deref ${1}_ARCHIVE)
-   get_local_file "$archivefile"
+   get_local_file "$1"
    _install_archive "$1"
 }
 
