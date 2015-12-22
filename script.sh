@@ -89,8 +89,14 @@ get_md5() {
 match_md5() {
    f=$1
    expect_md5=$2
-   # Succeed if expected is not defined, or if sum matches
-   [ -z "$expect_md5" -o "$(get_md5 $f)" = "$expect_md5" ]
+   if [ -z "$expect_md5" ] ; then
+     echo "No MD5 defined - must assume it's OK"
+     true
+   elif [ "$(get_md5 $f)" = "$expect_md5" ] ; then
+     true
+   else
+     false
+   fi
 }
 
 md5_check() {
@@ -106,8 +112,7 @@ md5_check() {
 
    debug "Checking MD5 $wanted_md5 for $item"
    if match_md5 $file $wanted_md5 ; then
-      debug "MD5 ok ($item)"
-      true
+      echo "MD5 ok ($item)"
    else
       die "MD5 checksum ($md5) did not match predefined md5 ($wanted_md5) for item $item.  Check CONFIG file."
    fi
@@ -248,7 +253,7 @@ install_site_archive() {
    step "Downloading update site archive (.zip) for $1"
    url=$(deref ${1}_ARCHIVE_URL)
    download "$url" "$(deref ${1}_ARCHIVE_MD5)"
-   md5_check "$1" "$downloaded_file"
+   md5_check "${1}_ARCHIVE" "$downloaded_file"
    _install_archive "$1"
 }
 
