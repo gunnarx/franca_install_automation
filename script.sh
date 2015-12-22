@@ -202,7 +202,7 @@ _install_update_site() {
       echo "Success"
    else
       echo "Fail"
-      [ $EXIT_ON_FAILURE -eq "true" ] && exit 1  # <- needs to be set in environment
+      [ "$EXIT_ON_FAILURE" -eq "true" ] && exit 1  # <- needs to be set in environment
    fi
 
    $DEBUG && set +x
