@@ -2,9 +2,8 @@
 # Part of franca_install_automation
 # License: See project dir
 
-# This is a bourne-shell script but since it includes
-# configuration data only it is called CONFIG and included
-# from another script.
+# This is a bourne-shell script but since it includes only configuration
+# data it is called CONFIG.  It is sourced from another script.
 
 # INFO:
 # -------------------------------------------------------------------------
@@ -13,41 +12,44 @@
 # Special case for Vagrant (affects later definitions)
 if_vagrant HOME=/home/vagrant
 
-# Where to install eclipse?
-# INSTALL_DIR=/usr/local   # requires root...
-INSTALL_DIR=$HOME/tools/autoeclipse
-WORKSPACE_DIR=$HOME/workspace
+# ------------------------------------------------------------------------
+# SETTINGS <- edit these if you wish
+
+# Where to install eclipse and eclipse workspace?
+[ -z "$ECLIPSE_INSTALL_DIR" ] && ECLIPSE_INSTALL_DIR="$HOME/tools/autoeclipse"
+[ -z "$ECLIPSE_WORKSPACE_DIR" ] && ECLIPSE_WORKSPACE_DIR="$HOME/workspace"
 
 # Set Download dir
 # NOTE: If script is used to provision a vagrant box, this will always
 # be reset to /vagrant instead
-DOWNLOAD_DIR=/tmp
+DOWNLOAD_DIR="/tmp"
 
-# Eclipse distribution ----------------------------------------------------
+# Eclipse distribution ---------------------------------------------------
 
 # URLs to latest x86 32 and 64 bit releases of Eclipse (DSL variant) follow.
 # You can update the one you need...
 
 # It is recommended to look up and specify your closest mirror URL
-# Choose another appropriate mirror by putting this URL *in your web browser*
-# (it does not work as part of this CONFIG), and then add the URL here.
+# Choose another appropriate mirror by putting the following URL *in your
+# web browser* (it does not work as part of this CONFIG), and then find a
+# mirror and add the URL here.
+# Be careful of the base directory which differs.  For example FAU uses
+# eclipse/*, other sites might have it under pub/eclipse/* etc.
 # http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads"
 
 # We use FAU here as one possible choice.
-ECLIPSE_MIRROR_FAU_DE="http://ftp.fau.de/eclipse/technology/epp/downloads"
+ECLIPSE_MIRROR="http://ftp.fau.de/eclipse"
 
-USE_ECLIPSE_MIRROR="$ECLIPSE_MIRROR_FAU_DE"
-# NOTE: You can set _MD5 variables to empty to skip MD5 check (just remove the
-# assignment altogether).
+# NOTE: You can set _MD5 variables to empty to skip MD5 check (just remove the assignment altogether)
+# but it is used to determine if files are already downloaded to save time.
 
-# ! Please consider setting the URL to a mirror near you instead !
-ECLIPSE_INSTALLER_i686="http://ftp.fau.de/eclipse/technology/epp/downloads/release/luna/SR2/eclipse-dsl-luna-SR2-linux-gtk.tar.gz"
+ECLIPSE_INSTALLER_i686="$ECLIPSE_MIRROR/technology/epp/downloads/release/luna/SR2/eclipse-dsl-luna-R-linux-gtk.tar.gz"
 ECLIPSE_MD5_x686=
 
-ECLIPSE_INSTALLER_x86_64="http://ftp.fau.de/eclipse/technology/epp/downloads/release/luna/SR2/eclipse-dsl-luna-SR2-linux-gtk-x86_64.tar.gz"
+ECLIPSE_INSTALLER_x86_64="$ECLIPSE_MIRROR/technology/epp/downloads/release/luna/SR2/eclipse-dsl-luna-SR2-linux-gtk-x86_64.tar.gz"
 ECLIPSE_MD5_x86_64=98eeaea78478ac384667e3f05142effc
 
-# D-Bus EMF model ---------------------------------------------------------
+# D-Bus EMF model --------------------------------------------------------
 
 # Note: Here _VERSION is necessary I think, because of the way
 # we do this download...
@@ -55,10 +57,8 @@ DBUS_EMF_VERSION=0.7.8
 DBUS_EMF_UPDATE_SITE_HASH=f9db6c26f742   # This is something that exists on the web page - I figured why not check it.
 DBUS_EMF_UPDATE_SERVER="http://dbus-emf-model.eclipselabs.org.codespot.com/git/update_site/releases"
 DBUS_EMF_UPDATE_SITE_URL="$DBUS_EMF_UPDATE_SERVER/$DBUS_EMF_VERSION"
-DBUS_EMF_FEATURES=model.emf.dbusxml.feature.feature.group
-
-# FRANCA ------------------------------------------------------------
-
+DBUS_EMF_FEATURES=\
+model.emf.dbusxml.feature.feature.group
 FRANCA_ARCHIVE="site_franca_0.9.1.201412191134.zip"
 FRANCA_ARCHIVE_MD5=0957918d4f3002083d1ec48c2f5905e8
 FRANCA_ARCHIVE_URL="https://googledrive.com/host/0B7JseVbR6jvhazEtRDVsSk9mX1k/Releases/0.9/$FRANCA_ARCHIVE"
@@ -85,7 +85,6 @@ org.franca.deploymodel.dsl.ui,\
 org.franca.deploymodel.dsl.ui.source,\
 org.franca.generators,\
 org.franca.generators.source
-
 
 # Some CDT tools (autogen tools) require eclipse.remote
 # which requires another CDT tool (PTY).  Dependency hell?
