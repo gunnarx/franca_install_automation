@@ -323,7 +323,7 @@ if [ -d "$ECLIPSE_INSTALL_DIR/eclipse" ] ; then
    fi
 fi
 
-mkdir -p "$ECLIPSE_INSTALL_DIR" || die "Can't create target dir ($INSTALL_DIR)"
+mkdir -p "$ECLIPSE_INSTALL_DIR" || die "Can't create target dir ($ECLIPSE_INSTALL_DIR)"
 
 if [ -d "$ECLIPSE_WORKSPACE_DIR" ] ; then
    if [ -z "$VAGRANT" ] ; then  # No need to warn in vagrant case
@@ -358,8 +358,9 @@ download "$ECLIPSE_INSTALLER" $(deref ECLIPSE_MD5_$MACHINE) # This sets a variab
 # Downloaded? - check MD5 and then unpack
 [ -f "$downloaded_file" ] || die "ECLIPSE not found (not downloaded?)."
 md5_check ECLIPSE "$downloaded_file" $MACHINE
-step "Unpacking Eclipse to $INSTALL_DIR"
-untar "$downloaded_file" "$INSTALL_DIR"
+
+step "Unpacking Eclipse to $ECLIPSE_INSTALL_DIR"
+untar "$downloaded_file" "$ECLIPSE_INSTALL_DIR"
 
 install MWE
 
@@ -442,7 +443,7 @@ At the moment, i don't know any more instructions for ionas usage, sorry.
 MSG
 
 echo
-echo "All Done. You may now start eclipse by running: $INSTALL_DIR/eclipse/eclipse"
+echo "All Done. You may now start eclipse by running: $ECLIPSE_INSTALL_DIR/eclipse/eclipse"
 
 java -version >/dev/null 2>&1 || warn "Could not run java executable to check version!?"
 java -version 2>&1 | fgrep -q $PREFERRED_JAVA_VERSION || warn "Your java version is not $PREFERRED_JAVA_VERSION? -- some of the eclipse features may _silently_ fail. WARNING\!"
