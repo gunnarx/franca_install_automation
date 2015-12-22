@@ -216,8 +216,8 @@ org.artop.examples.feature.group
 
 # MDT_OCL   --------------------------------------------------------------
 
-MDT_OCL_ARCHIVE_URL="http://download.eclipse.org/modeling/mdt/ocl/downloads/drops/6.1.0/N201511091302/mdt-ocl-Update-N201511091302.zip"
-MDT_OCL_ARCHIVE_MD5="553cd1f85ac603580aa32f8672982183"
+MDT_OCL_ARCHIVE_URL="http://download.eclipse.org/modeling/mdt/ocl/downloads/drops/6.1.0/S201511091515/mdt-ocl-Update-6.1.0M3.zip"
+MDT_OCL_ARCHIVE_MD5="f3123e793633f8a5abfb829e63623a45"
 MDT_OCL_FEATURES=\
 org.eclipse.ocl.ecore
 
