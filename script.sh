@@ -76,6 +76,11 @@ warn() {
    unless_vagrant read
 }
 
+# Print a note, no pause
+note() {
+   echo "NOTE: $1"
+}
+
 # dereference variable:
 # This is a kind of weird hack, but it evaluates the variable whose name is
 # given by the input.  It is used extensively in this program.
