@@ -224,19 +224,25 @@ get_local_file() {
 
    step "Find $file software archive locally"
 
-   # defined using environment variable?
+   done=false
+
+   # Location defined using environment variable?
    loc="$(deref ${1}_ARCHIVE_LOCAL_DIR)"
    if [ -n "$loc" ] ; then
       path="$loc/$file"
+      if [ -f "$path" ] ; then
+         echo "Found $file using \$${1}_ARCHIVE_LOCAL_DIR ($loc)"
+         done=true
+      fi
    else
-      path="./$file"  # Let's try current directory, might work
+      path="./$file"  # Let's try current directory, it might work
+      if [ -f "$path" ] ; then
+         echo "Found $file in current directory"
+         done=true
+      fi
    fi
 
-   # Found already?
-   done=false
-   [ -f "$path" ] && done=true
-
-   # if not, ask user interactively
+   # If not found yet, ask user interactively
    while ! $done ; do
       echo "I need the file $file to be provided by you locally."
       echo "Please provide a path to the file (or the directory it is in)."
