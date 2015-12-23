@@ -9,7 +9,7 @@
 if_vagrant HOME=/home/vagrant
 
 # ------------------------------------------------------------------------
-# SETTINGS <- edit these if you wish
+# MAIN SETTINGS <- edit these if you wish
 
 # Where to install eclipse and eclipse workspace?
 [ -z "$ECLIPSE_INSTALL_DIR" ] && ECLIPSE_INSTALL_DIR="$HOME/tools/autoeclipse"
@@ -20,7 +20,11 @@ if_vagrant HOME=/home/vagrant
 # be reset to /vagrant instead
 DOWNLOAD_DIR="/tmp"
 
+# Note: Eclipse and packages might depend on a particular Java version.
+PREFERRED_JAVA_VERSION=1.7
+
 # Eclipse distribution ---------------------------------------------------
+
 
 # URLs to latest x86 32 and 64 bit releases of Eclipse (DSL variant) follow.
 # You can update the one you need...
