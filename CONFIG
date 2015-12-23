@@ -5,10 +5,6 @@
 # This is a bourne-shell script but since it includes only configuration
 # data it is called CONFIG.  It is sourced from another script.
 
-# INFO:
-# -------------------------------------------------------------------------
-# SETTINGS
-
 # Special case for Vagrant (affects later definitions)
 if_vagrant HOME=/home/vagrant
 

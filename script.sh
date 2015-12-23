@@ -213,11 +213,91 @@ _install_update_site() {
       echo "Success"
    else
       echo "Fail"
-      [ $EXIT_ON_FAILURE -eq "true" ] && exit 1  # <- needs to be set in environment
+      [ "$EXIT_ON_FAILURE" = "true" ] && exit 1  # <- needs to be set in environment
    fi
 
    $DEBUG && set +x
 }
+
+get_local_file() {
+
+   file="$1"
+   cd "$MYDIR"
+
+   step "Find $1 software archive locally"
+   done=false
+   [ -f "./$file" ] && { path="./$file" ; done=true ; }
+   while ! $done ; do
+      echo "I need the file $file to be provided by you locally."
+      echo "Please provide a path to the file (or the directory it is in)."
+      echo "Path that is relative to current directory ($PWD) is ok."
+      echo -n "Path: "
+      read path
+      path="${path/\~/$HOME}"  # We need to expand ~ manually
+      [ -d "$path" -a -f "$path/$file" ] && path="$path/$file"
+      [ -f "$path" ] && done=true
+      [ ! -e "$path" ] && { echo "Let's see..." ; ls -l "$path" ; echo "No - try again." ; }
+      [ -d "$path" -a ! -f "$path/$file" ] && { echo "No, can't find the file there - try again" ; }
+   done
+
+   cp "$path" "$DOWNLOAD_DIR"
+   downloaded_file="$file"
+   cd - >/dev/null
+}
+
+unpack_site_archive() {
+   step "Unpacking archive $2 for $1"
+   UNPACK_DIR=$DOWNLOAD_DIR/tmp.$$.$1
+   mkdir -p "$UNPACK_DIR"            || die "mkdir UNPACK_DIR ($UNPACK_DIR) failed"
+   cd "$UNPACK_DIR"                  || die "cd to UNPACK_DIR ($UNPACK_DIR) failed"
+   unzip -q "$DOWNLOAD_DIR/$downloaded_file" || die "unzip $DOWNLOAD_DIR/$downloaded_file failed"
+   cd - >/dev/null
+}
+
+install_site_archive() {
+   section "Installing: $1 (site archive)"
+   step "Downloading update site archive (.zip) for $1"
+   url=$(deref ${1}_ARCHIVE_URL)
+   download "$url" "$(deref ${1}_ARCHIVE_MD5)"
+   md5_check "$1" "$downloaded_file"
+   _install_archive "$1"
+}
+
+install_online_update_site() {
+   section "Installing: $1 (online site)"
+   _install_update_site "$1"
+}
+
+_install_archive() {
+   unpack_site_archive "$1" "$downloaded_file"
+   step "Installing $1 from local update site (unpacked archive)"
+   eval ${1}_UPDATE_SITE_URL="file://$UNPACK_DIR"
+   _install_update_site "$1"
+   cd "$MYDIR"
+   rm -rf "$UNPACK_DIR"
+}
+
+install_local_file() {
+   cd "$MYDIR"
+   section "Installing local file for $1"
+   archivefile=$(deref ${1}_ARCHIVE)
+   get_local_file "$archivefile"
+   _install_archive "$1"
+
+}
+
+user_pass() {
+   site=$1
+   echo "Please write your login for update site $site"
+   echo "User name: "
+   read user
+   echo "Password: "
+   read pass
+   eval ${1}_USER="$user"
+   eval ${1}_PASS="$pass"
+}
+
+
 
 MYDIR=$(dirname "$0")
 ORIGDIR="$PWD"
@@ -248,6 +328,17 @@ defined ECLIPSE_INSTALLER_$MACHINE ECLIPSE_INSTALL_DIR DOWNLOAD_DIR DBUS_EMF_UPD
 if_vagrant DOWNLOAD_DIR=/vagrant
 
 # Create installation and workspace dirs
+if [ -d "$ECLIPSE_INSTALL_DIR/eclipse" ] ; then
+   if [ -z "$VAGRANT" ] ; then  # No need to warn in vagrant case
+      echo
+      echo "NOTE the eclipse installation dir exists ($ECLIPSE_INSTALL_DIR/eclipse)!"
+      echo "It is usually not a problem but to make a clean install you may want to remove it"
+      warn "Remove installation dir if you want to make a clean install."
+   fi
+fi
+
+mkdir -p "$ECLIPSE_INSTALL_DIR" || die "Can't create target dir ($ECLIPSE_INSTALL_DIR)"
+
 if [ -d "$ECLIPSE_WORKSPACE_DIR" ] ; then
    if [ -z "$VAGRANT" ] ; then  # No need to warn in vagrant case
       echo
@@ -283,9 +374,6 @@ download "$ECLIPSE_INSTALLER" $(deref ECLIPSE_MD5_$MACHINE) # This sets a variab
 md5_check ECLIPSE "$downloaded_file" $MACHINE
 untar "$downloaded_file" "$ECLIPSE_INSTALL_DIR"
 
-section "Installing CDT"
-install_update_site CDT
-
 # Not sure really why I still do this check... It's legacy :)
 section "Checking DBus EMF model on update site"
 check_site_hash            DBUS_EMF
@@ -310,21 +398,25 @@ cd -
 # "Update Site" is now a local directory:
 FRANCA_UPDATE_SITE_URL="file://$UNPACK_DIR"
 section "Installing Franca"
-install_update_site FRANCA
+install_online_update_site FRANCA
 rm -rf "$UNPACK_DIR"
 
-section "Downloading Franca examples"
-cd "$ECLIPSE_WORKSPACE_DIR"            || die "cd to ECLIPSE_WORKSPACE_DIR ($ECLIPSE_WORKSPACE_DIR) failed"
+section "Installing CDT"
+install_online_update_site CDT
 
-section Downloading Franca examples
-cd "$ECLIPSE_WORKSPACE_DIR" || die "cd to ECLIPSE_WORKSPACE_DIR ($ECLIPSE_WORKSPACE_DIR) failed"
+section "Installing IPC CommonAPI C++ from update site"
+install_online_update_site COMMON_API_CPP
+
+
+section "Downloading Franca examples"
+[ -d "$ECLIPSE_WORKSPACE_DIR" ] && cd "$ECLIPSE_WORKSPACE_DIR" || die "cd to ECLIPSE_WORKSPACE_DIR ($ECLIPSE_WORKSPACE_DIR) failed"
 download "$EXAMPLES_URL" "$EXAMPLES_MD5"
+mv "$DOWNLOAD_DIR/$downloaded_file" "$ECLIPSE_WORKSPACE_DIR/"
 step Checking MD5 sum for example
+echo downloaded_file is $downloaded_file
 md5_check EXAMPLES "$downloaded_file"
 EXAMPLES_FILE="$downloaded_file"
 
-section "Installing IPC CommonAPI C++ from update site"
-install_update_site       COMMON_API_CPP
 
 cat <<MSG
 
