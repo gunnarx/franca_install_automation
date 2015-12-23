@@ -9,7 +9,7 @@
 if_vagrant HOME=/home/vagrant
 
 # ------------------------------------------------------------------------
-# SETTINGS <- edit these if you wish
+# MAIN SETTINGS <- edit these if you wish
 
 # Where to install eclipse and eclipse workspace?
 [ -z "$ECLIPSE_INSTALL_DIR" ] && ECLIPSE_INSTALL_DIR="$HOME/tools/autoeclipse"
@@ -20,7 +20,11 @@ if_vagrant HOME=/home/vagrant
 # be reset to /vagrant instead
 DOWNLOAD_DIR="/tmp"
 
+# Note: Eclipse and packages might depend on a particular Java version.
+PREFERRED_JAVA_VERSION=1.7
+
 # Eclipse distribution ---------------------------------------------------
+
 
 # URLs to latest x86 32 and 64 bit releases of Eclipse (DSL variant) follow.
 # You can update the one you need...
@@ -101,8 +105,7 @@ org.franca.deploymodel.dsl.tests.base.source,\
 org.franca.deploymodel.dsl.ui,\
 org.franca.deploymodel.dsl.ui.source,\
 org.franca.generators,\
-org.franca.generators.source,\
-org.franca.ui.feature.group
+org.franca.generators.source
 
 # FRANCA EXAMPLES --------------------------------------------------------
 
@@ -110,122 +113,5 @@ EXAMPLES_ARCHIVE="0.10/org_franca_examples_src_2015-10-28.zip"
 EXAMPLES_MD5="ffbbef3db813821e032a9161fd45fe34"
 FRANCA_BASE_URL="https://googledrive.com/host/0B7JseVbR6jvhazEtRDVsSk9mX1k"
 EXAMPLES_URL="$FRANCA_BASE_URL/Releases/$EXAMPLES_ARCHIVE"
-
-# MWE    -----------------------------------------------------------------
-
-MWE_UPDATE_SITE_URL="http://download.eclipse.org/modeling/emft/mwe/updates/"
-MWE_FEATURES=\
-org.eclipse.emf.mwe.ui
-
-# SPHINX -----------------------------------------------------------------
-
-SPHINX_ARCHIVE="sphinx-Update-0.9.1.zip" # 0.8.0 originally in README
-SPHINX_ARCHIVE_MD5="0d144bc355120278a9277ca88489c11b"
-SPHINX_ARCHIVE_URL="$ECLIPSE_MIRROR/sphinx/$SPHINX_ARCHIVE"
-SPHINX_FEATURES=\
-org.eclipse.sphinx.emf,\
-org.eclipse.sphinx.emf.workspace,\
-org.eclipse.sphinx.emf.editors.forms,\
-org.eclipse.sphinx.emf.explorer,\
-org.eclipse.sphinx.emf.validation,\
-org.eclipse.sphinx.emf.validation.ui,\
-org.eclipse.sphinx.gmf.runtime.ui,\
-org.eclipse.sphinx.xtendxpand,\
-org.eclipse.sphinx.xtendxpand.ui
-
-# XPAND ------------------------------------------------------------------
-
-XPAND_VERSION="2.1.0/R201505260349"
-XPAND_ARCHIVE="m2t-xpand-Update-2.1.0.zip"
-XPAND_ARCHIVE_MD5="bb157d8a9e317d428f9a33840611fdee"
-XPAND_ARCHIVE_SITE="$ECLIPSE_MIRROR/modeling/m2t/xpand/downloads/drops/"
-XPAND_ARCHIVE_URL="$XPAND_ARCHIVE_SITE/$XPAND_VERSION/$XPAND_ARCHIVE"
-XPAND_FEATURES=\
-org.eclipse.xpand.ui
-
-# ------------------------------------------------------------------------
-# Several EMF features are available in an update site but I could not make
-# it work so here is each individual feature as its own archive.
-
-# EMF_VALIDATION ---------------------------------------------------------
-
-EMF_VALIDATION_ARCHIVE="emf-validation-Update-1.8.0.zip"
-EMF_VALIDATION_ARCHIVE_MD5="bd734e4462c4ebbd5ce994f48ec08757"
-EMF_VALIDATION_ARCHIVE_VERSION="1.8.0/R201405281429"
-EMF_VALIDATION_ARCHIVE_SITE="$ECLIPSE_MIRROR/modeling/emf/validation/downloads/drops"
-EMF_VALIDATION_ARCHIVE_URL="$EMF_VALIDATION_ARCHIVE_SITE/$EMF_VALIDATION_ARCHIVE_VERSION/$EMF_VALIDATION_ARCHIVE"
-EMF_VALIDATION_FEATURES=\
-org.eclipse.emf.validation,\
-org.eclipse.emf.validation.ocl,\
-org.eclipse.emf.validation.ui
-
-# EMF_TRANSACTION --------------------------------------------------------
-
-EMF_TRANSACTION_ARCHIVE="emf-transaction-Update-1.8.0.zip"
-EMF_TRANSACTION_ARCHIVE_MD5="c538e87543e42fdc065bf7a41aa6e17d"
-EMF_TRANSACTION_ARCHIVE_VERSION="1.8.0/R201405281451"
-EMF_TRANSACTION_ARCHIVE_SITE="$ECLIPSE_MIRROR/modeling/emf/transaction/downloads/drops"
-EMF_TRANSACTION_ARCHIVE_URL="$EMF_TRANSACTION_ARCHIVE_SITE/$EMF_TRANSACTION_ARCHIVE_VERSION/$EMF_TRANSACTION_ARCHIVE" 
-EMF_TRANSACTION_FEATURES=\
-org.eclipse.emf.transaction,\
-org.eclipse.emf.transaction.ui,\
-org.eclipse.emf.workspace,\
-org.eclipse.emf.workspace.ui
-
-# GMF_RUNTIME ------------------------------------------------------------
-
-GMF_RUNTIME_ARCHIVE="gmf-sdk-runtime-1.8.1.zip"
-GMF_RUNTIME_ARCHIVE_MD5="4672edf198ae22c97b556d37d0bb9391"
-GMF_RUNTIME_VERSION="1.8.1/R201408201453"
-GMF_RUNTIME_ARCHIVE_URL="$ECLIPSE_MIRROR/modeling/gmp/gmf-runtime/downloads/drops/$GMF_RUNTIME_VERSION/$GMF_RUNTIME_ARCHIVE"
-GMF_RUNTIME_FEATURES=\
-org.eclipse.gmf.runtime.emf.core,\
-org.eclipse.gmf.runtime.diagram.core,\
-org.eclipse.gmf.runtime.diagram.ui,\
-org.eclipse.gmf.runtime.diagram.ui.resources.editor,\
-org.eclipse.gmf.runtime.diagram.ui.resources.editor.ide,\
-org.eclipse.gmf.runtime.diagram.ui.providers,\
-org.eclipse.gmf.runtime.diagram.ui.providers.ide,\
-org.eclipse.gmf.runtime.diagram.ui.render,\
-
-# GMF_NOTATION     -------------------------------------------------------
-
-GMF_NOTATION_ARCHIVE="gmf-sdk-notation-1.8.0.zip"
-GMF_NOTATION_ARCHIVE_MD5="b3d3ba8d83ce1b6c94b0500fe85360aa"
-GMF_NOTATION_VERSION="1.8.0/R201405281433"
-GMF_NOTATION_ARCHIVE_URL="$ECLIPSE_MIRROR/modeling/gmp/gmf-notation/downloads/drops/$GMF_NOTATION_VERSION/$GMF_NOTATION_ARCHIVE"
-GMF_NOTATION_FEATURES=\
-org.eclipse.gmf.runtime.notation
-
-# XTEND     --------------------------------------------------------------
-
-XTEND_UPDATE_SITE_URL="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"
-XTEND_FEATURES=\
-org.eclipse.xtend.util.stdlib,\
-org.eclipse.xtend.shared.ui,\
-org.eclipse.xtend.check.ui
-
-# ARTOP     --------------------------------------------------------------
-
-ARTOP_ARCHIVE="artop-Update-4.2.1.zip"
-ARTOP_ARCHIVE_MD5="5d2801b62f5fd04926cbdadbe8900907"
-ARTOP_FEATURES=\
-org.artop.aal.autosar411,\
-org.artop.aal.common,\
-org.artop.examples.feature.group
-
-# MDT_OCL   --------------------------------------------------------------
-
-MDT_OCL_ARCHIVE_URL="http://download.eclipse.org/modeling/mdt/ocl/downloads/drops/6.1.0/N201511091302/mdt-ocl-Update-N201511091302.zip"
-MDT_OCL_ARCHIVE_MD5="553cd1f85ac603580aa32f8672982183"
-MDT_OCL_FEATURES=\
-org.eclipse.ocl.ecore
-
-# IONAS  -----------------------------------------------------------------
-
-IONAS_UPDATE_SITE_URL="http://docs.projects.genivi.org/ionas-ui-update-site"
-IONAS_FEATURES=\
-org.autosar.ionas.feature.feature.group,\
-org.genivi.ionas.feature.feature.group
 
 # === EOF ===
