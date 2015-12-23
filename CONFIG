@@ -86,15 +86,6 @@ org.franca.deploymodel.dsl.ui.source,\
 org.franca.generators,\
 org.franca.generators.source
 
-# Some CDT tools (autogen tools) require eclipse.remote
-# which requires another CDT tool (PTY).  Dependency hell?
-# No exact version specified at this time, hopefully this does not break...
-CDT_VERSION="8.6"
-CDT_SERVER="http://download.eclipse.org/tools/cdt/releases"
-PTY_UPDATE_SITE_URL="$CDT_SERVER/$CDT_VERSION"
-PTY_FEATURES=\
-org.eclipse.cdt.utils.pty
-
 # ECLIPSE C/C++ Development environment (CDT)  ----------------------------
 #
 CDT_VERSION="8.6"
