@@ -33,13 +33,7 @@ cd "$MYDIR"
 section "Installing IPC CommonAPI C++ from update site"
 install_online_update_site COMMON_API_CPP
 
-section "Downloading Franca examples"
-try_cd "$ECLIPSE_WORKSPACE_DIR"
-download "$EXAMPLES_URL" "$EXAMPLES_MD5"
-mv "$DOWNLOAD_DIR/$downloaded_file" "$ECLIPSE_WORKSPACE_DIR/"
-md5_check EXAMPLES "$downloaded_file"
-EXAMPLES_FILE="$downloaded_file"
-
+. download_examples.sh
 
 cat <<MSG
 
