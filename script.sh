@@ -30,7 +30,16 @@ cd "$MYDIR"
 # PACKAGE INSTALLATION (varies between installed variant / git branches)
 # --------------------------------------------------------------------------
 
-section "Installing IPC CommonAPI C++ from update site"
+# Not sure really why I still do this check... It's legacy :)
+section "Checking DBus EMF model on update site"
+check_site_hash            DBUS_EMF
+check_site_latest_version  DBUS_EMF
+install_online_update_site DBUS_EMF
+
+install_site_archive FRANCA
+
+install_online_update_site CDT
+
 install_online_update_site COMMON_API_CPP
 
 . download_examples.sh
