@@ -45,13 +45,9 @@ if [ "$OSTYPE" = "GNU/Linux" -a "$MACHINE" = "i686" ]; then
     ECLIPSE_INSTALLER=$ECLIPSE_INSTALLER_i686
 elif [ "$OSTYPE" = "GNU/Linux" -a "$MACHINE" = "x86_64" ]; then
     ECLIPSE_INSTALLER=$ECLIPSE_INSTALLER_x86_64
-elif [ "$OSTYPE" = "???" -a "$MACHINE" = "???" ]; then
-    # TODO: Handle case (MacOSX, etc.)
-    #ECLIPSE_INSTALLER=???
-    #ECLIPSE_MD5=???
-    :
+    # Future possibility: Handle MacOSX and others
 else
-    die "ERROR: Unknown (OSTYPE=$OSTYPE, MACHINE=$MACHINE)"
+    die "Sorry, unsupported OS or CPU architecture $OSTYPE:$MACHINE.  But you can probably fix this if you edit the script.  Pull requests welcome. "
 fi
 
 # Get Eclipse archive
@@ -65,5 +61,4 @@ download "$ECLIPSE_INSTALLER" $(deref ECLIPSE_MD5_$MACHINE) # This sets a variab
 md5_check ECLIPSE "$downloaded_file" $MACHINE
 step "Unpacking Eclipse to $ECLIPSE_INSTALL_DIR"
 untar "$downloaded_file" "$ECLIPSE_INSTALL_DIR" || die
-
 
