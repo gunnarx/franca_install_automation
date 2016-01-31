@@ -38,7 +38,7 @@ install_online_update_site KRENDERING
 
 install_site_archive       FRANCA
 
-. download_examples.sh
+. download_franca_examples.sh
 
 cat <<MSG
 
