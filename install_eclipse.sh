@@ -13,7 +13,7 @@ OSTYPE=$(uname -o)
 MACHINE=$(uname -m)
 
 # Check that a few necessary variables are defined
-defined ECLIPSE_INSTALLER_$MACHINE ECLIPSE_INSTALL_DIR DOWNLOAD_DIR DBUS_EMF_UPDATE_SITE_URL FRANCA_ARCHIVE_URL KRENDERING_SITE_URL
+defined ECLIPSE_INSTALLER_$MACHINE ECLIPSE_INSTALL_DIR DOWNLOAD_DIR
 
 # If running in Vagrant, override the download dir defined in CONFIG
 if_vagrant DOWNLOAD_DIR=/vagrant
