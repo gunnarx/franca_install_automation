@@ -54,21 +54,21 @@ if_vagrant DOWNLOAD_DIR=/vagrant
 # PACKAGE INSTALLATION (varies between installed variant / git branches)
 # --------------------------------------------------------------------------
 
-install_online_update_site MWE
+install MWE
 
-install_site_archive       MDT_OCL
+install MDT_OCL
 
-install_site_archive       EMF_VALIDATION
+install EMF_VALIDATION
 
-install_site_archive       EMF_TRANSACTION
+install EMF_TRANSACTION
 
-install_site_archive       GMF_NOTATION
+install GMF_NOTATION
 
-install_site_archive       GMF_RUNTIME
+install GMF_RUNTIME
 
-install_online_update_site XTEND
+install XTEND
 
-install_site_archive       XPAND
+install XPAND
 
 section "Installing: SPHINX (archive file)"
 step "Downloading Sphinx update site archive (.zip)"
@@ -97,17 +97,17 @@ step "Preliminary check DBus EMF model on update site"
 check_site_hash            DBUS_EMF
 check_site_latest_version  DBUS_EMF
 
-install_online_update_site DBUS_EMF
+install DBUS_EMF
 
-install_online_update_site KRENDERING
+install KRENDERING
 
-install_site_archive       FRANCA
+install FRANCA
 
 # ARTOP needs special download with login, therefore the user is required
 # to provide the site archive locally.  We will ask for it here.
-install_local_file         ARTOP
+install_local_file ARTOP
 
-install_online_update_site IONAS
+install IONAS
 
 . download_franca_examples.sh
 

@@ -12,13 +12,13 @@ if_vagrant HOME=/home/vagrant
 # MAIN SETTINGS <- edit these if you wish
 
 # Where to install eclipse and eclipse workspace?
-[ -z "$ECLIPSE_INSTALL_DIR" ] && ECLIPSE_INSTALL_DIR="$HOME/tools/autoeclipse"
+[ -z "$ECLIPSE_INSTALL_DIR" ]   && ECLIPSE_INSTALL_DIR="$HOME/tools/autoeclipse"
 [ -z "$ECLIPSE_WORKSPACE_DIR" ] && ECLIPSE_WORKSPACE_DIR="$HOME/workspace"
 
 # Set Download dir
 # NOTE: If script is used to provision a vagrant box, this will always
 # be reset to /vagrant instead
-DOWNLOAD_DIR="/tmp"
+[ -z "$DOWNLOAD_DIR" ] && DOWNLOAD_DIR="/tmp"
 
 # Note: Eclipse and packages might depend on a particular Java version.
 PREFERRED_JAVA_VERSION=1.7
@@ -38,7 +38,7 @@ PREFERRED_JAVA_VERSION=1.7
 # http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads"
 
 # We use FAU here as one possible choice.
-ECLIPSE_MIRROR="http://ftp.fau.de/eclipse"
+[ -z "$ECLIPSE_MIRROR" ] && ECLIPSE_MIRROR="http://ftp.fau.de/eclipse"
 
 # NOTE: You can set _MD5 variables to empty to skip MD5 check (just remove the assignment altogether)
 # but it is used to determine if files are already downloaded to save time.
