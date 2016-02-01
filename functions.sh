@@ -43,9 +43,9 @@ unless_vagrant() {
 # Print a section header
 section() {
       # Using printf because "echo -n" is not fully portable
-      printf '********************************************************************\n'
+      printf '****************************************************************\n'
       printf '*** ' ; echo $@
-      printf '********************************************************************\n'
+      printf '****************************************************************\n'
 }
 
 # Print an operation with *** in front of it
