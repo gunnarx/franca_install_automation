@@ -62,3 +62,4 @@ md5_check ECLIPSE "$downloaded_file" $MACHINE
 step "Unpacking Eclipse to $ECLIPSE_INSTALL_DIR"
 untar "$downloaded_file" "$ECLIPSE_INSTALL_DIR" || die
 
+cd "$MYDIR"
