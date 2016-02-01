@@ -42,7 +42,7 @@ install_online_update_site CDT
 
 install_online_update_site COMMON_API_CPP
 
-. download_examples.sh
+. download_franca_examples.sh
 
 cat <<MSG
 

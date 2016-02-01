@@ -4,6 +4,11 @@
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
 
+# Apparently this needs to be specified if Vagrant has alternative options
+# (trying this with other Vagrant providers is currently untested and users
+#  must try that on their own._)
+ENV['VAGRANT_DEFAULT_PROVIDER'] = 'virtualbox'
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
    # This allows to set a web proxy from outside the vagrant environment by
