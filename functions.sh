@@ -318,15 +318,4 @@ try_cd() {
    fi
 }
 
-# Set up some variables
-ORIGDIR="$PWD"
-SCRIPTDIR=$(dirname "$0")
-cd "$SCRIPTDIR"
-MYDIR="$PWD"
-
-# Special case for vagrant: We know the script is in /vagrant
-# $0 is in this case the name of the shell instead of the name of the script
-test_vagrant
-if_vagrant echo Using vagrant : $0
-if_vagrant MYDIR=/vagrant
 

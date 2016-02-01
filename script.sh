@@ -11,17 +11,44 @@ echo "***************************************************************"
 echo " script.sh starting"
 echo "***************************************************************"
 
+# This function sets variable $VAGRANT if we are running under vagrant provisioning
+test_vagrant() {
+   VAGRANT=""
+   echo "$0" | fgrep -q "vagrant-shell" && VAGRANT="yes"
+}
+
+# Run command only if Vagrant environment
+if_vagrant() {
+   [ -n "$VAGRANT" ] && eval $@
+}
+
+
+# Set up some variables
+ORIGDIR="$PWD"
+D=$(dirname "$0")
+cd "$D"
+MYDIR="$PWD"
+
+# Special case for vagrant: We know the script is in /vagrant
+# $0 is in that case the name of the shell instead of the name of the script
+test_vagrant
+if_vagrant echo Using vagrant : $0
+if_vagrant MYDIR=/vagrant
+
+cd "$MYDIR"
+
 # Helper functions (shared)
-. functions.sh
+. ./functions.sh
 
 # Include config
 [ -f ./CONFIG ] || die "CONFIG file missing?"
 . ./CONFIG      || die "Failure when sourcing CONFIG"
 
-# Install eclipse (shared)
-. install_eclipse.sh
+# If running in Vagrant, override the download dir defined in CONFIG
+if_vagrant DOWNLOAD_DIR=/vagrant
 
-cd "$MYDIR"
+# Install eclipse (shared)
+. ./install_eclipse.sh
 
 # --------------------------------------------------------------------------
 # PACKAGE INSTALLATION (varies between installed variant / git branches)
