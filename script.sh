@@ -82,7 +82,7 @@ install_local_file         ARTOP
 
 install_online_update_site IONAS
 
-. download_examples.sh
+. download_franca_examples.sh
 
 cat <<MSG
 
