@@ -58,13 +58,13 @@ if_vagrant DOWNLOAD_DIR=/vagrant
 section "Checking DBus EMF model on update site"
 check_site_hash            DBUS_EMF
 check_site_latest_version  DBUS_EMF
-install_online_update_site DBUS_EMF
+install DBUS_EMF
 
-install_site_archive FRANCA
+install FRANCA
 
-install_online_update_site CDT
+install CDT
 
-install_online_update_site COMMON_API_CPP
+install COMMON_API_CPP
 
 . download_franca_examples.sh
 
