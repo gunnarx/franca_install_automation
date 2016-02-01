@@ -209,7 +209,8 @@ Installation on bare metal
 You may use ./script.sh (and CONFIG) directly on any machine (VM or
 bare metal) without using Vagrant, to simply automate the Franca installation.
 
-1. Edit CONFIG if needed.
+1. Edit CONFIG if needed (but more typically simply check out the
+   appropriate git branch)
 2. Run script:
 
 ```bash
@@ -217,7 +218,7 @@ bare metal) without using Vagrant, to simply automate the Franca installation.
 ```
 
 script.sh does not use any package manager so it should run on most distros. It
-is developed on Fedora 20 but tested also on Ubuntu and Debian (using the
+is developed on Fedora 23 but tested also on Ubuntu and Debian (using the
 Vagrant method)
 
 Prerequisites
