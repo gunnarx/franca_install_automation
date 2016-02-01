@@ -38,7 +38,7 @@ install KRENDERING
 
 install FRANCA
 
-. download_examples.sh
+. download_franca_examples.sh
 
 cat <<MSG
 
