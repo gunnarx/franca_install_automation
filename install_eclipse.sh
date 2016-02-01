@@ -15,9 +15,6 @@ MACHINE=$(uname -m)
 # Check that a few necessary variables are defined
 defined ECLIPSE_INSTALLER_$MACHINE ECLIPSE_INSTALL_DIR DOWNLOAD_DIR
 
-# If running in Vagrant, override the download dir defined in CONFIG
-if_vagrant DOWNLOAD_DIR=/vagrant
-
 # Create installation and workspace dirs
 if [ -d "$ECLIPSE_INSTALL_DIR/eclipse" ] ; then
    if [ -z "$VAGRANT" ] ; then  # No need to warn in vagrant case
