@@ -34,7 +34,6 @@ MYDIR="$PWD"
 test_vagrant
 if_vagrant echo Using vagrant : $0
 if_vagrant MYDIR=/vagrant
-if_vagrant DOWNLOAD_DIR=/vagrant
 
 cd "$MYDIR"
 
@@ -45,10 +44,10 @@ cd "$MYDIR"
 [ -f ./CONFIG ] || die "CONFIG file missing?"
 . ./CONFIG      || die "Failure when sourcing CONFIG"
 
-# Install eclipse (shared)
-. ./install_eclipse.sh
+# If running in Vagrant, override the download dir defined in CONFIG
+if_vagrant DOWNLOAD_DIR=/vagrant
 
-cd "$MYDIR"
+# Install eclipse (shared)
 . ./install_eclipse.sh
 
 # --------------------------------------------------------------------------
