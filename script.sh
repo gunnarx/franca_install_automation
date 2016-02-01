@@ -59,11 +59,11 @@ step "Preliminary check DBus EMF model on update site"
 check_site_hash            DBUS_EMF
 check_site_latest_version  DBUS_EMF
 
-install_online_update_site DBUS_EMF
+install DBUS_EMF
 
-install_online_update_site KRENDERING
+install KRENDERING
 
-install_site_archive       FRANCA
+install FRANCA
 
 . download_franca_examples.sh
 

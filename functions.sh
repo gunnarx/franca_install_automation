@@ -298,6 +298,18 @@ install_local_file() {
    _install_archive "$1"
 }
 
+install() {
+   # Which type of installation it is, is decided by which variables are
+   # defined in CONFIG. Then call the corresponding installation function.
+   if [ -n "$(deref ${1}_UPDATE_SITE_URL)" ] ; then
+      install_online_update_site $1
+   elif [ -n "$(deref ${1}_ARCHIVE_URL)" ] ; then
+      install_site_archive $1
+   else
+      die "install(): For $1 I can find either ${1}_UPDATE_SITE_URL or ${1}_ARCHIVE_URL defined. Giving up."
+   fi
+}
+
 try_cd() {
    if [ -z "$1" ] ; then
       die "try_cd: no directory given"
