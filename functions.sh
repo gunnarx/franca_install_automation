@@ -146,7 +146,7 @@ download() {
    if [ -z "$downloaded_file" ] ; then
       echo Downloading...
 #     wget -c "$1" -O "$outfile" -c --no-check-certificate || die "wget failed.  Is wget installed?"
-      curl -L -# -O "$1"  || die "curl failed.  Is curl installed?"
+      curl -L -# -O "$1"  || die "curl failed.  Is curl installed? (or is the network down?)"
       downloaded_file=$outfile
    fi
    $DEBUG && set +x
