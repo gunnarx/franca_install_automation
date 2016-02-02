@@ -131,7 +131,8 @@ MSG
 echo
 echo "All Done. You may now start eclipse by running: $ECLIPSE_INSTALL_DIR/eclipse/eclipse"
 
-. check_java_version.sh
+cd "$MYDIR"
+. ./check_java_version.sh
 
 cd "$ORIGDIR"
 
