@@ -56,17 +56,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       vb.customize [ "modifyvm", :id, "--vram", "128" ]
    end
 
-   # Magic fix "mesg n" (exists in /root/.profile on Ubuntu) to not run
-   # during provisioning, which means we avoid the annoying "Stdin is not a
-   # tty" error printed from "mesg n"
-   # Docs/credits: http://foo-o-rama.com/vagrant--stdin-is-not-a-tty--fix.html
-   config.vm.provision "fix-no-tty", type: "shell" do |s|
-      s.privileged = false
-      s.inline = "if [ -w /root/.profile ] ; then
-         sudo sed -i '/tty/!s/mesg n/tty -s \\&\\& mesg n/' /root/.profile
-      fi"
-   end
-
    # Make sure proxy settings affect also sudo commands
    # (by default the environment is cleared for sudo)
    config.vm.provision :shell, inline:
