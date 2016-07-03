@@ -127,6 +127,7 @@ true                  # Make sure Vagrant does not stop on error
     echo "Provisioning is done, now reboot the VM by typing:"
     echo
     echo "$ vagrant reload"
+    echo "Login is: user:vagrant password:vagrant"
     echo
     echo "Eclipse is in ~vagrant/tools/autoeclipse/eclipse and should"
     echo "also be available as an icon on the desktop."

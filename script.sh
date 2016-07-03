@@ -4,7 +4,7 @@
 # Git repository: https://github.com/gunnarx/franca_install_automation
 # pull requests welcome
 
-# Set to "false" or "true" for debug printouts
+# Set to "true" for debug printouts
 DEBUG=false
 
 echo "***************************************************************"

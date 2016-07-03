@@ -6,7 +6,7 @@ Scripts related to [Franca IDL](https://code.google.com/a/eclipselabs.org/p/fran
 VM or bare metal?
 -----------------
 
-If you are installing on your machine directly, skip to 
+If you are installing on your machine directly, skip to
 "Installation on bare metal"
 
 If you want to create a Virtual Machine read on.
@@ -114,7 +114,7 @@ apparently works, since it is required for Vagrant to work).
 Instructions for Virtual Machine creation
 -----------------------------------------
 
-1. Install Vagrant. For example (for Debian or Ubuntu): 
+1. Install Vagrant. For example (for Debian or Ubuntu):
    ```bash
    $ sudo apt-get install vagrant
    ```
@@ -124,13 +124,13 @@ Instructions for Virtual Machine creation
    ```
    Alternatively, download and install files from http://www.vagrantup.com/
 
-2. Install VirtualBox. For example (for Debian or Ubuntu): 
+2. Install VirtualBox. For example (for Debian or Ubuntu):
    ```bash
    $ sudo apt-get install virtualbox
    ```
    Alternatively, download and install files from http://www.virtualbox.org/
 
-3. Run `vagrant up`: 
+3. Run `vagrant up`:
 
    NOTE: I ran into a strange bug where a new machine claimed to be
    provisioned already (this should not happen...) but for that reason we
@@ -206,8 +206,8 @@ Read Vagrant documentation to learn more: http://www.vagrantup.com/
 Installation on bare metal
 --------------------------
 
-You may use ./script.sh (and CONFIG) directly on any machine (VM or
-bare metal) without using Vagrant, to simply automate the Franca installation.
+You may use ./script.sh (and CONFIG) directly on any existing machine
+(virtual or not) to simply automate the Franca installation.
 
 1. Edit CONFIG if needed (but more typically simply check out the
    appropriate git branch)
@@ -218,8 +218,8 @@ bare metal) without using Vagrant, to simply automate the Franca installation.
 ```
 
 script.sh does not use any package manager so it should run on most distros. It
-is developed on Fedora 23 but tested also on Ubuntu and Debian (using the
-Vagrant method)
+is developed on Fedora 23 but to some extent tested also on Ubuntu and
+Debian (using the Vagrant method)
 
 Prerequisites
 -------------
@@ -281,7 +281,7 @@ channels of Vagrant-proxyconf plugin.
 Development/Testing information
 -------------------------------
 
-Users can disregard this:
+Most users can disregard this.
 
 Apart from corporate environments I use an http proxy for repeated testing.
 By running a local caching proxy, the repeated downloads of files
@@ -293,7 +293,7 @@ Out of interest, from inside the VM, the host is the default gateway, so
 here is a way to get the IP of the host:
 
 ```bash
-$ netstat -rn | grep "^0.0.0.0 " | cut -d " " -f10 
+$ netstat -rn | grep "^0.0.0.0 " | cut -d " " -f10
 ```
 
 But for now I simply have it hardcoded to 10.0.2.2 which appears to be
@@ -303,22 +303,18 @@ for the NATed network of the VM.
 Known bugs
 ----------
 
-1. Franca 0.9.2 includes a bug that prevents the opening the Wizard for
-creating a new Franca file.  For example by using "File->New Franca
-Interface"
+1. Not a bug in this project per se, but Franca 0.9.2 includes a bug that
+   prevents the opening the Wizard for creating a new Franca file.
+   For example by using "File->New Franca Interface"
 
-Workaround: Choose "File->New" instead and manually give it a .fidl suffix.  
-Proceed editing as usual.
+   Workaround: Choose "File->New" instead and manually give it a .fidl suffix.
+   Proceed editing as usual.
 
-At first I thought it was a problem with this installation but it
-is a bug in Franca tooling and tracked here:
-http://code.google.com/a/eclipselabs.org/p/franca/issues/detail?id=149
+   http://code.google.com/a/eclipselabs.org/p/franca/issues/detail?id=149
 
-2. There is an odd bug for Unity/Ubuntu Desktop only that causes the Eclipse menus to
-not display at all. It seems to happen on the first boot after installation
-(and never again!) It affects also the HUD.  Simply closing and restarting
-Eclipse seems to solve the problem.  If you find any additional information,
-please feed it back.
-
-
+2. There is an odd bug for Unity/Ubuntu Desktop only that causes the
+   Eclipse menus to not display at all. It seems to happen on the first
+   boot after installation (and never again!) It affects also the HUD.
+   Simply closing and restarting Eclipse seems to solve the problem.  If
+   you find any additional information, please feed it back.
 
