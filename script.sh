@@ -29,6 +29,9 @@ D=$(dirname "$0")
 cd "$D"
 MYDIR="$PWD"
 
+# From now on use the downloads in parent dir
+DOWNLOAD_DIR="$PWD/downloads"
+
 # Special case for vagrant: We know the script is in /vagrant
 # $0 is in that case the name of the shell instead of the name of the script
 test_vagrant

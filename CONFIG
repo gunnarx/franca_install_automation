@@ -18,7 +18,7 @@ if_vagrant HOME=/home/vagrant
 # Set Download dir
 # NOTE: If script is used to provision a vagrant box, this will always
 # be reset to /vagrant instead
-[ -z "$DOWNLOAD_DIR" ] && DOWNLOAD_DIR="/tmp"
+[ -z "$DOWNLOAD_DIR" ] && DOWNLOAD_DIR="downloads/"
 
 # Note: Eclipse and packages might depend on a particular Java version.
 PREFERRED_JAVA_VERSION=1.7
