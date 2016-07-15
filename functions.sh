@@ -1,6 +1,6 @@
 #!/bin/bash
 # (C) 2014 Gunnar Andersson
-# License: CC-BY 4.0 Intl. (http://creativecommons.org/licenses/by/4.0/)
+# License: MPLv2 - see project dir
 # Git repository: https://github.com/gunnarx/franca_install_automation
 # pull requests welcome
 
