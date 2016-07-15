@@ -13,7 +13,7 @@
 
 # Preserve Unix line endings on those files (used inside the Linux VM)
 CONFIG text eol=lf
-script.sh text eol=lf
+*.sh text eol=lf
 
 # Denote all files that are truly binary and should not be modified.
 *.png binary
