@@ -57,11 +57,19 @@ if_vagrant DOWNLOAD_DIR=/vagrant
 # PACKAGE INSTALLATION (varies between installed variant / git branches)
 # --------------------------------------------------------------------------
 
-install DBUS_EMF
+#install DBUS_EMF
 
-install KRENDERING
+#install KRENDERING
 
-install FRANCA
+#install FRANCA
+
+install CDT
+
+#install TM_TERMINAL
+
+install RSE
+
+install YOCTO_SDK
 
 . ./download_franca_examples.sh
 

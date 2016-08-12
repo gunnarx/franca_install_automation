@@ -50,12 +50,21 @@ ECLIPSE_MD5_x86_64="6c2d45de8874b71a4eba19afe584acf6"
 
 # D-Bus EMF model --------------------------------------------------------
 
-DBUS_EMF_VERSION=0.8.1
+#DBUS_EMF_VERSION=0.8.1
 DBUS_EMF_UPDATE_SERVER="http://kbirken.github.io/dbus-emf-model/releases"
 DBUS_EMF_UPDATE_SITE_URL="$DBUS_EMF_UPDATE_SERVER/$DBUS_EMF_VERSION"
 DBUS_EMF_UPDATE_SITE_URL="$DBUS_EMF_UPDATE_SERVER"
 DBUS_EMF_FEATURES=\
 model.emf.dbusxml.feature.feature.group
+
+YOCTO_SDK_VERSION=2.1.0
+YOCTO_SDK_ECLIPSE_VERSION=mars  # = latest one available at the moment?
+YOCTO_SDK_UPDATE_SERVER="http://downloads.yoctoproject.org/releases/eclipse-plugin"
+YOCTO_SDK_UPDATE_SITE_URL="$YOCTO_SDK_UPDATE_SERVER/$YOCTO_SDK_VERSION/$YOCTO_SDK_ECLIPSE_VERSION"
+YOCTO_SDK_FEATURES=\
+org.yocto.sdk.feature.group,\
+org.yocto.sdk.source.feature.group,\
+org.yocto.bc.feature.group
 
 # KIELER framework -------------------------------------------------------
 
@@ -105,6 +114,53 @@ org.franca.deploymodel.dsl.ui,\
 org.franca.deploymodel.dsl.ui.source,\
 org.franca.generators,\
 org.franca.generators.source
+
+# ECLIPSE C/C++ Development environment (CDT)  ----------------------------
+#
+CDT_VERSION="8.6"
+CDT_SERVER="http://download.eclipse.org/tools/cdt/releases"
+CDT_UPDATE_SITE_URL="$CDT_SERVER/$CDT_VERSION/"
+CDT_FEATURES=\
+org.eclipse.cdt,\
+org.eclipse.cdt.feature.group,\
+org.eclipse.cdt.gdb,\
+org.eclipse.cdt.gdb.feature.group,\
+org.eclipse.cdt.platform.feature.group,\
+org.eclipse.cdt.native.feature.group,\
+org.eclipse.cdt.gnu.dsf.feature.group,\
+org.eclipse.cdt.gnu.debug.feature.group,\
+org.eclipse.cdt.ui,\
+org.eclipse.cdt.launch.remote,\
+org.eclipse.cdt.autotools.core
+
+# COMMON API (C++) FOR IPC
+COMMON_API_CPP_VERSION="3.1.3"
+COMMON_API_CPP_SERVER="http://docs.projects.genivi.org/yamaica-update-site/CommonAPI/updatesite"
+COMMON_API_CPP_UPDATE_SITE_URL="$COMMON_API_CPP_SERVER/3.1/$COMMON_API_CPP_VERSION"
+COMMON_API_CPP_FEATURES=\
+org.genivi.commonapi.core,\
+org.genivi.commonapi.core.ui,\
+org.genivi.commonapi.core.validator,\
+org.genivi.commonapi.dbus,\
+org.genivi.commonapi.dbus.ui,\
+org.genivi.commonapi.dbus.validator,\
+org.genivi.commonapi.someip,\
+org.genivi.commonapi.someip.ui,\
+org.genivi.commonapi.someip.validator,\
+
+TM_TERMINAL_UPDATE_SITE_URL="http://download.eclipse.org/tm/terminal/updates/4.0/GA/"
+TM_TERMINAL_FEATURES=\
+org.eclipse.tm.terminal.control
+
+RSE_UPDATE_SITE_URL="http://download.eclipse.org/tm/updates/4.0"
+RSE_FEATURES=\
+org.eclipse.rse.core,\
+org.eclipse.rse.services.local,\
+org.eclipse.rse.terminals.ui,\
+org.eclipse.rse.subsystems.files.core,\
+org.eclipse.rse.subsystems.shells.core,\
+org.eclipse.rse.files.ui
+
 
 # FRANCA EXAMPLES --------------------------------------------------------
 
