@@ -1,5 +1,4 @@
 section Downloading Franca examples
-try_cd "$ECLIPSE_WORKSPACE_DIR"
 download "$EXAMPLES_URL" "$EXAMPLES_MD5"
 step Checking MD5 sum for FRANCA EXAMPLES
 md5_check EXAMPLES "$downloaded_file"
