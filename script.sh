@@ -54,10 +54,6 @@ if_vagrant DOWNLOAD_DIR=/vagrant
 # PACKAGE INSTALLATION (varies between installed variant / git branches)
 # --------------------------------------------------------------------------
 
-# Not sure really why I still do this check... It's legacy :)
-section "Checking DBus EMF model on update site"
-check_site_hash            DBUS_EMF
-check_site_latest_version  DBUS_EMF
 install DBUS_EMF
 
 install FRANCA

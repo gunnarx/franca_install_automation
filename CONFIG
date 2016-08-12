@@ -51,14 +51,15 @@ ECLIPSE_MD5_x86_64=98eeaea78478ac384667e3f05142effc
 
 # D-Bus EMF model --------------------------------------------------------
 
-# Note: Here _VERSION is necessary I think, because of the way
-# we do this download...
-DBUS_EMF_VERSION=0.7.8
-DBUS_EMF_UPDATE_SITE_HASH=f9db6c26f742   # This is something that exists on the web page - I figured why not check it.
-DBUS_EMF_UPDATE_SERVER="http://dbus-emf-model.eclipselabs.org.codespot.com/git/update_site/releases"
+DBUS_EMF_VERSION=0.8.1
+DBUS_EMF_UPDATE_SERVER="http://kbirken.github.io/dbus-emf-model/releases"
 DBUS_EMF_UPDATE_SITE_URL="$DBUS_EMF_UPDATE_SERVER/$DBUS_EMF_VERSION"
+DBUS_EMF_UPDATE_SITE_URL="$DBUS_EMF_UPDATE_SERVER"
 DBUS_EMF_FEATURES=\
 model.emf.dbusxml.feature.feature.group
+
+# FRANCA -----------------------------------------------------------------
+
 FRANCA_ARCHIVE="site_franca_0.9.1.201412191134.zip"
 FRANCA_ARCHIVE_MD5=0957918d4f3002083d1ec48c2f5905e8
 FRANCA_ARCHIVE_URL="https://googledrive.com/host/0B7JseVbR6jvhazEtRDVsSk9mX1k/Releases/0.9/$FRANCA_ARCHIVE"
