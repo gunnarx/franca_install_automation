@@ -37,11 +37,15 @@ Compatibility requires this to stay on an older Franca version.
 
 The following branches install only Franca Tooling - the tip of the branch
 is typically installing the latest Franca version.
-* trusty64-lxde   -- Ubuntu Trusty Tahr 14.04 LTS, with LXDE desktop (recommended)
+* master          -- Ubuntu Trusty Tahr 14.04 LTS, with LXDE desktop (recommended)
 * trusty64-unity  -- Ubuntu Trusty Tahr 14.04 LTS, with standard Ubuntu (Unity) desktop
                      (Warning: This is very big and takes a long time to
                       install. Also read KNOWN BUGS)
-* debian_7.3-lxde -- Debian 7.3, with LXDE desktop (broken at this time)
+* cpp_common_api  -- Same desktop as master but CommonAPI tooling included
+             (but that means staying with older Franca 0.9 and Eclipse Luna)
+
+Experimental:
+* ionas
 
 Branches named deprecated= are no longer kept up to date with changes,
 and will likely be removed soon.
