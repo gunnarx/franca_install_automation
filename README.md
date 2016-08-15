@@ -322,3 +322,7 @@ Known bugs
    Simply closing and restarting Eclipse seems to solve the problem.  If
    you find any additional information, please feed it back.
 
+Maintainer/Contact
+-------------------
+= Github account: gunnarx
+
