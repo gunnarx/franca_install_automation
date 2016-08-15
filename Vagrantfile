@@ -34,12 +34,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       puts "Vagrant has no proxy plugin => skipped proxy configuration."
    end
 
-   config.vm.box = "trusty64"
+   config.vm.box = "debian73"
 
-   config.vm.hostname = "francalab-trusty64"
+   config.vm.hostname = "francalab-debian73"
 
    # If above box does not exist locally, fetch it here:
-   config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
+   config.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/debian-73-x64-virtualbox-puppet.box"
 
    # To run eclipse we need more than default RAM 512MB And we might as well
    # set a useful name also, which I prefer to have equal to the hostname that
