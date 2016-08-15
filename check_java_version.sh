@@ -1,4 +1,8 @@
 #!/bin/sh
+# (C) 2015 Gunnar Andersson
+# This file is part of franca_install_automation
+# License: See project directory
+
 if [ -z "$PREFERRED_JAVA_VERSION" ] ; then
   echo "Variable PREFERRED_JAVA_VERSION is not defined"
 else

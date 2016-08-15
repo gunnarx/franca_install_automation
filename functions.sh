@@ -1,6 +1,6 @@
 #!/bin/bash
 # (C) 2014 Gunnar Andersson
-# License: CC-BY 4.0 Intl. (http://creativecommons.org/licenses/by/4.0/)
+# License: MPLv2 - see project dir
 # Git repository: https://github.com/gunnarx/franca_install_automation
 # pull requests welcome
 
@@ -126,6 +126,13 @@ download() {
    downloaded_file=
    outfile=$(basename "$1")
    expected_md5=$2
+
+   if [ -n "$VAGRANT" ] ; then
+      progress_flag="-q"     # Be absolutely quiet
+   else
+      progress_flag="-#"     # Use a small progress bar 
+   fi
+
    # If already exists, we check md5 to know if it is complete and OK
    if [ -f "$outfile" ] ; then
       echo -n "File exists: $PWD/$outfile, checking..."
@@ -146,7 +153,7 @@ download() {
    if [ -z "$downloaded_file" ] ; then
       echo Downloading...
 #     wget -c "$1" -O "$outfile" -c --no-check-certificate || die "wget failed.  Is wget installed?"
-      curl -L -# -O "$1"  || die "curl failed.  Is curl installed? (or is the network down?)"
+      curl -L $progress_flag -O "$1"  || die "curl failed.  Is curl installed? (or is the network down?)"
       downloaded_file=$outfile
    fi
    $DEBUG && set +x

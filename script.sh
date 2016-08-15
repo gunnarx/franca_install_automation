@@ -1,10 +1,10 @@
 #!/bin/bash
 # (C) 2014 Gunnar Andersson
-# License: CC-BY 4.0 Intl. (http://creativecommons.org/licenses/by/4.0/)
+# License: MPLv2 - see project dir.
 # Git repository: https://github.com/gunnarx/franca_install_automation
 # pull requests welcome
 
-# Set to "false" or "true" for debug printouts
+# Set to "true" for debug printouts
 DEBUG=false
 
 echo "***************************************************************"
@@ -28,6 +28,9 @@ ORIGDIR="$PWD"
 D=$(dirname "$0")
 cd "$D"
 MYDIR="$PWD"
+
+# From now on use the downloads in parent dir
+DOWNLOAD_DIR="$PWD/downloads"
 
 # Special case for vagrant: We know the script is in /vagrant
 # $0 is in that case the name of the shell instead of the name of the script
@@ -54,18 +57,13 @@ if_vagrant DOWNLOAD_DIR=/vagrant
 # PACKAGE INSTALLATION (varies between installed variant / git branches)
 # --------------------------------------------------------------------------
 
-# Not sure really why I still do this check... It's legacy :)
-step "Preliminary check DBus EMF model on update site"
-check_site_hash            DBUS_EMF
-check_site_latest_version  DBUS_EMF
-
 install DBUS_EMF
 
 install KRENDERING
 
 install FRANCA
 
-. download_franca_examples.sh
+. ./download_franca_examples.sh
 
 cat <<MSG
 

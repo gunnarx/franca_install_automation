@@ -18,13 +18,12 @@ if_vagrant HOME=/home/vagrant
 # Set Download dir
 # NOTE: If script is used to provision a vagrant box, this will always
 # be reset to /vagrant instead
-[ -z "$DOWNLOAD_DIR" ] && DOWNLOAD_DIR="/tmp"
+[ -z "$DOWNLOAD_DIR" ] && DOWNLOAD_DIR="downloads/"
 
 # Note: Eclipse and packages might depend on a particular Java version.
 PREFERRED_JAVA_VERSION=1.7
 
 # Eclipse distribution ---------------------------------------------------
-
 
 # URLs to latest x86 32 and 64 bit releases of Eclipse (DSL variant) follow.
 # You can update the one you need...
@@ -51,10 +50,10 @@ ECLIPSE_MD5_x86_64="6c2d45de8874b71a4eba19afe584acf6"
 
 # D-Bus EMF model --------------------------------------------------------
 
-DBUS_EMF_VERSION=0.8.0
-DBUS_EMF_UPDATE_SITE_HASH=1605fd0922ff   # Something that exists on the web page - I figured why not check it.
-DBUS_EMF_UPDATE_SERVER="http://dbus-emf-model.eclipselabs.org.codespot.com/git/update_site/releases"
+DBUS_EMF_VERSION=0.8.1
+DBUS_EMF_UPDATE_SERVER="http://kbirken.github.io/dbus-emf-model/releases"
 DBUS_EMF_UPDATE_SITE_URL="$DBUS_EMF_UPDATE_SERVER/$DBUS_EMF_VERSION"
+DBUS_EMF_UPDATE_SITE_URL="$DBUS_EMF_UPDATE_SERVER"
 DBUS_EMF_FEATURES=\
 model.emf.dbusxml.feature.feature.group
 

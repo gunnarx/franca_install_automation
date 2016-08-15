@@ -1,4 +1,7 @@
 #!/bin/sh
+# (C) 2015 Gunnar Andersson
+# This file is part of franca_install_automation
+# License: See project directory
 
 die() {
    echo Failed - stopping
