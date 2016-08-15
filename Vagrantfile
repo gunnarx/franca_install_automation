@@ -18,9 +18,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       if ENV['http_proxy']
          puts 'NOTE: Found WEB PROXY defined in shell environment.  Will reuse the following settings inside Vagrant:'
 
-         config.proxy.ftp   = ENV['ftp_proxy']   || "not defined"
          config.proxy.http  = ENV['http_proxy']  || "not defined"
          config.proxy.https = ENV['https_proxy'] || "not defined"
+         config.proxy.ftp   = ENV['ftp_proxy']   || "not defined"
          config.proxy.no_proxy = "localhost,127.0.0.1"
 
          # Print settings, but try to protect password if by chance 

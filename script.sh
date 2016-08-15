@@ -58,10 +58,10 @@ if_vagrant DOWNLOAD_DIR=/vagrant
 # --------------------------------------------------------------------------
 
 install DBUS_EMF
-install KRENDERING
 install FRANCA
 install RSE
 install CDT
+install COMMON_API_CPP
 install PTP
 install AUTOTOOLS
 install TRACE_COMPASS
@@ -100,4 +100,3 @@ cd "$MYDIR"
 . ./check_java_version.sh
 
 cd "$ORIGDIR"
-
