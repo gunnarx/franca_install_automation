@@ -48,8 +48,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    # graphical desktops after all.
    vmname = config.vm.hostname + "-" + Time.now.strftime("%Y%m%d%H%M")
    config.vm.provider :virtualbox do |vb|
-      # Don't boot with headless mode
-      vb.gui = true
+      # Leave it commented to boot in headless mode (useful for automated tests)
+      # vb.gui = true
 
       vb.customize [ "modifyvm", :id, "--name", vmname ]
       vb.customize [ "modifyvm", :id, "--memory", "1536" ]
