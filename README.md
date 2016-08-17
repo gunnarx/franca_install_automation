@@ -1,7 +1,7 @@
 Automated Eclipse/Franca environment installation
 =================================================
 
-Scripts related to [Franca IDL](https://code.google.com/a/eclipselabs.org/p/franca/) installation.
+Scripts related to [Franca IDL](https://github.com/franca/franca) installation.
 
 VM or bare metal?
 -----------------
@@ -35,8 +35,9 @@ locally you have your own distro chosen already.
 
 The following branch installs C++ Common API support in addition to Franca.
 Compatibility requires this to stay on an older Franca version.
-* cpp_common_api  -- Ubuntu Trusty Tahr 14.04 LTS, with LXDE desktop
-                     and C++ Common API support (recommended).
+* cpp_common_api_(with_yocto_tools)
+ -- Ubuntu Trusty Tahr 14.04 LTS, with LXDE desktop and C++ Common API
+ support (recommended).
 
 The following branches install only Franca Tooling - the tip of the branch
 is typically installing the latest Franca version.
@@ -44,12 +45,12 @@ is typically installing the latest Franca version.
 * trusty64-unity  -- Ubuntu Trusty Tahr 14.04 LTS, with standard Ubuntu (Unity) desktop
                      (Warning: This is very big and takes a long time to
                       install. Also read KNOWN BUGS)
-* cpp_common_api_(with_yocto_tools)
-             -- Same desktop as master but CommonAPI tooling included
-             (but that means staying with older Franca 0.9 and Eclipse Luna)
 
-Experimental:
-* ionas
+Experimental branches:
+* ionas -- IONAS tooling for FRANCA/AUTOSAR(tm) integration
+           *NOTE:* Using this requires some local archives that can only be
+           downloaded using appropriate AUTOSAR/ARTOP accounts and
+           memberships.
 
 Branches named deprecated= are no longer kept up to date with changes,
 and will likely be removed soon.
