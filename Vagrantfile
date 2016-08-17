@@ -1,3 +1,7 @@
+# This file is part of franca_install_automation
+# (C) 2014-2016 Gunnar Andersson
+# License: MPLv2 - see project dir.
+
 # -*- mode: ruby -*-
 # vim: set ft=ruby sw=4 ts=4 tw=0 et:
 
