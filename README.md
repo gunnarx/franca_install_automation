@@ -6,8 +6,9 @@ Scripts related to [Franca IDL](https://code.google.com/a/eclipselabs.org/p/fran
 VM or bare metal?
 -----------------
 
-If you are installing on your machine directly, skip to
-"Installation on bare metal"
+If you are installing on your machine directly, use the
+chapter "Installation on bare metal", after first reading
+about the branches.
 
 If you want to create a Virtual Machine read on.
 
@@ -25,8 +26,10 @@ Before you create the VM there is a choice to make and that is which flavour
 differences in the code but leading to quite big differences in the VM
 (different distros and graphical environments).
 
-If you just want to go ahead and do a quick test, choose precise64-lxde
-(or simply master branch) and skip to the next chapter.
+UPDATE: Because there are differences in Franca and tool versions, these
+branches now also modify what is installed in Eclipse.  All information
+about the distro of course only applies only for the VM - if you install
+locally you have your own distro chosen already.
 
 ### Branches / flavors:
 
@@ -41,7 +44,8 @@ is typically installing the latest Franca version.
 * trusty64-unity  -- Ubuntu Trusty Tahr 14.04 LTS, with standard Ubuntu (Unity) desktop
                      (Warning: This is very big and takes a long time to
                       install. Also read KNOWN BUGS)
-* cpp_common_api  -- Same desktop as master but CommonAPI tooling included
+* cpp_common_api_(with_yocto_tools)
+             -- Same desktop as master but CommonAPI tooling included
              (but that means staying with older Franca 0.9 and Eclipse Luna)
 
 Experimental:
