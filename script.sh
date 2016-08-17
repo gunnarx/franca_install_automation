@@ -22,15 +22,24 @@ if_vagrant() {
    [ -n "$VAGRANT" ] && eval $@
 }
 
+# Absolute path - assume everything is relative to "$MYDIR"
+# There are some potential bugs here... - hopefully it works
+# using Plan B.  Probably there are better ways than this hack.
+absolute_path() { 
+  olddir="$PWD"
+  cd "$MYDIR"
+  # Readlink should handle relative and absolute paths.
+  x=$(readlink -f "$1")       #... but fails for example for dir/file if dir does not exist!
+  [ -z "$x" ] && x="$PWD/$1"  # Plan B - if it was a relative path but readlink failed...
+  echo "$x"
+  cd "$olddir"
+}
 
 # Set up some variables
 ORIGDIR="$PWD"
 D=$(dirname "$0")
 cd "$D"
 MYDIR="$PWD"
-
-# From now on use the downloads in parent dir
-DOWNLOAD_DIR="$PWD/downloads"
 
 # Special case for vagrant: We know the script is in /vagrant
 # $0 is in that case the name of the shell instead of the name of the script
@@ -49,6 +58,11 @@ cd "$MYDIR"
 
 # If running in Vagrant, override the download dir defined in CONFIG
 if_vagrant DOWNLOAD_DIR=/vagrant
+
+# Just in case, adjust directories to absolute if defined as relative
+ECLIPSE_INSTALL_DIR=$(absolute_path "$ECLIPSE_INSTALL_DIR")
+ECLIPSE_WORKSPACE_DIR=$(absolute_path "$ECLIPSE_WORKSPACE_DIR")
+DOWNLOAD_DIR=$(absolute_path "$DOWNLOAD_DIR")
 
 # Install eclipse (shared)
 . ./install_eclipse.sh
