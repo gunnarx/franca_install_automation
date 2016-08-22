@@ -56,9 +56,6 @@ cd "$MYDIR"
 [ -f ./CONFIG ] || die "CONFIG file missing?"
 . ./CONFIG      || die "Failure when sourcing CONFIG"
 
-# If running in Vagrant, override the download dir defined in CONFIG
-if_vagrant DOWNLOAD_DIR=/vagrant
-
 # FIXME: this can be cleaned up.  Quick fix is to make dirs here
 # whether they are relative or not...
 mkdir -p "$ECLIPSE_INSTALL_DIR"
