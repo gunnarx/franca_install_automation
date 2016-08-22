@@ -59,6 +59,11 @@ cd "$MYDIR"
 # If running in Vagrant, override the download dir defined in CONFIG
 if_vagrant DOWNLOAD_DIR=/vagrant
 
+# FIXME: this can be cleaned up.  Quick fix is to make dirs here
+# whether they are relative or not...
+mkdir -p "$ECLIPSE_INSTALL_DIR"
+mkdir -p "$ECLIPSE_WORKSPACE_DIR"
+
 # Just in case, adjust directories to absolute if defined as relative
 ECLIPSE_INSTALL_DIR=$(absolute_path "$ECLIPSE_INSTALL_DIR")
 ECLIPSE_WORKSPACE_DIR=$(absolute_path "$ECLIPSE_WORKSPACE_DIR")
