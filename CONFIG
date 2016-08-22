@@ -96,7 +96,7 @@ org.franca.generators.source
 # Consider also: http://download.eclipse.org/tools/ptp/updates/luna/
 #PTP_ARCHIVE_URL="http://www.mirrorservice.org/sites/download.eclipse.org/eclipseMirror/tools/ptp/updates/9.0.0/ptp-master-9.0.0.201506101404.zip"
 #PTP_ARCHIVE_MD5=900a97c435fb5ce5560ab09cb0838889
-PTP_ARCHIVE_URL="http://ftp-stud.fht-esslingen.de/pub/Mirrors/eclipse/tools/ptp/builds/8.1.2/ptp-master-8.1.2.201504061524.zip"
+PTP_ARCHIVE_URL="http://mirror.cc.columbia.edu/pub/software/eclipse/tools/ptp/builds/8.1.2/ptp-master-8.1.2.201504061524.zip"
 PTP_ARCHIVE_MD5=66f3bfa472cb1ecdc12647d40a345b54
 #PTP_UPDATE_SITE_URL="http://download.eclipse.org/tools/ptp/updates/luna/"
 PTP_FEATURES=\
