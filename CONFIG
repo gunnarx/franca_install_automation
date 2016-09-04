@@ -43,7 +43,7 @@ PREFERRED_JAVA_VERSION=1.7
 # but it is used to determine if files are already downloaded to save time.
 
 ECLIPSE_INSTALLER_i686="$ECLIPSE_MIRROR/technology/epp/downloads/release/luna/SR2/eclipse-dsl-luna-R-linux-gtk.tar.gz"
-ECLIPSE_MD5_x686=
+ECLIPSE_MD5_x686=a652ca17a2cb17091eb1bb1e5d7ab25e 
 ECLIPSE_INSTALLER_x86_64="$ECLIPSE_MIRROR/technology/epp/downloads/release/luna/SR2/eclipse-dsl-luna-SR2-linux-gtk-x86_64.tar.gz"
 ECLIPSE_MD5_x86_64=98eeaea78478ac384667e3f05142effc
 
