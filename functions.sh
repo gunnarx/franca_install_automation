@@ -133,6 +133,12 @@ download() {
       progress_flag="-#"     # Use a small progress bar 
    fi
 
+   # If exists in cache (and not in downloads), copy it from there
+   if [ ! -f "$outfile" -a -n "$CACHE_DIR" -a -f "$CACHE_DIR/$outfile" ] ; then
+      echo "Found in cache, copying..."
+      cp "$CACHE_DIR/$outfile" "$outfile"
+   fi
+
    # If already exists, we check md5 to know if it is complete and OK
    if [ -f "$outfile" ] ; then
       echo -n "File exists: $PWD/$outfile, checking..."
