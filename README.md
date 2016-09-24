@@ -186,6 +186,9 @@ Instructions for Virtual Machine creation
 
    The instructions can be found towards the end of `script.sh`.
 
+Useful information about compatibility and versions:
+https://github.com/franca/franca/wiki/Compatibility-Overview
+
 
 Tweaking settings
 ------------------

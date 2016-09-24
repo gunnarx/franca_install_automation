@@ -40,7 +40,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
    config.vm.box = "trusty64"
 
-   config.vm.hostname = "francalab-trusty64"
+   config.vm.hostname = ENV['HOSTNAME']
+   config.vm.hostname = "francalab-trusty64" if ENV['hostname'] == nil
 
    # If above box does not exist locally, fetch it here:
    config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
@@ -62,6 +63,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
    # Export the VM name (need to know the name of the artifact when creating automated build)
    ENV['VMNAME'] = vmname
+   config.vm.provision :shell, inline:
+      "echo #{vmname} >/vagrant/VMNAME"
 
    # Make sure proxy settings affect also sudo commands
    # (by default the environment is cleared for sudo)
