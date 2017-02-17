@@ -89,12 +89,18 @@ install KRENDERING
 
 install FRANCA
 
-. ./download_franca_examples.sh
+#. ./download_franca_examples.sh
 
 cat <<MSG
 
 Instructions:
 -------------
+
+*** THE EXAMPLES ARE TEMPORARILY NOT INCLUDED BECAUSE OF 404 URL
+*** REFER TO https://github.com/franca for information and download
+*** them and place them in the workspace _directory_
+*** them and place them in the workspace _directory.
+
 The examples are now in your workspace _directory_ but not yet known to your
 project browser.  When you have started eclipse, go to Workspace, then select
    File -> Import...

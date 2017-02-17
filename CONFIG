@@ -76,10 +76,9 @@ de.cau.cs.kieler.core.kivi
 
 # FRANCA -----------------------------------------------------------------
 
-FRANCA_VERSION="0.10.0.201507291433"
-FRANCA_ARCHIVE="site_franca_${FRANCA_VERSION}.zip"
-FRANCA_ARCHIVE_MD5="74c3e5cef73dcb36b0c8f3c00bacd555"
-FRANCA_ARCHIVE_URL="https://googledrive.com/host/0B7JseVbR6jvhazEtRDVsSk9mX1k/Releases/0.10/$FRANCA_ARCHIVE"
+FRANCA_UPDATE_SERVER="http://franca.github.io/franca/update_site/releases"
+FRANCA_VERSION="0.10.0"   # (Versions as of 2017-02:  0.9.0 0.9.1 0.10.0 0.11.0)
+FRANCA_UPDATE_SITE_URL="$FRANCA_UPDATE_SERVER/$FRANCA_VERSION"
 FRANCA_FEATURES=\
 org.franca.connectors.dbus,\
 org.franca.connectors.dbus.source,\
