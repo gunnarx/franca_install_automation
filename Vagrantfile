@@ -1,3 +1,7 @@
+# This file is part of franca_install_automation
+# (C) 2014-2016 Gunnar Andersson
+# License: MPLv2 - see project dir.
+
 # -*- mode: ruby -*-
 # vim: set ft=ruby sw=4 ts=4 tw=0 et:
 
@@ -36,7 +40,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
    config.vm.box = "trusty64"
 
-   config.vm.hostname = "francalab-trusty64"
+   config.vm.hostname = ENV['HOSTNAME']
+   config.vm.hostname = "francalab-trusty64" if ENV['hostname'] == nil
 
    # If above box does not exist locally, fetch it here:
    config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
@@ -48,13 +53,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    # graphical desktops after all.
    vmname = config.vm.hostname + "-" + Time.now.strftime("%Y%m%d%H%M")
    config.vm.provider :virtualbox do |vb|
-      # Don't boot with headless mode
-      vb.gui = true
+      # Leave it commented to boot in headless mode (useful for automated tests)
+      # vb.gui = true
 
       vb.customize [ "modifyvm", :id, "--name", vmname ]
       vb.customize [ "modifyvm", :id, "--memory", "1536" ]
       vb.customize [ "modifyvm", :id, "--vram", "128" ]
    end
+
+   # Export the VM name (need to know the name of the artifact when creating automated build)
+   ENV['VMNAME'] = vmname
+   config.vm.provision :shell, inline:
+      "echo #{vmname} >/vagrant/VMNAME"
 
    # Make sure proxy settings affect also sudo commands
    # (by default the environment is cleared for sudo)
@@ -127,6 +137,7 @@ true                  # Make sure Vagrant does not stop on error
     echo "Provisioning is done, now reboot the VM by typing:"
     echo
     echo "$ vagrant reload"
+    echo "Login is: user:vagrant password:vagrant"
     echo
     echo "Eclipse is in ~vagrant/tools/autoeclipse/eclipse and should"
     echo "also be available as an icon on the desktop."

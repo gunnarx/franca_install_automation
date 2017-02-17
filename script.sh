@@ -1,10 +1,10 @@
 #!/bin/bash
 # (C) 2014 Gunnar Andersson
-# License: CC-BY 4.0 Intl. (http://creativecommons.org/licenses/by/4.0/)
+# License: MPLv2 - see project dir.
 # Git repository: https://github.com/gunnarx/franca_install_automation
 # pull requests welcome
 
-# Set to "false" or "true" for debug printouts
+# Set to "true" for debug printouts
 DEBUG=false
 
 echo "***************************************************************"
@@ -22,6 +22,18 @@ if_vagrant() {
    [ -n "$VAGRANT" ] && eval $@
 }
 
+# Absolute path - assume everything is relative to "$MYDIR"
+# There are some potential bugs here... - hopefully it works
+# using Plan B.  Probably there are better ways than this hack.
+absolute_path() { 
+  olddir="$PWD"
+  cd "$MYDIR"
+  # Readlink should handle relative and absolute paths.
+  x=$(readlink -f "$1")       #... but fails for example for dir/file if dir does not exist!
+  [ -z "$x" ] && x="$PWD/$1"  # Plan B - if it was a relative path but readlink failed...
+  echo "$x"
+  cd "$olddir"
+}
 
 # Set up some variables
 ORIGDIR="$PWD"
@@ -44,8 +56,15 @@ cd "$MYDIR"
 [ -f ./CONFIG ] || die "CONFIG file missing?"
 . ./CONFIG      || die "Failure when sourcing CONFIG"
 
-# If running in Vagrant, override the download dir defined in CONFIG
-if_vagrant DOWNLOAD_DIR=/vagrant
+# FIXME: this can be cleaned up.  Quick fix is to make dirs here
+# whether they are relative or not...
+mkdir -p "$ECLIPSE_INSTALL_DIR"
+mkdir -p "$ECLIPSE_WORKSPACE_DIR"
+
+# Just in case, adjust directories to absolute if defined as relative
+ECLIPSE_INSTALL_DIR=$(absolute_path "$ECLIPSE_INSTALL_DIR")
+ECLIPSE_WORKSPACE_DIR=$(absolute_path "$ECLIPSE_WORKSPACE_DIR")
+DOWNLOAD_DIR=$(absolute_path "$DOWNLOAD_DIR")
 
 # Install eclipse (shared)
 . ./install_eclipse.sh
@@ -118,6 +137,17 @@ Instructions for IONAS
 
 Unpack the package from AUTOSAR "CONC_610_...IntegrationOfNonARSystems" separately.
 To import relevant files into Workspace, go to the Workspace, then select
+
+Instructions:
+-------------
+
+*** THE EXAMPLES ARE TEMPORARILY NOT INCLUDED BECAUSE OF 404 URL
+*** REFER TO https://github.com/franca for information and download
+*** them and place them in the workspace _directory_
+*** them and place them in the workspace _directory.
+
+The examples are now in your workspace _directory_ but not yet known to your
+project browser.  When you have started eclipse, go to Workspace, then select
    File -> Import...
    Expand the "General" category (folder)
       and then "Existing Projects into Workspace".  Press Next.
