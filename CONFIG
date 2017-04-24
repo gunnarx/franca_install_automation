@@ -55,7 +55,10 @@ DBUS_EMF_UPDATE_SERVER="http://kbirken.github.io/dbus-emf-model/releases"
 DBUS_EMF_UPDATE_SITE_URL="$DBUS_EMF_UPDATE_SERVER/$DBUS_EMF_VERSION"
 DBUS_EMF_UPDATE_SITE_URL="$DBUS_EMF_UPDATE_SERVER"
 DBUS_EMF_FEATURES=\
-model.emf.dbusxml.feature.feature.group
+model.emf.dbusxml.feature.feature.group,\
+model.emf.dbusxml,\
+model.emf.dbusxml.edit,\
+model.emf.dbusxml.editor
 
 # KIELER framework -------------------------------------------------------
 
