@@ -259,6 +259,7 @@ get_local_file() {
       echo "A path that is relative to current directory ($PWD) is OK."
       printf "Path: "
       read path
+      [ -z "$path" ] && path="."
       path="${path/\~/$HOME}"  # We need to expand ~ manually
       [ -d "$path" -a -f "$path/$file" ] && path="$path/$file"
       [ -f "$path" ] && done=true
