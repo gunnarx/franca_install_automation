@@ -79,33 +79,32 @@ install KRENDERING
 
 install FRANCA
 
-#. ./download_franca_examples.sh
+. ./download_franca_examples.sh
 
 cat <<MSG
 
 Instructions:
 -------------
 
-*** THE EXAMPLES ARE TEMPORARILY NOT INCLUDED BECAUSE OF 404 URL
-*** REFER TO https://github.com/franca for information and download
-*** them and place them in the workspace _directory_
-*** them and place them in the workspace _directory.
-
-The examples are now in your workspace _directory_ but not yet known to your
-project browser.  When you have started eclipse, go to Workspace, then select
+The examples are now in your workspace _directory_ inside franca/examples but
+not yet known to your project browser.  When you have started eclipse, go to
+Workspace, then select
    File -> Import...
    Expand the "General" category (folder)
       and then "Existing Projects into Workspace".  Press Next.
-   Select option "Select Archive File" and press "Browse..."
-   Select the .zip file containing $EXAMPLES_FILE and hit OK.
-   Hit Finish to import/copy into workspace.
+   Select option "Select root directory" and press "Browse..." Go into the franca
+   directory inside workspace dir and select the "examples" directory.  Press
+   OK. 5 projects should be listed and you can import all of them by copy, or
+   reference.
 
-   Finally you may now run tests by going into
-   "org.franca.examples.basic" package
+   Finally you may now run the tests by:
+
+   Go into "org.franca.examples.basic" package
    under /src, open "org.franca.examples.basic.tests"
 
-   Right click on for example AllTests.java
-   and select Run As "JUnit Test".  You should get a green bar result.
+   Right click on for example AllTests.java and select Run As "JUnit Test".
+   You should get a green bar result* and some generated code on the console. 
+   *If the JUnit window becomes hidden, find it again.
 
    But from now on you should instead read the Franca documentation for up
    to date instructions on this stuff.
