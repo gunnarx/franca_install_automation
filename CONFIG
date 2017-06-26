@@ -87,7 +87,7 @@ de.cau.cs.kieler.core.kivi
 # FRANCA -----------------------------------------------------------------
 
 FRANCA_UPDATE_SERVER="http://franca.github.io/franca/update_site/releases"
-FRANCA_VERSION="0.11.0"   # (Versions as of 2017-02:  0.9.0 0.9.1 0.10.0 0.11.0)
+FRANCA_VERSION="0.11.1"   # (Versions as of 2017-02:  0.9.0 0.9.1 0.10.0 0.11.0)
 FRANCA_UPDATE_SITE_URL="$FRANCA_UPDATE_SERVER/$FRANCA_VERSION"
 FRANCA_FEATURES=\
 org.franca.connectors.dbus,\
