@@ -77,6 +77,8 @@ install DBUS_EMF
 
 install KRENDERING
 
+install EMF_COMPARE
+
 install FRANCA
 
 . ./download_franca_examples.sh
