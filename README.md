@@ -6,23 +6,22 @@ Scripts related to [Franca IDL](https://github.com/franca/franca) installation.
 VM or bare metal?
 -----------------
 
-If you are installing on your machine directly, use the
-chapter "Installation on bare metal", after first reading
-about the branches.
+If you are installing on your machine directly, use the chapter
+"Installation on bare metal", after first reading about the branches.
 
 If you want to create a Virtual Machine read on.
 
 Corporate Environment?
 ----------------------
 
-If you are in an environment that requires web access through
-a proxy, read the chapter Proxy Configuration.
+If you are in an environment that requires web access through a proxy, read
+the chapter Proxy Configuration.
 
 A note on branches (for VM)
 ---------------------------
 
-Before you create the VM there is a choice to make and that is which flavour
-(distro) to use.  The git repository has a number of branches with minor
+Before you create the VM there is a choice to make and that is which
+flavour (distro) to use.  The git repository has a few branches with minor
 differences in the code but leading to quite big differences in the VM
 (different distros and graphical environments).
 
@@ -52,11 +51,12 @@ Experimental branches:
            downloaded using appropriate AUTOSAR/ARTOP accounts and
            memberships.
 
-Branches named deprecated= are no longer kept up to date with changes,
-and will likely be removed soon.
+Branches named deprecated= are no longer kept up to date with changes, and
+will likely be removed soon.
 
 Branches named broken= are broken, probably for quite some time - because
-if a break can be easily fixed it will be, and not renamed of course.
+if a break could be easily fixed it would have been fixed instead of
+renamed.
 
 Branches not listed above are likely work-in-progress.  Try them only if
 you need the very latest not yet merged functionality.
@@ -185,8 +185,9 @@ Instructions for Virtual Machine creation
 7. To run Franca examples you must manually import them into the workspace.
 
    The instructions can be found towards the end of `script.sh`.
+   Yes, that's right -- go read the bottom of the script!
 
-Useful information about compatibility and versions:
+Some useful information about compatibility and versions:
 https://github.com/franca/franca/wiki/Compatibility-Overview
 
 
