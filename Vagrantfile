@@ -86,7 +86,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
    # Install prerequisites
    config.vm.provision :shell, inline:
-      'sudo apt-get update; sudo apt-get install -y wget unzip openjdk-7-jre'
+      'sudo add-apt-repository ppa:openjdk-r/ppa
+       sudo apt-get update; sudo apt-get install -y wget unzip openjdk-8-jre'
 
    # Run the eclipse + franca installer script
    config.vm.provision :shell, :path => "script.sh"

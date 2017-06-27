@@ -21,7 +21,7 @@ if_vagrant HOME=/home/vagrant
 [ -z "$DOWNLOAD_DIR" ] && DOWNLOAD_DIR="downloads/"
 
 # Note: Eclipse and packages might depend on a particular Java version.
-PREFERRED_JAVA_VERSION=1.7
+PREFERRED_JAVA_VERSION=1.8
 
 # Eclipse distribution ---------------------------------------------------
 
