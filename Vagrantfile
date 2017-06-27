@@ -38,13 +38,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       puts "Vagrant has no proxy plugin => skipped proxy configuration."
    end
 
-   config.vm.box = "trusty64"
+   config.vm.box = "bento/ubuntu-16.04"
 
    config.vm.hostname = ENV['HOSTNAME']
-   config.vm.hostname = "francalab-trusty64" if ENV['hostname'] == nil
+   config.vm.hostname = "francalab-xenial64" if ENV['hostname'] == nil
 
    # If above box does not exist locally, fetch it here:
-   config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
+   config.vm.box_url = "https://atlas.hashicorp.com/bento/boxes/ubuntu-16.04"
 
    # To run eclipse we need more than default RAM 512MB And we might as well
    # set a useful name also, which I prefer to have equal to the hostname that
@@ -86,8 +86,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
    # Install prerequisites
    config.vm.provision :shell, inline:
-      'sudo add-apt-repository ppa:openjdk-r/ppa
-       sudo apt-get update; sudo apt-get install -y wget unzip openjdk-8-jre'
+      'sudo apt-get update; sudo apt-get install -y wget unzip openjdk-8-jre'
 
    # Run the eclipse + franca installer script
    config.vm.provision :shell, :path => "script.sh"
