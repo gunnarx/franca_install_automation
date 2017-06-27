@@ -42,11 +42,11 @@ PREFERRED_JAVA_VERSION=1.8
 # NOTE: You can set _MD5 variables to empty to skip MD5 check (just remove the assignment altogether)
 # but it is used to determine if files are already downloaded to save time.
 
-ECLIPSE_INSTALLER_i686="$ECLIPSE_MIRROR/technology/epp/downloads/release/mars/R/eclipse-dsl-mars-R-linux-gtk.tar.gz"
-ECLIPSE_MD5_x686="80c4e3d0dbe204fbf476de08df0fcf18"
+ECLIPSE_INSTALLER_i686="$ECLIPSE_MIRROR/technology/epp/downloads/release/release/neon/3/eclipse-dsl-neon-3-linux-gtk.tar.gz"
+ECLIPSE_MD5_i686=  # No one uses 32 bit anymore anyway...
 
-ECLIPSE_INSTALLER_x86_64="$ECLIPSE_MIRROR/technology/epp/downloads/release/mars/R/eclipse-dsl-mars-R-linux-gtk-x86_64.tar.gz"
-ECLIPSE_MD5_x86_64="6c2d45de8874b71a4eba19afe584acf6"
+ECLIPSE_INSTALLER_x86_64="$ECLIPSE_MIRROR/technology/epp/downloads/release/neon/3/eclipse-dsl-neon-3-linux-gtk-x86_64.tar.gz"
+ECLIPSE_MD5_x86_64="a6e68c829908dad3bb60966ef0f37093"
 
 # D-Bus EMF model --------------------------------------------------------
 
